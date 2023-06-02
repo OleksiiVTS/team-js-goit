@@ -1,0 +1,133 @@
+/*--button--*//*--button--*/
+
+
+
+
+
+/*---button up ---*/
+.button-up {
+  display: inline-block;
+  position: fixed;
+  transition: background-color .3s,
+              opacity .5s, 
+              visibility .5s;
+  animation: animatebut 3000ms infinite 1000ms;
+  
+  opacity: 0;
+  visibility: hidden;
+  z-index: 8;
+  background-color: var(--color-button);
+  border: 2px solid var(--color-text-button);   
+  width: 50px;   
+  height: 50px;
+  right: 50px;
+  bottom: 50px;   
+  text-align: center;   
+  border-radius: 25px; 
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Film P3';
+  font-weight: 700;
+  font-size: 64px;
+  color: #494848;
+}
+
+.button-up:hover, 
+.button-up:focus {
+  animation: animatebut step-start;
+  background-color: var(--color-text-button);
+}
+.arrow-up {
+  opacity: 0;
+  visibility: hidden;
+}
+.arrow-up span {
+  position: fixed;
+  z-index: 3;
+  
+  display: block;
+  width: 15px;
+  height: 15px;
+  right: 60px;
+  bottom: 70px;
+  border-left: 3px solid var(--color-button);
+  border-top: 3px solid var(--color-text-button);
+  text-shadow: 1px 1px 2px #494848;
+ 
+  margin: -2px;
+  animation: arrow-up 3000ms infinite;
+}
+
+.arrow-up span:nth-child(2){
+  animation-delay: -0.1s;
+  right: 70px;
+  bottom: 90px;
+}
+.arrow-up span:nth-child(3){
+  animation-delay: -0.2s;
+  right: 80px;
+  bottom: 75px;
+}
+.button-up.button-up-show,
+.arrow-up.button-up-show {
+  opacity: 1;
+  visibility: visible;
+}
+@keyframes arrow-up {
+  0%{
+      opacity: 0;
+      transform: rotate(45deg) translate(10px,10px);
+  }
+  50%{
+      opacity: 1;
+  }
+  100%{
+      opacity: 0;
+      transform: rotate(45deg) translate(-10px,-10px);
+  }
+}
+
+@keyframes animatebut {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);;
+  }
+}
+
+
+
+
+@media screen and (max-width: 414px) {
+  .button-big-pointed {
+    min-width: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .button-up {
+    right: 50px;
+    bottom: 50px;
+  }
+  .button-big-pointed {
+    min-width: 592px;
+    font-size: 24px;;
+  }
+}
+@media screen and (min-width: 1280px) {
+  
+  .button-big,
+  .button-big-plas {
+    min-width: 434px;
+    height: 65px;
+    font-size: 24px;;
+  }
+}

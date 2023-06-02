@@ -1,3 +1,4 @@
-/* НАгадую як робити імпорт з ваших файлів         */
-
-/* наприклад:    @import url('./reset.css');       */
+/*-Стандартні скидання стилів, visually-hidden, параменти section і container-*/
+@import url('./styles/reset.css');
+/* все що стосується кнопок, назви кнопок скопіевані вам у кожен css */
+@import url('./styles/buttons.css');
