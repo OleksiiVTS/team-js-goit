@@ -1,0 +1,117 @@
+.upcoming_film {
+    background-color: var(--color-black);
+
+    /* margin-left: 20px;
+    margin-right: 20px; */
+}
+.upcoming_title{
+    color: var(--color-white);
+    font-weight: 500;
+font-size: 16px;
+line-height: 1.19;
+text-transform: uppercase;
+}
+.info-item{
+    margin-bottom: 12px;
+}
+
+.film-info{
+    color: var(--color-white);
+}
+
+.description-about{
+    text-transform: uppercase; 
+    font-weight: 500;
+font-size: 16px;
+line-height: 1.19;
+color: var(--color-text-header-d);
+
+}
+
+.release,
+.vote,
+.popularity,
+.genre{
+    color: var(--color-text-header-d);
+
+}
+.release-value{
+    color: var(--color-text-button);
+}
+/* .vote-value {
+    display: flex;
+    align-items: center;
+  } */
+  
+  .vote-average,
+  .vote-count {
+    display: inline-block;
+    padding: 1px 8px 1px 8px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+  }
+  
+  .vote-average {
+    margin-right: 4px;
+  }
+  
+  .vote-count {
+    margin-left: 4px;
+  }
+
+
+
+@media screen and (min-width: 320px) {
+ .upcoming_title{
+    padding-top: 24px;
+    margin-bottom: 24px;
+    margin-left: 20px;
+ }
+.film-card{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 40px;
+}
+.film-title{
+    margin:24px 0 20px 0;
+}
+.description-item{
+    margin:20px 0 20px 0;
+}
+
+.upcoming_film_add{
+    margin-bottom: 40px;
+}
+.about-value {
+    display: block;
+margin-top: 16px;
+}
+.release{
+    margin-right: 57px;
+}
+.vote{
+    margin-right: 61px;
+}
+
+.popularity{
+    margin-right: 77px;
+}
+.genre{
+    margin-right: 107px;
+}
+.genre-value{
+    font-size: 11px; 
+    font-weight: 500;
+}
+/* если слов больше 2-х, то не влазит в строку */
+
+
+
+}
+
+
+
+
+
+
