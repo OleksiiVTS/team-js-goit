@@ -85,14 +85,27 @@ button, link {
   overflow: hidden;
 }
 
-/* @media screen and (min-width: 320px) {
-  
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0 15px;
+  width: 100%;
+}
+
+@media screen and (min-width: 320px) {
+  .container {
+    width: 320px;
+  }
 }
 
 @media screen and (min-width: 768px) {
-   
+  .container {
+    max-width: 768px;
+  }
 }
 
 @media screen and (min-width: 1280px) {
-  
-} */
+  .container {
+    max-width: 1280px;
+  }
+}
