@@ -2,3 +2,6 @@
 @import url('./styles/reset.css');
 /* все що стосується кнопок, назви кнопок скопіевані вам у кожен css */
 @import url('./styles/buttons.css');
+
+@import url('./styles/hero-homepage.css');
+
