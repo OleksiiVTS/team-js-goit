@@ -1,5 +1,5 @@
-import Gallery from './class/Gallery.js';
-import GenreList from './class/GenreList.js';
+import Gallery from './Gallery.js';
+import GenreList from './GenreList.js';
 
 // elements in html
 const refs = {

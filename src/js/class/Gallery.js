@@ -1,5 +1,5 @@
 const axios = require("axios/dist/axios.min.js"); // node
-import GenreList from './class/GenreList.js';
+import GenreList from './GenreList.js';
 import Notiflix from 'notiflix';
 
 // Класс + ключ
