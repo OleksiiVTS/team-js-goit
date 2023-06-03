@@ -11,7 +11,7 @@ const refs = {
 const moviesTrendsDay = new Gallery({
   selector: ".gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/day',   // частина шляху для запиту
-  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+  query: 'language=en'          // сам запит, те що стоїть після знаку ?
 });
 
 moviesTrendsDay.onMarkup();
@@ -23,7 +23,7 @@ moviesTrendsDay.onMarkup();
 const genre = new GenreList({
   selector: ".select",      // куди виводимо сформований HTML-код 
   url: "/genre/movie/list", // частина шляху для запиту
-  query: 'language=en'      // сам запит, те що стоъть після знаку ?
+  query: 'language=en'      // сам запит, те що стоїть після знаку ?
 });
 
 genre.outMarkupGenreList();

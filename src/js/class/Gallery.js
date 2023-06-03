@@ -1,6 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
-import Notiflix from 'notiflix';
+//import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6'
