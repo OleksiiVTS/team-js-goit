@@ -1,10 +1,97 @@
 /*--button--*//*--button--*/
+/* 
+.button-general - кнопки "Load more" та "Search movie"
+.button-watch-trailer - кнопка "Watch trailer"
+.button-rem-me - кнопка "Remind me" + жовта "Add to my library"
+.button-my-libr - всі не жовті кнопки на library, у них заміна кольору через тему
+.button-round-pag - кругла кнопка пагінації
+.button-round-search - кругла кнопка пошуку
+*/
+
+.button-general,
+.button-watch-trailer,
+.button-rem-me,
+.button-my-libr {
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+
+  background: var(--color-button);
+  border-radius: 74px;
+  border: none;
+
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+
+  color: var(--color-black);
+}
 
 
+.button-my-libr {
+  background: var(--color-black);
+  color: var(--color-white);
+  border: 1px solid var(--color-text-button);
+}
+
+.button-general:hover,
+.button-watch-trailer:hover,
+.button-rem-me:hover {
+  background: var(--color-white);
+  color: var(--color-text-button);
+  border: 1px solid var(--color-text-button);
+}
+
+.button-my-libr:hover {
+  background: var(--color-white);
+  color: var(--color-text-button);
+  border: none;
+}
+
+.button-round-pag,
+.button-round-search {
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  width: 24px;
+  height: 24px;
+  background: var(--color-button);
+  border-radius: 50%;
+  border: none;
+
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #FFFFFF;
+}
+.button-round-search {
+  width: 40px;
+  height: 40px;
+  fill: var(--color-white);
+}
+
+.button-round-pag:hover,
+.button-round-search:hover {
+  background: var(--color-button-hover);
+  color: var(--color-text-header-l);
+  fill: var(--color-text-header-l);
+} 
 
 
-
-/*---button up ---*/
+/*---button up ---*/ /*---button up ---*/ /*---button up ---*/ /*---button up ---*/
 .button-up {
   display: inline-block;
   position: fixed;
@@ -106,28 +193,52 @@
 
 
 
-@media screen and (max-width: 414px) {
-  .button-big-pointed {
-    min-width: 100%;
-  }
+@media screen and (max-width: 320px) {
+  
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
+  .button-general,
+  .button-watch-trailer,
+  .button-rem-me {
+    font-size: 14px;
+    line-height: 1.1;
+  }
+  .button-my-libr {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .button-round-pag {
+    width: 32px;
+    height: 32px;
+  }
+  .button-round-search {
+    width: 44px;
+    height: 44px;
+  }
+
   .button-up {
     right: 50px;
     bottom: 50px;
   }
-  .button-big-pointed {
-    min-width: 592px;
-    font-size: 24px;;
-  }
+  
 }
 @media screen and (min-width: 1280px) {
-  
-  .button-big,
-  .button-big-plas {
-    min-width: 434px;
-    height: 65px;
-    font-size: 24px;;
+  .button-general {
+    font-size: 18px;
+    line-height: 1.5;
   }
+  .button-watch-trailer {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .button-round-pag {
+    width: 40px;
+    height: 40px;
+  }
+  .button-round-search {
+    width: 48px;
+    height: 48px;
+  }
+
 }
