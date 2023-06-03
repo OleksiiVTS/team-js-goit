@@ -2,5 +2,6 @@
 
 // наприклад:    import './js/buttonup.js';
 
-//header
 import './js-header/header.js';
+import './js-vs/spinner-js';
+import './js-vs/pruklad';

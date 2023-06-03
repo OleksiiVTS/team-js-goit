@@ -5,3 +5,5 @@
 
 /* header */
 @import url('./styles//styles-header/header.css');
+/* Стилі спінера */
+@import url('./styles-vs/spinner.css');
