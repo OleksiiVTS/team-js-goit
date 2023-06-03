@@ -4,3 +4,5 @@
 @import url('./styles/buttons.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
+/* Стилі homepage-hero*/
+@import url('./hero-homepage/hero-homepage.css');

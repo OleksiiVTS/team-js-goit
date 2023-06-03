@@ -1,0 +1,15 @@
+.hero-homepage-section {
+  background-color: rgb(192, 192, 206);
+}
+
+.hero-title {
+  font-family: 'Roboto';
+font-weight: 700;
+font-size: 64px;
+line-height: 75px;
+
+}
+
+.hero-hide {
+  display: none;
+}
