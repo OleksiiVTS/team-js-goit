@@ -54,7 +54,9 @@ function createFilmCard(film) {
           <div class="description-item">
             <span class="description-about">About:</span> <span class="about-value">${film.overview}</span>
           </div>
-          <button class="upcoming_film_add">Add to My Library</button>
+         
+          <button class="button-rem-me">Add to My Library</button>
+          
         </div>
       </div>
     `;
@@ -62,7 +64,7 @@ function createFilmCard(film) {
     cardContainer.innerHTML = cardHTML;
 
     // Добавляем обработчик события для кнопки после создания разметки
-    const addButton = document.querySelector(".upcoming_film_add");
+    const addButton = document.querySelector(".button-rem-me");
     addButton.addEventListener("click", toggleLibraryFilm);
 
     // Изменяем формат даты. При изменении назания классов в разметке, изменить класс ниже
@@ -86,7 +88,7 @@ function formatDate(dateString) {
 
 // Функция для обработки нажатия на кнопку добавления/удаления фильма из My Library
 function toggleLibraryFilm() {
-  const addButton = document.querySelector(".upcoming_film_add");
+  const addButton = document.querySelector(".button-rem-me");
   const filmTitle = document.querySelector(".film-card img").alt;
   const libraryFilms = JSON.parse(localStorage.getItem("libraryFilms")) || [];
 

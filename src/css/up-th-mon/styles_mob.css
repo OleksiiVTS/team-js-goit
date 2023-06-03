@@ -1,9 +1,7 @@
 .upcoming_film {
     background-color: var(--color-black);
-
-    /* margin-left: 20px;
-    margin-right: 20px; */
 }
+
 .upcoming_title{
     color: var(--color-white);
     font-weight: 500;
@@ -80,9 +78,8 @@ color: var(--color-text-header-d);
     margin:20px 0 20px 0;
 }
 
-.upcoming_film_add{
-    margin-bottom: 40px;
-}
+
+
 .about-value {
     display: block;
 margin-top: 16px;
