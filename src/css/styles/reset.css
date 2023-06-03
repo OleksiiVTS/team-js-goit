@@ -94,7 +94,7 @@ button, link {
 
 @media screen and (min-width: 320px) {
   .container {
-    width: 320px;
+    min-width: 320px;
   }
 }
 
