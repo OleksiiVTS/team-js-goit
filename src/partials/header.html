@@ -1,3 +1,48 @@
 <header>
-   
+  <div class="container header-container">
+    <div class="header">
+      <nav class="nav-wrap">
+        <a class="header-logo" href="./index.html">
+          <img class="logo-image" src="./images/header-img/popcorn.svg" alt="logo"
+        /></a>
+        <a class="header-title" href="./index.html"> Cinemania</a>
+        <a class="header-menu">MENU</a>
+
+        <ul class="desktop-menu">
+          <p class="menu-title">Menu</p>
+          <li class="menu-item"><a class="menu-item-txt" href="./index.html">HOME</a></li>
+          <li class="menu-item"><a class="menu-item-txt" href="./catalog.html">CATALOG</a></li>
+          <li class="menu-item"><a class="menu-item-txt" href="./library.html">MY LIBRARY</a></li>
+        </ul>
+      </nav>
+
+      <div class="theme-switch-btn">
+        <input type="checkbox" class="checkbox" id="checkbox" checked/>
+        <label for="checkbox" class="checkbox-label">
+          <svg class="moon-icon">
+            <use href="./images/sprite.svg#moon"></use>
+          </svg>
+          <svg class="sun-icon">
+            <use href="./images/sprite.svg#sun"></use>
+          </svg>
+          <svg class="ball-icon">
+            <use href="./images/sprite.svg#ball"></use>
+          </svg>
+        </label>
+      </div>
+    </div>
+
+    <nav class="mobile-menu-wrap hidden">
+      <a class="header-logo" href="./index.html">
+        <img class="logo-image" src="./images/header-img/popcorn.svg" alt="logo"
+      /></a>
+      <ul class="mobile-menu">
+        <p class="mobile-menu-title">Menu</p1>
+        <li class="menu-item"><a class="menu-item-txt" href="./index.html"> HOME</a> </li>
+        <li class="menu-item"><a class="menu-item-txt" href="./catalog.html">CATALOG</a></li>
+        <li class="menu-item"><a class="menu-item-txt" href="./library.html">MY LIBRARY</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-menu-backdrop hidden"></div>
+  </div>
 </header>
