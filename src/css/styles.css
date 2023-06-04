@@ -2,6 +2,8 @@
 @import url('./styles/reset.css');
 /* все що стосується кнопок, назви кнопок скопіевані вам у кожен css */
 @import url('./styles/buttons.css');
+/* Стилі модального вікта відсутності трейлера */
+@import url('./styles/modal-wind-tr.css');
 
 /* Стилі секції UPCOMING THIS MONTH */
 @import url('./up-th-mon/styles_mob.css');
@@ -11,6 +13,7 @@
 @import url('./styles//styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
-
 /* hero-homepage */
 @import url('./hero-homepage/hero-homepage.css');
+/* Стилі Load-more */
+@import url('./styles-vs/load-more.css');
