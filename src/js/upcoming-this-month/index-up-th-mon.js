@@ -61,7 +61,7 @@ function createFilmCard(film) {
               film.popularity}
             </span>
           </div>
-          <div class="info-item">
+          <div class="info-item genre-item">
             <span class="genre">Genre:</span> <span class="genre-value">${film.genres
               .map(genre => genre.name)
               .join(', ')}</span>
