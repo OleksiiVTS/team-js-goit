@@ -1,11 +1,10 @@
 import Pagination from 'tui-pagination';
 import axios from 'axios';
-// import GenreList from 'GenreList';
 
 const paginationContainer = document.getElementById('tui-pagination-container');
 const pageContentContainer = document.getElementById('page-content-container');
-const totalItems = 100; // Замінити фактичною загальною кількістю елементів
-const itemsPerPage = 10; // Замініть бажану кількість елементів на сторінці
+const totalItems = 100; // Замініть на фактичну загальну кількість елементів
+const itemsPerPage = 10; // Замініть на бажану кількість елементів на сторінці
 
 const pagination = new Pagination(paginationContainer, {
   totalItems,
@@ -24,9 +23,9 @@ pagination.on('afterMove', async (eventData) => {
 
     // Створення розмітки для елементів на поточній сторінці
     const pageMarkup = createPageMarkup(data);
-   // Замініть "createPageMarkup" своєю власною функцією, щоб створити розмітку для поточної сторінки
+    // Замініть "createPageMarkup" своєю власною функцією, щоб створити розмітку для поточної сторінки
 
-     // Оновлення вмісту сторінки за допомогою згенерованої розмітки
+    // Оновлення вмісту сторінки за допомогою згенерованої розмітки
     updatePageContent(pageMarkup);
     // Замініть "updatePageContent" своєю власною функцією для оновлення вмісту сторінки
   } catch (error) {
@@ -51,7 +50,7 @@ function createPageMarkup(data) {
   let markup = '';
   data.forEach((item) => {
     markup += `<div class="item">${item.title}</div>`;
-    // Замінити генерацією власної розмітки елемента на основі отриманих даних
+    // Замініть генерацію власної розмітки елемента на основі отриманих даних
   });
 
   return markup;
@@ -66,6 +65,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const initialData = await fetchDataForPage(1); // Отримання початкових даних для першої сторінки
     const initialPageMarkup = createPageMarkup(initialData);
     updatePageContent(initialPageMarkup);
+
+    // Ініціалізація пагінації
+    pagination.reset(totalItems); // Скидання пагінації до початкових значень
+    pagination.movePageTo(1); // Перехід до першої сторінки
   } catch (error) {
     console.error('Error fetching initial data:', error);
   }
