@@ -1,5 +1,5 @@
 const axios = require("axios/dist/axios.min.js"); // node
-import Notiflix from 'notiflix';
+//import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6'
@@ -28,8 +28,9 @@ export default class GenreList {
       const params = new Object(this.params);
 
       const {data} = await axios.get(this.url, { params });
-      //this.genres = this.addGenres(data.genres)
+
       this.exportToLS(data.genres);
+
       if (!this.genres) {
         this.genres = this.importFromLS()
       }
@@ -40,18 +41,15 @@ export default class GenreList {
     }
   }
 
-  // addGenres(data) {
-  //   const result = data.map(e => e)
-
-  //   return result    
-  // }
-
   exportToLS(data) {
-    localStorage.genreList = JSON.stringify(data);
+    const str = JSON.stringify(data);
+    localStorage.setItem("genreList", str);
   }
 
   importFromLS() {
-    return JSON.parse( localStorage.genreList );
+    const str = localStorage.getItem('genreList');
+    const arr = JSON.parse(str);
+    return arr
   }
 
 
