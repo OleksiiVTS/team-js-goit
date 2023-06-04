@@ -2,7 +2,8 @@
 @import url('./styles/reset.css');
 /* все що стосується кнопок, назви кнопок скопіевані вам у кожен css */
 @import url('./styles/buttons.css');
+
+/* header */
+@import url('./styles//styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
-/* Стилі homepage-hero*/
-@import url('./hero-homepage/hero-homepage.css');
