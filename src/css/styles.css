@@ -15,3 +15,5 @@
 @import url('./styles-vs/spinner.css');
 /* Стилі Load-more */
 @import url('./styles-vs/load-more.css');
+/* Стилі сітки каталога*/
+@import url('./styles-catalog_net/styles-catalog_net.css');
