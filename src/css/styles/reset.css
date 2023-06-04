@@ -100,7 +100,7 @@ link {
 
 @media screen and (min-width: 320px) {
   .container {
-    max-width: 320px;
+    width: 320px;
   }
 }
 
