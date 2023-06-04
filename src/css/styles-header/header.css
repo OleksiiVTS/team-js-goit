@@ -48,16 +48,6 @@ body {
   transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.header-menu:hover,
-.header-menu:focus,
-.header-title:hover,
-.header-title:focus,
-.menu-item-txt:hover,
-.menu-item-txt:focus {
-  color: var(--color-text-button);
-  cursor: pointer;
-}
-
 .nav-wrap {
   display: flex;
   width: 157px;
@@ -159,6 +149,17 @@ body {
 .mobile-menu-title,
 .desktop-menu {
   display: none;
+}
+
+.header-menu:hover,
+.header-menu:focus,
+.header-title:hover,
+.header-title:focus,
+.menu-item-txt:hover,
+.menu-item-txt:focus,
+.current-page {
+  color: var(--color-text-button);
+  cursor: pointer;
 }
 /* TABLET */
 
