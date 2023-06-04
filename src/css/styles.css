@@ -3,6 +3,10 @@
 /* все що стосується кнопок, назви кнопок скопіевані вам у кожен css */
 @import url('./styles/buttons.css');
 
+/* Стилі секції UPCOMING THIS MONTH */
+@import url('./up-th-mon/styles_mob.css');
+@import url('./up-th-mon/styles_tab.css');
+@import url('./up-th-mon/styles_pc.css');
 /* header */
 @import url('./styles//styles-header/header.css');
 /* Стилі спінера */
