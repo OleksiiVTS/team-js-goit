@@ -1,15 +1,15 @@
 const heroRandomFilm = document.getElementById('hero-random-film');
-const heroDefault = document.getElementById('default-hero');
+const heroSection = document.getElementById('hero-section');
+const apiKey = '9073999c285844087924fd0e24160fae';
 
 async function fetchFilmData() {
-  const apiKey = '9073999c285844087924fd0e24160fae';
   const apiUrl = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`;
 
   try {
     const response = await fetch(apiUrl);
     const { results } = await response.json();
     const filmIndexes = results.map(({ id }) => id);
-    heroDefault.classList.add('hero-hide');
+    heroSection.classList.add('hero-hide');
 
     return filmIndexes;
   } catch (error) {
@@ -26,7 +26,6 @@ async function getRandomFilm() {
 }
 
 async function getFilmDetails(filmIndex) {
-  const apiKey = '9073999c285844087924fd0e24160fae';
   const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}?api_key=${apiKey}`;
 
   try {
@@ -56,14 +55,29 @@ async function getFilmDetails(filmIndex) {
 async function createFilmBox() {
   try {
     const film = await getRandomFilm();
+    const words = film.overview.split(' ');
+    let truncatedOverview = words.slice(0, 30).join(' ');
+
+    if (words.length > 30) {
+      truncatedOverview += '...';
+    }
+
     const markup = `
-      <div>
+    <section class="hero-movie" style="background-image: linear-gradient(
+      86.77deg,
+      #111111 30.38%,
+      rgba(17, 17, 17, 0) 65.61%
+    ), url(${film.backgroundImage})";>
+    <div class="container hero-container">
         <h1 class="hero-title">${film.title}</h1>
         <p>Рейтинг: ${film.rating}</p>
-        <p>${film.overview}</p?
-        <a href="${film.trailer}" target="_blank">Посилання на трейлер</a>
-        <img src="${film.backgroundImage}" alt="${film.title}" />
-      </div>
+        <p class="hero-text">${truncatedOverview}</p>
+        <div class="hero-homepage-buttons">
+        <button type="button" class="button-watch-trailer"><a class="hero-href" href="${film.trailer}" target="_blank">Watch trailer</a></button>
+        <button type="button" class="button-more-details"><a class="hero-href" id="more-details-button" target="_blank">More Details</a></button>
+              </div>
+        </div>
+      </section>
     `;
     heroRandomFilm.innerHTML = markup;
   } catch (error) {
