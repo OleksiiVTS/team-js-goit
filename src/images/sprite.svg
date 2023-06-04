@@ -14,9 +14,9 @@
 <path fill="none" stroke="#F84119" stroke-opacity="0.9" style="stroke: var(--color2, #F84119)" stroke-linejoin="miter" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.1333" d="M6.798 6.354c-5.12 5.47-5.1 14.359 0.043 19.854"></path>
 </symbol>
 
-
-<symbol id="close-icon" viewBox="0 0 32 32">
-<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.6667" d="M30 30l-28-28M30 2l-28 28"></path>
+<symbol id="close" width="12" height="12">
+<!-- <path d="M11.25 11.25L0.75 0.75M11.25 0.75L0.75 11.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/> -->
+<path d="M8 .806 7.194 0 4 3.194.806 0 0 .806 3.194 4 0 7.194.806 8 4 4.806 7.194 8 8 7.194 4.806 4 8 .806Z"/>
 </symbol>
 
 <symbol id="spotlight" viewBox="0 0 32 32">
