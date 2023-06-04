@@ -19,3 +19,6 @@
 @import url('./styles-vs/load-more.css');
 /* Стилі сітки каталога*/
 @import url('./styles-catalog_net/styles-catalog_net.css');
+
+/* Стилі Footer */
+@import url('./styles/styles-footer/footer.css');
