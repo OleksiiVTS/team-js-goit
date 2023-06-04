@@ -9,6 +9,27 @@
   line-height: 1.19;
   text-transform: uppercase;
 }
+.container-features {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .column {
+    flex-basis: 50%;
+  }
+  
+  .date-vote {
+    margin-bottom: 20px;
+  }
+  
+  .popularity-genre {
+    margin-bottom: 20px;
+  }
+  
+  .description-item {
+    flex-basis: 100%;
+  }
+
 .info-item {
   margin-bottom: 12px;
 }
@@ -25,6 +46,9 @@
   color: var(--color-text-header-d);
 }
 
+.film-title{
+    text-transform: uppercase;
+}
 .release,
 .vote,
 .popularity,
@@ -55,6 +79,10 @@
 .vote-count {
   margin-left: 4px;
 }
+.button-rem-me{
+    display: inline;
+    margin-bottom: 40px;
+}
 
 @media screen and (min-width: 320px) {
   .upcoming_title {
@@ -65,10 +93,12 @@
   .film-card {
     margin-left: 20px;
     margin-right: 20px;
-    margin-bottom: 40px;
+ 
   }
   .film-title {
     margin: 24px 0 20px 0;
+    font-size: 20px;
+line-height: 1.15;
   }
   .description-item {
     margin: 20px 0 20px 0;
@@ -92,8 +122,10 @@
     margin-right: 107px;
   }
   .genre-value {
+    font-style: normal;
     font-size: 11px;
     font-weight: 500;
+
   }
   /* если слов больше 2-х, то не влазит в строку */
 }
