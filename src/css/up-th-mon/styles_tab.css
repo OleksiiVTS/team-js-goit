@@ -10,9 +10,8 @@ margin-left: 34px;
 
 .film-title {
     font-size: 28px;
-line-height: 1.18;
-    text-transform: uppercase;
-    margin: 32px 0 24px 0;
+  line-height: 1.18;
+  margin: 32px 0 24px 0;
   }
   .column-struct {
     flex-basis: 50%;
@@ -26,10 +25,19 @@ line-height: 1.18;
     font-size: 16px;
   
   }
+  .container-features {
+    flex-wrap: wrap;
+    display: flex;
+  }
+    .about-value {
+     margin-top: 16px;
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 1.42;
+
+    }
 
 
 
 
 }
-
-

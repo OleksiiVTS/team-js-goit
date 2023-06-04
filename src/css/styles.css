@@ -13,6 +13,8 @@
 @import url('./styles//styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
+/* hero-homepage */
+@import url('./hero-homepage/hero-homepage.css');
 /* Стилі Load-more */
 @import url('./styles-vs/load-more.css');
 /* Стилі сітки каталога*/
