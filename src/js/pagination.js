@@ -1,6 +1,6 @@
 import Pagination from 'tui-pagination';
 import axios from 'axios';
-import GenreList from 'GenreList';
+// import GenreList from 'GenreList';
 
 const paginationContainer = document.getElementById('tui-pagination-container');
 const pageContentContainer = document.getElementById('page-content-container');
