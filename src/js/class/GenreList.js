@@ -28,11 +28,11 @@ export default class GenreList {
       const params = new Object(this.params);
 
       const {data} = await axios.get(this.url, { params });
-      //this.genres = this.addGenres(data.genres)
+
       this.exportToLS(data.genres);
-      console.log(this.genres);
+
       if (!this.genres) {
-        this.genres = new Array(this.importFromLS())
+        this.genres = this.importFromLS()
       }
 
       return data.genres; 
