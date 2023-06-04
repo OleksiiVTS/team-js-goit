@@ -39,6 +39,22 @@ export default class Gallery {
   // @string - pathUrl - частина url після URL 
   // https://api.themoviedb.org/3/trending/movie/day?api_key=999999&page=1&
   //
+
+  async getList() {
+    try {
+      const params = new Object(this.params);
+      const { data }  = await axios.get(this.url, { params });
+
+      this.totalPage = data.total_page;
+      this.totalResult = data.total_result;
+  
+      return data.results; 
+
+    } catch (error) {
+      this.onError(error)
+    }
+  }
+
   async getMoviesList() {
     try {
 
@@ -51,21 +67,6 @@ export default class Gallery {
       this.onError(error)
     }
 
-  }
-
-  async getList() {
-    try {
-      const params = new Object(this.params);
-      const { data }  = await axios.get(this.url, { params });
-      
-      this.totalPage = data.total_page;
-      this.totalResult = data.total_result;
-  
-      return data.results; 
-
-    } catch (error) {
-      this.onError(error)
-    }
   }
 
   incrementPage() {
@@ -104,7 +105,6 @@ export default class Gallery {
 
       const markup = await this.createNewCards();
       this.updateGallery(markup);
-
       return markup;
 
     } catch (error) {

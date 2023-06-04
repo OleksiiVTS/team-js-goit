@@ -30,8 +30,9 @@ export default class GenreList {
       const {data} = await axios.get(this.url, { params });
       //this.genres = this.addGenres(data.genres)
       this.exportToLS(data.genres);
+      console.log(this.genres);
       if (!this.genres) {
-        this.genres = this.importFromLS()
+        this.genres = new Array(this.importFromLS())
       }
 
       return data.genres; 
@@ -40,18 +41,15 @@ export default class GenreList {
     }
   }
 
-  // addGenres(data) {
-  //   const result = data.map(e => e)
-
-  //   return result    
-  // }
-
   exportToLS(data) {
-    localStorage.genreList = JSON.stringify(data);
+    const str = JSON.stringify(data);
+    localStorage.setItem("genreList", str);
   }
 
   importFromLS() {
-    return JSON.parse( localStorage.genreList );
+    const str = localStorage.getItem('genreList');
+    const arr = JSON.parse(str);
+    return arr
   }
 
 
