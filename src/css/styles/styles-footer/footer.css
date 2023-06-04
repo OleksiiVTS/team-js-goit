@@ -1,7 +1,16 @@
+.footer-container {
+  margin-top: 40px;
+  margin-bottom: 28px;
+  padding: 0 42px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
 .footer__icon {
-  margin-top: 120px;
-  margin-left: 110px;
-  margin-right: 10px;
+  margin-left: 7px;
+  margin-right: 7px;
+  margin-top: 8px;
   animation: heartbeat 1s infinite ease-in-out;
 }
 
@@ -18,5 +27,16 @@
 }
 
 .footer-text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.143;
+
+  color: var(--color-text-header-d);
+}
+
+.footer-link {
   color: #b7b7b7;
+  text-decoration: underline;
 }
