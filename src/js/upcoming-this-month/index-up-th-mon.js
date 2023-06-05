@@ -15,6 +15,12 @@ async function fetchFilmData() {
 // Функция для создания HTML разметки карточки фильма
 function createFilmCard(film) {
   const cardContainer = document.querySelector(".upcoming_film_card");
+  
+  if (!cardContainer) {
+    // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
+    return;
+  }
+
 
   if (film === null) {
   // Если фильмы не найдены, отображаем модальное окно
@@ -115,20 +121,22 @@ function formatDate(dateString) {
 function toggleLibraryFilm() {
   const addButton = document.querySelector(".button-rem-me");
   const filmTitle = document.querySelector(".film-card img").alt;
-  const libraryFilms = JSON.parse(localStorage.getItem("libraryFilms")) || [];
+  const libraryFilms = new Set(JSON.parse(localStorage.getItem("libraryFilms")) || []);
 
   if (addButton.textContent === "Add to My Library") {
     addButton.textContent = "Remove from My Library";
-    libraryFilms.push(filmTitle);
+
+    // Добавляем фильм в Set
+    libraryFilms.add(filmTitle);
   } else {
     addButton.textContent = "Add to My Library";
-    const filmIndex = libraryFilms.indexOf(filmTitle);
-    if (filmIndex > -1) {
-      libraryFilms.splice(filmIndex, 1);
-    }
+
+    // Удаляем фильм из Set
+    libraryFilms.delete(filmTitle);
   }
 
-  localStorage.setItem("libraryFilms", JSON.stringify(libraryFilms));
+  // Сохраняем Set в Local Storage
+  localStorage.setItem("libraryFilms", JSON.stringify(Array.from(libraryFilms)));
 }
 
 // Вызываем функцию для получения данных о фильме и создания карточки
