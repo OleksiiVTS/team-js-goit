@@ -16,7 +16,7 @@ genres.getGenreList();
 
 export default class Gallery {
   constructor({ name, url, query, selector }) {
-    this.name = name;
+    this.name = name;                     // назва ключа у ЛС
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.page = 1;
     this.listMovies = this.importFromLS();  // список фільмів
