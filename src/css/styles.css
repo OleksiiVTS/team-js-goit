@@ -17,6 +17,8 @@
 @import url('./hero-homepage/hero-homepage.css');
 /* Стилі Load-more */
 @import url('./styles-vs/load-more.css');
+/* Стилі пагінації */
+@import url('./pagsnation/pagination.css');
 /* Стилі сітки каталога*/
 @import url('./styles-catalog_net/styles-catalog_net.css');
 
