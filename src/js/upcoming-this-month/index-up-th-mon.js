@@ -16,6 +16,11 @@ async function fetchFilmData() {
 function createFilmCard(film) {
   const cardContainer = document.querySelector(".upcoming_film_card");
 
+  if (!cardContainer) {
+    // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
+    return;
+  }
+  
   if (film === null) {
   // Если фильмы не найдены, отображаем модальное окно
   fetch('../partials/modal-wind-tr.html')
