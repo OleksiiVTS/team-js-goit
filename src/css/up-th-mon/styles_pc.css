@@ -41,12 +41,14 @@ line-height: 1.18;
   .about-value{
      font-size: 14px;
     line-height: 1.42;
-   
+    height: 160px;
+    width: 390px;
+    overflow: auto;
 
   }
 
   .button-rem-me{
-    margin:20px 0 20px;
+    margin:70px 0 0px;
   }
 
 
