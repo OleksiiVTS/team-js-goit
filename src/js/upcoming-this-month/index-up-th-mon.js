@@ -17,20 +17,20 @@ function createFilmCard(film) {
   const cardContainer = document.querySelector(".upcoming_film_card");
 
   if (!cardContainer) {
-    // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
+    // Якщо елемент .upcoming_film_card не існує на поточній сторінці, припиняємо виконання функції
     return;
   }
-  
+
   if (film === null) {
-  // Если фильмы не найдены, отображаем модальное окно
-  fetch('../partials/modal-wind-tr.html')
-    .then(response => response.text())
-    .then(modalContent => {
-      cardContainer.innerHTML = modalContent;
-    })
-    .catch(error => {
-      console.log('Ошибка при загрузке модального окна:', error);
-    });
+    // Если фильмы не найдены, отображаем модальное окно
+    fetch('../partials/modal-wind-tr.html')
+      .then(response => response.text())
+      .then(modalContent => {
+        cardContainer.innerHTML = modalContent;
+      })
+      .catch(error => {
+        console.log('Ошибка при загрузке модального окна:', error);
+      });
 
   } else {
     // Если фильмы найдены, создаем карточку фильма
@@ -39,64 +39,59 @@ function createFilmCard(film) {
         <img src="https://image.tmdb.org/t/p/original/${
           film.backdrop_path
         }" alt="${film.original_title}" />
-  <div class="film-info">
-      <div class="info-item">
+        <div class="film-info">
+          <div class="info-item">
             <h2 class="film-title">${film.original_title}</h2>
-      </div>
-
-
-<div class="container-features">
-      <div class="column-struct">
-        <div class="date-vote">
-          <div class="info-item">
-            <span class="release">Release Date:</span> <span class="release-value release-date">${
-              film.release_date}</span>
           </div>
-          <div class="info-item">
-            <span class="vote">Vote / Votes:</span>
-            <span class="vote-value">
-              <span class="vote-average">${film.vote_average}</span> /
-              <span class="vote-count">${film.vote_count}</span>
-            </span>
+  
+          <div class="container-features">
+            <div class="column-struct">
+              <div class="date-vote">
+                <div class="info-item">
+                  <span class="release">Release Date:</span> <span class="release-value release-date">${
+                    film.release_date}</span>
+                </div>
+                <div class="info-item">
+                  <span class="vote">Vote / Votes:</span>
+                  <span class="vote-value">
+                    <span class="vote-average">${film.vote_average}</span> /
+                    <span class="vote-count">${film.vote_count}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="column-struct">
+              <div class="popularity-genre">
+                <div class="info-item">
+                  <span class="popularity">Popularity:</span> <span class="popularity-value">${
+                    film.popularity}
+                  </span>
+                </div>
+                <div class="info-item genre-item">
+                  <span class="genre">Genre:</span> <span class="genre-value">${film.genres
+                    .map(genre => genre.name)
+                    .join(', ')}</span>
+                </div>
+              </div>
+            </div>
+            <div class="description-item">
+              <span class="description-about">About:</span> <span class="about-value">${
+                film.overview
+              }</span>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="column-struct">
-        <div class="popularity-genre">
-          <div class="info-item">
-            <span class="popularity">Popularity:</span> <span class="popularity-value">${
-              film.popularity}
-            </span>
-          </div>
-          <div class="info-item genre-item">
-            <span class="genre">Genre:</span> <span class="genre-value">${film.genres
-              .map(genre => genre.name)
-              .join(', ')}</span>
-          </div>
-        </div>
-      </div>
-      <div class="description-item">
-        <span class="description-about">About:</span> <span class="about-value">${
-          film.overview
-        }</span>
-      </div>
-</div>
-    
-
-
-         
+  
           <button class="button-rem-me">Add to My Library</button>
-          
         </div>
-    </div>
+      </div>
     `;
-
+  
     cardContainer.innerHTML = cardHTML;
-
+  
     // Добавляем обработчик события для кнопки после создания разметки
     const addButton = document.querySelector(".button-rem-me");
     addButton.addEventListener("click", toggleLibraryFilm);
-
+  
     // Изменяем формат даты. При изменении назания классов в разметке, изменить класс ниже
     const releaseDateElement = document.querySelector(".release-value.release-date");
     const releaseDate = film.release_date;
@@ -115,30 +110,33 @@ function formatDate(dateString) {
   return `${day}.${month}.${year}`;
 }
 
-
 // Функция для обработки нажатия на кнопку добавления/удаления фильма из My Library
 function toggleLibraryFilm() {
   const addButton = document.querySelector(".button-rem-me");
   const filmTitle = document.querySelector(".film-card img").alt;
-  const libraryFilms = JSON.parse(localStorage.getItem("libraryFilms")) || [];
+  const libraryFilms = new Set(JSON.parse(localStorage.getItem("libraryFilms")) || []);
 
   if (addButton.textContent === "Add to My Library") {
     addButton.textContent = "Remove from My Library";
-    libraryFilms.push(filmTitle);
+
+    // Добавляем фильм в Set
+    libraryFilms.add(filmTitle);
   } else {
     addButton.textContent = "Add to My Library";
-    const filmIndex = libraryFilms.indexOf(filmTitle);
-    if (filmIndex > -1) {
-      libraryFilms.splice(filmIndex, 1);
-    }
+
+    // Удаляем фильм из Set
+    libraryFilms.delete(filmTitle);
   }
 
-  localStorage.setItem("libraryFilms", JSON.stringify(libraryFilms));
+  // Сохраняем Set в Local Storage
+  localStorage.setItem("libraryFilms", JSON.stringify(Array.from(libraryFilms)));
 }
 
-// Вызываем функцию для получения данных о фильме и создания карточки
-fetchFilmData().then((filmData) => {
-  console.log("Получены данные о фильме:", filmData);
-  createFilmCard(filmData);
-});
-
+// Проверяем текущий URL страницы и вызываем функции только на странице index.html
+if (window.location.pathname === '/index.html') {
+  // Вызываем функцию для получения данных о фильме и создания карточки
+  fetchFilmData().then((filmData) => {
+    console.log("Получены данные о фильме:", filmData);
+    createFilmCard(filmData);
+  });
+}
