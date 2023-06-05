@@ -46,8 +46,11 @@ export default class Gallery {
   async getList() {
     try {
       const params = new Object(this.params);
-      const { data }  = await axios.get(this.url, { params });
-      this.
+      const { data } = await axios.get(this.url, { params });
+      
+      this.exportToLS(data.results);
+      this.list = this.importFromLS();
+
       this.totalPage = data.total_page;
       this.totalResult = data.total_result;
   
