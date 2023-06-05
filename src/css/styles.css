@@ -20,5 +20,7 @@
 /* Стилі сітки каталога*/
 @import url('./styles-catalog_net/styles-catalog_net.css');
 
+/* Стилі пошуку каталогу */
+@import url('./styles/styles-catalog-search/catalog-search.css');
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');

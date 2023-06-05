@@ -1,34 +1,130 @@
-.catalog-search {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  padding: 0px;
+@media screen and (max-width: 320px) {
+  .catalog-search {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: 40px;
+    padding-bottom: 16px;
+    margin: auto;
+    max-width: 280px;
+    height: 40px;
+  }
 
-  position: absolute;
-  width: 398px;
-  height: 48px;
-  left: 441px;
-  top: 800px;
+  .catalog-search-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 142px 10px 20px;
+    margin-right: 16px;
+
+    max-width: 224px;
+    height: 40px;
+
+    border: 1px solid #595959;
+    border-radius: 8px;
+  }
+  .button-round-search {
+    width: 40px;
+    height: 40px;
+  }
+
+  .form-search {
+    display: flex;
+  }
 }
-.catalog-search-input {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 12px 260px 12px 24px;
-  gap: 10px;
 
-  width: 334px;
-  height: 48px;
+@media screen and (min-width: 321px) {
+  .catalog-search {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: 40px;
+    padding-bottom: 16px;
+    margin: auto;
+    max-width: 280px;
+    height: 40px;
+  }
 
-  border: 1px solid #595959;
-  border-radius: 8px;
+  .catalog-search-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 142px 10px 20px;
+    margin-right: 16px;
+
+    max-width: 224px;
+    height: 40px;
+
+    border: 1px solid #595959;
+    border-radius: 8px;
+  }
+  .button-round-search {
+    width: 40px;
+    height: 40px;
+  }
+
+  .form-search {
+    display: flex;
+  }
 }
-.catalog-submit-btn {
-  margin-left: 16px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
-}
 
-/* border: 1px solid #ffffff; */
+@media screen and (min-width: 768px) {
+  .catalog-search {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: 40px;
+    padding-bottom: 16px;
+    margin: auto;
+    max-width: 280px;
+    height: 40px;
+  }
+
+  .catalog-search-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 142px 10px 20px;
+    margin-right: 16px;
+
+    max-width: 204px;
+    height: 44px;
+
+    border: 1px solid #595959;
+    border-radius: 8px;
+  }
+  .button-round-search {
+    width: 40px;
+    height: 40px;
+  }
+
+  .form-search {
+    display: flex;
+  }
+}
+@media screen and (min-width: 1280px) {
+  /* .catalog-search {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding-top: 80px;
+    padding-bottom: 48px;
+    margin: auto;
+    width: 398px;
+    height: 48px;
+  }
+  .catalog-search-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 260px 12px 24px;
+    gap: 10px;
+    margin-right: 16px;
+
+    width: 334px;
+    height: 48px;
+
+    border: 1px solid #595959;
+    border-radius: 8px;
+  } */
+}

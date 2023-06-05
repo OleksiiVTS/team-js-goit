@@ -1,11 +1,6 @@
 const URL = 'https://api.themoviedb.org/3';
 const API_KEY = 'ddf41d08627025b2d6783befee0c5c94';
-import Notiflix from 'notiflix';
 
-// import Gallery from '../class/Gallery.js';
-// import GenreList from '../class/GenreList.js';
-
-const gallery = new Gallery();
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 const catalogSearchSubmitBtn = document.querySelector('.button-round-search');
 catalogSearchSubmitBtn.addEventListener('click', onSubmit);
@@ -17,7 +12,7 @@ function onSubmit(event) {
   const value = catalogSearchForm.value.trim();
   if (value === '') return;
   else {
-    gallerySearch.query = value;
+    gallery.query = value;
 
     //     OOPS...
     // We are very sorry!
