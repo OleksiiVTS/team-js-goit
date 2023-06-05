@@ -184,7 +184,7 @@ export default class Gallery {
     </div>`
   }
 
-  convertId_to_Name(aGenre, list) {
+  convertId_to_Name(aGenre, list = genres.importFromLS()) {
 
       const result = aGenre.map(item => {
         const obj = list.find(el => el.id === item);
