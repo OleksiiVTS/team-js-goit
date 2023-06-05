@@ -1,6 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
-import Notiflix from 'notiflix';
+//import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6'
@@ -14,9 +14,11 @@ const genres = new GenreList({
 genres.getGenreList();
 
 export default class Gallery {
-  constructor({url, query, selector}) {
+  constructor({ name, url, query, selector }) {
+    this.name = name;
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.page = 1;
+    this.listMovies = this.importFromLS();  // список фільмів
 
     this.url = URL + url;
     this.params = { 
@@ -39,6 +41,27 @@ export default class Gallery {
   // @string - pathUrl - частина url після URL 
   // https://api.themoviedb.org/3/trending/movie/day?api_key=999999&page=1&
   //
+
+  // отримання даних з серверу
+  async getList() {
+    try {
+      const params = new Object(this.params);
+      const { data } = await axios.get(this.url, { params });
+      
+      this.exportToLS(data.results);
+      this.list = this.importFromLS();
+
+      this.totalPage = data.total_page;
+      this.totalResult = data.total_result;
+  
+      return data.results; 
+
+    } catch (error) {
+      this.onError(error)
+    }
+  }
+
+  // отримання даних з додавання сторінки для пагінації
   async getMoviesList() {
     try {
 
@@ -50,28 +73,37 @@ export default class Gallery {
     } catch (error) {
       this.onError(error)
     }
-
   }
 
-  async getList() {
-    try {
-      const params = new Object(this.params);
-      const { data }  = await axios.get(this.url, { params });
+  // запис списку фільмів у LS
+  exportToLS(data) {
+    if (!this.name.trim()) { 
+        throw new Error("no field name in create Class");
+        return;
+    }
       
-      this.totalPage = data.total_page;
-      this.totalResult = data.total_result;
-  
-      return data.results; 
+    const str = JSON.stringify(data);
+    localStorage.setItem(this.name, str);
+  }
 
+  // зчитування списку фільмів з LS
+  importFromLS() {
+    try {
+      const str = localStorage.getItem(this.name);
+      const arr = JSON.parse(str);
+      return arr
     } catch (error) {
-      this.onError(error)
+        throw new Error("Wrong read data from LS");
+        return null;
     }
   }
 
+  // додавання сторінки
   incrementPage() {
     this.page++;
   }
 
+  //очистити блок сторінок
   resetPage() { 
     this.page = 1;
     this.totalPage = 0;
@@ -104,7 +136,6 @@ export default class Gallery {
 
       const markup = await this.createNewCards();
       this.updateGallery(markup);
-
       return markup;
 
     } catch (error) {
