@@ -1,5 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
@@ -45,6 +46,7 @@ export default class Gallery {
   // отримання даних з серверу
   async getList() {
     try {
+      enableSpinner();
       const params = new Object(this.params);
       const { data } = await axios.get(this.url, { params });
       
@@ -53,7 +55,8 @@ export default class Gallery {
 
       this.totalPages = data.total_pages;
       this.totalResults = data.total_results;
-  
+      disableSpinner();
+
       return data.results; 
 
     } catch (error) {
@@ -64,10 +67,10 @@ export default class Gallery {
   // отримання даних з додавання сторінки для пагінації
   async getMoviesList() {
     try {
-
+      enableSpinner();
       const data = await this.getList();
       this.incrementPage();
-
+      disableSpinner();
       return data; 
 
     } catch (error) {
@@ -119,8 +122,10 @@ export default class Gallery {
       // week - https://api.themoviedb.org/3/trending/movie/week
       // const url = '/trending/movie/day';
       // const query = 'language=en-US'
+      enableSpinner();
       const cards = await this.getMoviesList();
 
+      disableSpinner();
       return cards.reduce(
            (acc, data) => acc + cbTemplate(data), "");
 
@@ -133,9 +138,10 @@ export default class Gallery {
   //
   async onMarkup(cbTemplate = this.createCardGallery) { 
     try {
-
+      enableSpinner();
       const markup = await this.createNewCards(cbTemplate);
       this.updateGallery(markup);
+      disableSpinner();
       return markup;
 
     } catch (error) {

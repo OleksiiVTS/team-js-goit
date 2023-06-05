@@ -1,4 +1,5 @@
 const axios = require("axios/dist/axios.min.js"); // node
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
@@ -26,6 +27,7 @@ export default class GenreList {
   // Отримати масив об'єктів cпискe жанрів
   async getGenreList() {
     try {
+      enableSpinner();
       const params = new Object(this.params);
 
       const {data} = await axios.get(this.url, { params });
@@ -35,6 +37,7 @@ export default class GenreList {
       if (!this.list) {
         this.list = this.importFromLS()
       }
+      disableSpinner();
 
       return data.genres; 
     } catch (error) {
@@ -62,10 +65,12 @@ export default class GenreList {
   // створити html-розмітку для всіх строк селекту
   async createGenreList() {
     try {
+      enableSpinner();
 
       //--url 'https://api.themoviedb.org/3/genre/movie/list?language=en'
       const data = await this.getGenreList();
      
+      disableSpinner();
       return data.reduce(
            (acc, data) => {
             return acc + this.createGenreSelectRow(data)
@@ -84,9 +89,11 @@ export default class GenreList {
   // сформувати селект
   async outMarkupGenreList() { 
     try {
+      enableSpinner();
       const markup = await this.createGenreList();
       this.update(markup);
-  
+      disableSpinner();
+
       return markup;
     } catch (error) {
       this.onError(error);  
@@ -106,7 +113,10 @@ export default class GenreList {
   // отримати список жанрів
   async getList() {
     try {
+      enableSpinner();
       const list = await this.getGenreList();
+      disableSpinner();
+
       return list;      
     } catch (error) {
      this.onError(error); 
@@ -114,18 +124,20 @@ export default class GenreList {
   }
 
   // преоразовати усі категорії які є у фільмі з id на назву
-  async convertId_to_Name(aGenre, list = this.list) {
-    try {
-      const result = aGenre.map(item => {
-        const obj = list.find(el => el.id === item);
-        return obj ? obj.name : null;
-      })
+  // async convertId_to_Name(aGenre, list = this.list) {
+  //   try {
+  //     enableSpinner();
+  //     const result = aGenre.map(item => {
+  //       const obj = list.find(el => el.id === item);
+  //       return obj ? obj.name : null;
+  //     })
+  //     disableSpinner();
 
-      return result;
-    } catch (error) {
-      this.onError(error)
-    }
-  }
+  //     return result;
+  //   } catch (error) {
+  //     this.onError(error)
+  //   }
+  // }
 
   // якщо помилка
   onError(error){
