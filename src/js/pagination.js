@@ -1,75 +1,80 @@
 import Pagination from 'tui-pagination';
 import axios from 'axios';
+import 'tui-pagination/dist/tui-pagination.css';
+const TUI_VISIBLE_PAGES = 5;
 
-const paginationContainer = document.getElementById('tui-pagination-container');
-const pageContentContainer = document.getElementById('page-content-container');
-const totalItems = 100; // Замініть на фактичну загальну кількість елементів
-const itemsPerPage = 10; // Замініть на бажану кількість елементів на сторінці
+export function createPagination(totalItems, visiblePages) {
+  const options = {
+    itemsPerPage: 20,
+    totalItems: totalItems,
+    visiblePages: visiblePages < 5 ? visiblePages : TUI_VISIBLE_PAGES,
+  };
 
-const pagination = new Pagination(paginationContainer, {
-  totalItems,
-  itemsPerPage,
-  visiblePages: 5,
-  centerAlign: true,
-});
+  const pagination = new Pagination(refs.pagination, options);
 
-pagination.on('afterMove', async (eventData) => {
-  const currentPage = eventData.page;
-
-  try {
-    // Отримання даних для поточної сторінки за допомогою Axios
-    const data = await fetchDataForPage(currentPage);
-    // Замініть "fetchDataForPage" своєю власною функцією для отримання даних для поточної сторінки
-
-    // Створення розмітки для елементів на поточній сторінці
-    const pageMarkup = createPageMarkup(data);
-    // Замініть "createPageMarkup" своєю власною функцією, щоб створити розмітку для поточної сторінки
-
-    // Оновлення вмісту сторінки за допомогою згенерованої розмітки
-    updatePageContent(pageMarkup);
-    // Замініть "updatePageContent" своєю власною функцією для оновлення вмісту сторінки
-  } catch (error) {
-    console.error('Error fetching data:', error);
+  if (visiblePages > 1) {
+    refs.pagination.style.display = 'block';
+  } else {
+    refs.pagination.style.display = 'none';
   }
 
-  window.scrollTo(0, 0);
-});
+  return pagination;
+}
 
-async function fetchDataForPage(page) {
-  const response = await axios.get('https://example.com/api/items', {
-    params: {
-      page,
-      perPage: itemsPerPage,
-    },
+
+const MAIN_URL = 'https://api.themoviedb.org/3';
+const API_KEY = '7944ae355bdc42ac579681e106149d6b';
+
+export async function getTrending(page = 1) {
+  const url = `${MAIN_URL}/trending/all/day?api_key=${API_KEY}&language=en-US&page=${page}`;
+  return await axios
+    .get(url)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+
+export async function getByKeyword(query, page) {
+  const url = `${MAIN_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=en-US&page=${page}`;
+  return await axios
+    .get(url)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+
+export async function getInfoMovie(movie_id) {
+  const url = `${MAIN_URL}/movie/${movie_id}?api_key=${API_KEY}&language=en-US`;
+  return await axios
+    .get(url)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {});
+}
+
+export async function getVideos(movie_id) {
+  const url = `${MAIN_URL}/movie/${movie_id}/videos?api_key=${API_KEY}&language=en-US`;
+  return await axios
+    .get(url)
+    .then(response => {
+      return response.data.results;
+    })
+    .catch(error => {});
+}
+
+export async function getArrayofMovies(array) {
+  const arrayOfMovies = array.map(async movie_id => {
+    return await axios
+      .get(`${MAIN_URL}/movie/${movie_id}?api_key=${API_KEY}&language=en-US`)
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => console.log(error));
   });
 
-  return response.data;
+  const resultData = await Promise.all(arrayOfMovies);
+  return resultData;
 }
-
-function createPageMarkup(data) {
-  let markup = '';
-  data.forEach((item) => {
-    markup += `<div class="item">${item.title}</div>`;
-    // Замініть генерацію власної розмітки елемента на основі отриманих даних
-  });
-
-  return markup;
-}
-
-function updatePageContent(markup) {
-  pageContentContainer.innerHTML = markup;
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const initialData = await fetchDataForPage(1); // Отримання початкових даних для першої сторінки
-    const initialPageMarkup = createPageMarkup(initialData);
-    updatePageContent(initialPageMarkup);
-
-    // Ініціалізація пагінації
-    pagination.reset(totalItems); // Скидання пагінації до початкових значень
-    pagination.movePageTo(1); // Перехід до першої сторінки
-  } catch (error) {
-    console.error('Error fetching initial data:', error);
-  }
-});
