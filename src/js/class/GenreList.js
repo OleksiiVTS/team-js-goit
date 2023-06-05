@@ -1,5 +1,5 @@
 const axios = require("axios/dist/axios.min.js"); // node
-import Notiflix from 'notiflix';
+//import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6'
@@ -7,9 +7,10 @@ const URL = 'https://api.themoviedb.org/3';
 
 // передаємо класс селектору куди будемо вставляти лист жанрів
 export default class GenreList {
-  constructor({selector, url, query}) {
+  constructor({ selector, url, query }) {
+    this.name = 'genreList';
     this.out = this.getSelect(selector);
-    this.genres = this.importFromLS();
+    this.list = this.importFromLS();
 
     this.url = URL + url;
     this.params = { 
@@ -28,10 +29,11 @@ export default class GenreList {
       const params = new Object(this.params);
 
       const {data} = await axios.get(this.url, { params });
-      //this.genres = this.addGenres(data.genres)
+
       this.exportToLS(data.genres);
-      if (!this.genres) {
-        this.genres = this.importFromLS()
+
+      if (!this.list) {
+        this.list = this.importFromLS()
       }
 
       return data.genres; 
@@ -40,18 +42,20 @@ export default class GenreList {
     }
   }
 
-  // addGenres(data) {
-  //   const result = data.map(e => e)
-
-  //   return result    
-  // }
-
   exportToLS(data) {
-    localStorage.genreList = JSON.stringify(data);
+    const str = JSON.stringify(data);
+    localStorage.setItem(this.name, str);
   }
 
   importFromLS() {
-    return JSON.parse( localStorage.genreList );
+    try {
+      const str = localStorage.getItem(this.name);
+      const arr = JSON.parse(str);
+      return arr
+    } catch (error) {
+        throw new Error("Wrong read data from LS");
+        return null;
+    }
   }
 
 
@@ -110,10 +114,8 @@ export default class GenreList {
   }
 
   // преоразовати усі категорії які є у фільмі з id на назву
-  async convertId_to_Name(aGenre, list = this.genres) {
+  async convertId_to_Name(aGenre, list = this.list) {
     try {
-      // const list = this.genres;
-
       const result = aGenre.map(item => {
         const obj = list.find(el => el.id === item);
         return obj ? obj.name : null;
