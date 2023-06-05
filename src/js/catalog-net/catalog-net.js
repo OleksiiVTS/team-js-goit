@@ -12,19 +12,22 @@ const moviesTrendsWeek = new Gallery({
 });
 
 function TemplateTrendsWeek( data ) {
-  const { poster_path, original_title, title, vote_average } = data;
+  const { poster_path, original_title, title, vote_average, release_date, genres} = data;
 
-  return `<div class="movie-card">
-  <img class= "gallery__image" src="${'https://image.tmdb.org/t/p/w300' + poster_path}" alt="${original_title}" loading="lazy" />
-  <div class="info overlay">
-    <p class="info-item">
-      <b>Назва:
-      ${title}</b>
+  return `<div class="movie-card overlay-card">
+  <img class= "gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy" />
+  <div class="catalog_info">
+    <h2 class="catalog_title">
+    ${title}
+    </h2>
+      <div class="ganres_rating">
+        <p class="catalog_genres">
+        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids, genres)} | ${release_date}
+        </p>
+        <p class="catalog_rating">
+        Rating: ${(vote_average / 2).toFixed(1)}
       </p>
-      <p class="info-item">
-      <b>Рейтинг:
-      ${vote_average}</b>
-    </p>
+      </div>
   </div>
   </div>`
 }
