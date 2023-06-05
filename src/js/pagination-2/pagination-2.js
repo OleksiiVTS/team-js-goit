@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const paginationContainer = document.getElementById('tui-pagination-container');
 const pageContentContainer = document.getElementById('page-content-container');
-const totalItems = 100; // Замініть на фактичну загальну кількість елементів
-const itemsPerPage = 10; // Замініть на бажану кількість елементів на сторінці
+const totalItems = 40; // Замініть на фактичну загальну кількість елементів
+const itemsPerPage = 5; // Замініть на бажану кількість елементів на сторінці
 
 const pagination = new Pagination(paginationContainer, {
   totalItems,
@@ -73,3 +73,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     // console.error('Error fetching initial data:', error);
   }
 });
+
