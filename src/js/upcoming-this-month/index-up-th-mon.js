@@ -150,8 +150,3 @@ fetchFilmData().then((filmData) => {
   console.log("Получены данные о фильме:", filmData);
   createFilmCard(filmData);
 });
-<<<<<<< Updated upstream
-src/js/upcoming-this-month/_index-up-th-mon.js
-
-=======
->>>>>>> Stashed changes
