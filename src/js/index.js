@@ -5,3 +5,4 @@
 import './js-header/header.js';
 import './js-vs/spinner-js';
 import './js-vs/pruklad';
+import './js-catalog-search/catalog-search.js';

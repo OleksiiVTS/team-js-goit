@@ -1,0 +1,34 @@
+.catalog-search {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+
+  position: absolute;
+  width: 398px;
+  height: 48px;
+  left: 441px;
+  top: 800px;
+}
+.catalog-search-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 260px 12px 24px;
+  gap: 10px;
+
+  width: 334px;
+  height: 48px;
+
+  border: 1px solid #595959;
+  border-radius: 8px;
+}
+.catalog-submit-btn {
+  margin-left: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(141.22deg, #ffc226 9.4%, #f84119 91.91%);
+}
+
+/* border: 1px solid #ffffff; */
