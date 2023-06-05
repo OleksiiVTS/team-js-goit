@@ -4,7 +4,12 @@
         margin-left: 45px;
         margin-right: 24px;
     }
+/* .upcoming_centre{
 
+   margin-right: 100px;
+   background-color: bisque;
+} */
+ 
 .container-features{
     display: block;
 }
@@ -48,7 +53,7 @@ line-height: 1.18;
   }
 
   .button-rem-me{
-    margin:70px 0 0px;
+    margin:40px 0 0px;
   }
 
 
