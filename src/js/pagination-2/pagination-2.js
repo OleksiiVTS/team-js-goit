@@ -1,76 +1,37 @@
+// Додаткова залежність для пагінації
 import Pagination from 'tui-pagination';
-import axios from 'axios';
 
-const paginationContainer = document.getElementById('tui-pagination-container');
-const pageContentContainer = document.getElementById('page-content-container');
-const totalItems = 40; // Замініть на фактичну загальну кількість елементів
-const itemsPerPage = 5; // Замініть на бажану кількість елементів на сторінці
+export default class Gallery {
+  // ...
 
-const pagination = new Pagination(paginationContainer, {
-  totalItems,
-  itemsPerPage,
-  visiblePages: 5,
-  centerAlign: true,
-});
-
-pagination.on('afterMove', async (eventData) => {
-  const currentPage = eventData.page;
-
-  try {
-    // Отримання даних для поточної сторінки за допомогою Axios
-    const data = await fetchDataForPage(currentPage);
-    // Замініть "fetchDataForPage" своєю власною функцією для отримання даних для поточної сторінки
-
-    // Створення розмітки для елементів на поточній сторінці
-    const pageMarkup = createPageMarkup(data);
-    // Замініть "createPageMarkup" своєю власною функцією, щоб створити розмітку для поточної сторінки
-
-    // Оновлення вмісту сторінки за допомогою згенерованої розмітки
-    updatePageContent(pageMarkup);
-    // Замініти "updatePageContent" своєю власною функцією для оновлення вмісту сторінки
-  } catch (error) {
-    // console.error('Error fetching data:', error);
+  initPagination() {
+    const paginationContainer = document.getElementById('pagination');
+    const options = {
+      totalItems: this.totalResults,
+      itemsPerPage: 20, // Кількість елементів на сторінці
+      visiblePages: 5, // Кількість видимих сторінок в пагінації
+      centerAlign: true,
+      usageStatistics: false,
+      onPageClick: (event) => {
+        const page = event.page;
+        this.resetPage();
+        this.params.page = page;
+        this.onMarkup();
+      },
+    };
+    const pagination = new Pagination(paginationContainer, options);
   }
 
-  window.scrollTo(0, 0);
-});
-
-async function fetchDataForPage(page) {
-  const response = await axios.get('https://example.com/api/items', {
-    params: {
-      page,
-      perPage: itemsPerPage,
-    },
-  });
-
-  return response.data;
-}
-
-function createPageMarkup(data) {
-  let markup = '';
-  data.forEach((item) => {
-    markup += `<div class="item">${item.title}</div>`;
-    // Замініти генерацію власної розмітки елемента на основі отриманих даних
-  });
-
-  return markup;
-}
-
-function updatePageContent(markup) {
-  pageContentContainer.innerHTML = markup;
-}
-
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const initialData = await fetchDataForPage(1); // Отримання початкових даних для першої сторінки
-    const initialPageMarkup = createPageMarkup(initialData);
-    updatePageContent(initialPageMarkup);
-
-    // Ініціалізація пагінації
-    pagination.reset(totalItems); // Скидання пагінації до початкових значень
-    pagination.movePageTo(1); // Перехід до першої сторінки
-  } catch (error) {
-    // console.error('Error fetching initial data:', error);
+  async onMarkup(cbTemplate = this.createCardGallery) {
+    try {
+      enableSpinner();
+      const markup = await this.createNewCards(cbTemplate);
+      this.updateGallery(markup);
+      this.initPagination(); // Ініціалізуємо пагінацію після отримання нових даних
+      disableSpinner();
+      return markup;
+    } catch (error) {
+      this.onError(error);
+    }
   }
-});
-
+}

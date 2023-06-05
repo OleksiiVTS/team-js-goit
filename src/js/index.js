@@ -9,4 +9,5 @@ import './js-vs/load-more.js';
 import './js-vs/filter-library.js';
 import './js-vs/pruklad';
 import './modal-w-litle/modal-w-litle.js';
-import './catalog-net/catalog-net.js'
+import './catalog-net/catalog-net.js';
+import './pagination-2/pagination-2.js';
