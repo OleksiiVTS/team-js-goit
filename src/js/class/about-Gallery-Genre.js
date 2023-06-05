@@ -9,6 +9,7 @@ const refs = {
 
 // екземпляр класа до відображення трендових фільмів на день
 const moviesTrendsDay = new Gallery({
+  name: 'MoviesTrendsDay',      // назва гілки у LS
   selector: ".gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/day',   // частина шляху для запиту
   query: 'language=en'          // сам запит, те що стоъть після знаку ?
