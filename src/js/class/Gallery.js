@@ -194,13 +194,103 @@ export default class Gallery {
       return result.join(', ');
   }
 
-  updateGallery(data) {
-    if (!data || !this.out) { 
+  updateGallery(data, selector = this.out) {
+    if (!data && (!this.out || selector)) { 
       //throw new Error("No value or wrong selector");
       return;
     }
 
-    this.out.insertAdjacentHTML("beforeend", data);
+    selector.insertAdjacentHTML("beforeend", data);
+  }
+
+
+  // отримання одного фільму
+  async getFilmDetails(filmIndex) {
+    const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}?api_key=${API_KEY}`;
+
+    try {
+      enableSpinner();
+      const { data } = await axios(apiUrl);
+      disableSpinner();
+
+      return data;
+
+    } catch (error) {
+      this.onError('Film id not found:', error);
+    }
+  }
+
+  MarkupFilmDetails(data) { 
+    const {
+      filmTrailer,
+      backdrop_path,
+      original_title,
+      budget,
+      overview,
+      release_date,
+      genres,
+      vote_average,
+    } = data;
+
+    const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
+    const urlTrailer = `https://www.youtube.com/watch?v=${filmTrailer}`;
+
+    return `
+    <div class="movie-card">
+      <img class="image"
+        src="${urlImage}" 
+        alt="{${original_title}}" 
+        loading="lazy"
+        title="{${original_title}}"/>
+
+      <div class="info">
+        <p class="info-item">
+         <b>Title: </b>${original_title}
+        </p>
+        <p class="info-item">
+          <b>Budget: </b>$${budget}
+        </p>
+        <p class="info-item">
+          <b>Text: </b>${overview}
+        </p>
+        <p class="info-item">
+          <b>Release Date: </b>${release_date}
+        </p>
+        <p class="info-item">
+        <b>Genres: </b>${genres.map(e => e.name).join(', ')}
+        </p>
+        <p class="info-item">
+          <b>Vote: </b>${vote_average}
+        </p>
+      </div>
+    </div>`  
+  }
+
+  async onMarkupFilmDetails(idFilm, selector = this.out, cbMarkup = this.MarkupFilmDetails) { 
+    try {
+      enableSpinner();
+
+      const data = await this.getFilmDetails(idFilm);
+      const markup = cbMarkup(data);
+    //  console.log(markup);
+      this.updateFilmDetails(markup, selector);
+      
+      disableSpinner();
+  
+      return data;
+
+    } catch (error) {
+      this.onError('Film id not found:', error);
+    }
+  }
+
+    // вивід даних на хтмл-сторінку
+  updateFilmDetails(data, selector = this.out) {
+    if (!data && (!this.out || !selector)) { 
+      //throw new Error("No value or wrong selector");
+      return;
+    }
+    selector.insertAdjacentHTML("beforeend", data);
   }
 
   // якщо помилка
