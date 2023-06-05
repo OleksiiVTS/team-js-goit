@@ -29,7 +29,7 @@ pagination.on('afterMove', async (eventData) => {
     updatePageContent(pageMarkup);
     // Замініти "updatePageContent" своєю власною функцією для оновлення вмісту сторінки
   } catch (error) {
-    console.error('Error fetching data:', error);
+    // console.error('Error fetching data:', error);
   }
 
   window.scrollTo(0, 0);
@@ -70,6 +70,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     pagination.reset(totalItems); // Скидання пагінації до початкових значень
     pagination.movePageTo(1); // Перехід до першої сторінки
   } catch (error) {
-    console.error('Error fetching initial data:', error);
+    // console.error('Error fetching initial data:', error);
   }
 });
