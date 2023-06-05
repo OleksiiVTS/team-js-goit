@@ -17,14 +17,16 @@ function createFilmCard(film) {
   const cardContainer = document.querySelector(".upcoming_film_card");
 
   if (film === null) {
-    // Если фильмы не найдены, отображаем сообщение
-    const messageHTML = `
-      <div class="no-films-message">
-        <img src="ссылка_на_картинку" alt="No films found" />
-        <p>No films found.</p>
-      </div>
-    `;
-    cardContainer.innerHTML = messageHTML;
+  // Если фильмы не найдены, отображаем модальное окно
+  fetch('../partials/modal-wind-tr.html')
+    .then(response => response.text())
+    .then(modalContent => {
+      cardContainer.innerHTML = modalContent;
+    })
+    .catch(error => {
+      console.log('Ошибка при загрузке модального окна:', error);
+    });
+
   } else {
     // Если фильмы найдены, создаем карточку фильма
     const cardHTML = `
@@ -134,3 +136,4 @@ fetchFilmData().then((filmData) => {
   console.log("Получены данные о фильме:", filmData);
   createFilmCard(filmData);
 });
+
