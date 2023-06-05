@@ -22,16 +22,21 @@ function createFilmCard(film) {
   }
 
 
+  if (!cardContainer) {
+    // Якщо елемент .upcoming_film_card не існує на поточній сторінці, припиняємо виконання функції
+    return;
+  }
+
   if (film === null) {
-  // Если фильмы не найдены, отображаем модальное окно
-  fetch('../partials/modal-wind-tr.html')
-    .then(response => response.text())
-    .then(modalContent => {
-      cardContainer.innerHTML = modalContent;
-    })
-    .catch(error => {
-      console.log('Ошибка при загрузке модального окна:', error);
-    });
+    // Если фильмы не найдены, отображаем модальное окно
+    fetch('../partials/modal-wind-tr.html')
+      .then(response => response.text())
+      .then(modalContent => {
+        cardContainer.innerHTML = modalContent;
+      })
+      .catch(error => {
+        console.log('Ошибка при загрузке модального окна:', error);
+      });
 
   } else {
     // Если фильмы найдены, создаем карточку фильма
@@ -40,64 +45,59 @@ function createFilmCard(film) {
         <img src="https://image.tmdb.org/t/p/original/${
           film.backdrop_path
         }" alt="${film.original_title}" />
-  <div class="film-info">
-      <div class="info-item">
+        <div class="film-info">
+          <div class="info-item">
             <h2 class="film-title">${film.original_title}</h2>
-      </div>
-
-
-<div class="container-features">
-      <div class="column-struct">
-        <div class="date-vote">
-          <div class="info-item">
-            <span class="release">Release Date:</span> <span class="release-value release-date">${
-              film.release_date}</span>
           </div>
-          <div class="info-item">
-            <span class="vote">Vote / Votes:</span>
-            <span class="vote-value">
-              <span class="vote-average">${film.vote_average}</span> /
-              <span class="vote-count">${film.vote_count}</span>
-            </span>
+  
+          <div class="container-features">
+            <div class="column-struct">
+              <div class="date-vote">
+                <div class="info-item">
+                  <span class="release">Release Date:</span> <span class="release-value release-date">${
+                    film.release_date}</span>
+                </div>
+                <div class="info-item">
+                  <span class="vote">Vote / Votes:</span>
+                  <span class="vote-value">
+                    <span class="vote-average">${film.vote_average}</span> /
+                    <span class="vote-count">${film.vote_count}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="column-struct">
+              <div class="popularity-genre">
+                <div class="info-item">
+                  <span class="popularity">Popularity:</span> <span class="popularity-value">${
+                    film.popularity}
+                  </span>
+                </div>
+                <div class="info-item genre-item">
+                  <span class="genre">Genre:</span> <span class="genre-value">${film.genres
+                    .map(genre => genre.name)
+                    .join(', ')}</span>
+                </div>
+              </div>
+            </div>
+            <div class="description-item">
+              <span class="description-about">About:</span> <span class="about-value">${
+                film.overview
+              }</span>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="column-struct">
-        <div class="popularity-genre">
-          <div class="info-item">
-            <span class="popularity">Popularity:</span> <span class="popularity-value">${
-              film.popularity}
-            </span>
-          </div>
-          <div class="info-item genre-item">
-            <span class="genre">Genre:</span> <span class="genre-value">${film.genres
-              .map(genre => genre.name)
-              .join(', ')}</span>
-          </div>
-        </div>
-      </div>
-      <div class="description-item">
-        <span class="description-about">About:</span> <span class="about-value">${
-          film.overview
-        }</span>
-      </div>
-</div>
-    
-
-
-         
+  
           <button class="button-rem-me">Add to My Library</button>
-          
         </div>
-    </div>
+      </div>
     `;
-
+  
     cardContainer.innerHTML = cardHTML;
-
+  
     // Добавляем обработчик события для кнопки после создания разметки
     const addButton = document.querySelector(".button-rem-me");
     addButton.addEventListener("click", toggleLibraryFilm);
-
+  
     // Изменяем формат даты. При изменении назания классов в разметке, изменить класс ниже
     const releaseDateElement = document.querySelector(".release-value.release-date");
     const releaseDate = film.release_date;
@@ -115,7 +115,6 @@ function formatDate(dateString) {
 
   return `${day}.${month}.${year}`;
 }
-
 
 // Функция для обработки нажатия на кнопку добавления/удаления фильма из My Library
 function toggleLibraryFilm() {
@@ -139,9 +138,11 @@ function toggleLibraryFilm() {
   localStorage.setItem("libraryFilms", JSON.stringify(Array.from(libraryFilms)));
 }
 
-// Вызываем функцию для получения данных о фильме и создания карточки
-fetchFilmData().then((filmData) => {
-  console.log("Получены данные о фильме:", filmData);
-  createFilmCard(filmData);
-});
-
+// Проверяем текущий URL страницы и вызываем функции только на странице index.html
+if (window.location.pathname === '/index.html') {
+  // Вызываем функцию для получения данных о фильме и создания карточки
+  fetchFilmData().then((filmData) => {
+    console.log("Получены данные о фильме:", filmData);
+    createFilmCard(filmData);
+  });
+}
