@@ -2,9 +2,17 @@ const menuBtnEl = document.querySelector('.header-menu');
 const mobileMenuEl = document.querySelector('.mobile-menu-wrap');
 const mobileBackdropEl = document.querySelector('.mobile-menu-backdrop');
 const bodyEl = document.querySelector('body');
-
+const currentURL = window.location.href;
+const navLinks = document.getElementsByClassName('menu-item-txt');
 menuBtnEl.addEventListener('click', onMenuBtnClick);
 
+for (let i = 0; i < navLinks.length; i += 1) {
+  let linkURL = navLinks[i].getAttribute('href');
+
+  if (currentURL.includes(linkURL)) {
+    navLinks[i].classList.add('current-page');
+  }
+}
 function onMenuBtnClick() {
   mobileMenuEl.classList.remove('hidden');
   mobileBackdropEl.classList.remove('hidden');
@@ -39,7 +47,7 @@ function closeMobileMenu() {
 // THEME SWITCHING
 
 const dayThemeRefs = {
-  headerEl: document.querySelector('.header-container'),
+  headerEl: document.querySelector('.header-wrap'),
   mobileMenuModalEl: document.querySelector('.mobile-menu-wrap'),
   headerMenuEL: document.querySelector('.header-menu'),
   headerTitleEl: document.querySelector('.header-title'),

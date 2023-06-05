@@ -1,5 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
-import Notiflix from 'notiflix';
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
+//import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6'
@@ -7,9 +8,10 @@ const URL = 'https://api.themoviedb.org/3';
 
 // передаємо класс селектору куди будемо вставляти лист жанрів
 export default class GenreList {
-  constructor({selector, url, query}) {
+  constructor({ selector, url, query }) {
+    this.name = 'genreList';
     this.out = this.getSelect(selector);
-    this.genres = this.importFromLS();
+    this.list = this.importFromLS();
 
     this.url = URL + url;
     this.params = { 
@@ -25,14 +27,17 @@ export default class GenreList {
   // Отримати масив об'єктів cпискe жанрів
   async getGenreList() {
     try {
+      enableSpinner();
       const params = new Object(this.params);
 
       const {data} = await axios.get(this.url, { params });
-      //this.genres = this.addGenres(data.genres)
+
       this.exportToLS(data.genres);
-      if (!this.genres) {
-        this.genres = this.importFromLS()
+
+      if (!this.list) {
+        this.list = this.importFromLS()
       }
+      disableSpinner();
 
       return data.genres; 
     } catch (error) {
@@ -40,28 +45,32 @@ export default class GenreList {
     }
   }
 
-  // addGenres(data) {
-  //   const result = data.map(e => e)
-
-  //   return result    
-  // }
-
   exportToLS(data) {
-    localStorage.genreList = JSON.stringify(data);
+    const str = JSON.stringify(data);
+    localStorage.setItem(this.name, str);
   }
 
   importFromLS() {
-    return JSON.parse( localStorage.genreList );
+    try {
+      const str = localStorage.getItem(this.name);
+      const arr = JSON.parse(str);
+      return arr
+    } catch (error) {
+        throw new Error("Wrong read data from LS");
+        return null;
+    }
   }
 
 
   // створити html-розмітку для всіх строк селекту
   async createGenreList() {
     try {
+      enableSpinner();
 
       //--url 'https://api.themoviedb.org/3/genre/movie/list?language=en'
       const data = await this.getGenreList();
      
+      disableSpinner();
       return data.reduce(
            (acc, data) => {
             return acc + this.createGenreSelectRow(data)
@@ -80,9 +89,11 @@ export default class GenreList {
   // сформувати селект
   async outMarkupGenreList() { 
     try {
+      enableSpinner();
       const markup = await this.createGenreList();
       this.update(markup);
-  
+      disableSpinner();
+
       return markup;
     } catch (error) {
       this.onError(error);  
@@ -102,7 +113,10 @@ export default class GenreList {
   // отримати список жанрів
   async getList() {
     try {
+      enableSpinner();
       const list = await this.getGenreList();
+      disableSpinner();
+
       return list;      
     } catch (error) {
      this.onError(error); 
@@ -110,20 +124,20 @@ export default class GenreList {
   }
 
   // преоразовати усі категорії які є у фільмі з id на назву
-  async convertId_to_Name(aGenre, list = this.genres) {
-    try {
-      // const list = this.genres;
+  // async convertId_to_Name(aGenre, list = this.list) {
+  //   try {
+  //     enableSpinner();
+  //     const result = aGenre.map(item => {
+  //       const obj = list.find(el => el.id === item);
+  //       return obj ? obj.name : null;
+  //     })
+  //     disableSpinner();
 
-      const result = aGenre.map(item => {
-        const obj = list.find(el => el.id === item);
-        return obj ? obj.name : null;
-      })
-
-      return result;
-    } catch (error) {
-      this.onError(error)
-    }
-  }
+  //     return result;
+  //   } catch (error) {
+  //     this.onError(error)
+  //   }
+  // }
 
   // якщо помилка
   onError(error){
