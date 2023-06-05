@@ -22,7 +22,6 @@ function createFilmCard(film) {
     // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
     return;
   }
-
   if (film === null) {
     // Если фильмы не найдены, отображаем модальное окно
     startModalWiNoTreiler();
@@ -36,6 +35,7 @@ function createFilmCard(film) {
         <div class="film-info">
           <div class="info-item">
             <h2 class="film-title">${film.original_title}</h2>
+
           </div>
 
           <div class="container-features">
@@ -76,6 +76,7 @@ function createFilmCard(film) {
             </div>
           </div>
 
+
           <button class="button-rem-me">Add to My Library</button>
         </div>
       </div>
@@ -83,7 +84,9 @@ function createFilmCard(film) {
   
     cardContainer.innerHTML = cardHTML;
 
+
     // Проверяем наличие фильма в Local Storage и обновляем состояние кнопки
+
     const addButton = document.querySelector(".button-rem-me");
     const filmTitle = document.querySelector(".film-card img").alt;
     const libraryFilms = new Set(JSON.parse(localStorage.getItem("libraryFilms")) || []);
@@ -95,10 +98,12 @@ function createFilmCard(film) {
     // Добавляем обработчик события для кнопки после создания карточки фильма
     addButton.addEventListener("click", toggleLibraryFilm);
 
+
     // Изменяем формат даты. При изменении названия классов в разметке, изменить класс ниже
     const releaseDateElement = document.querySelector(
       ".release-value.release-date"
     );
+
     const releaseDate = film.release_date;
     const formattedDate = formatDate(releaseDate);
     releaseDateElement.textContent = formattedDate;
@@ -123,6 +128,7 @@ function toggleLibraryFilm() {
     JSON.parse(localStorage.getItem("libraryFilms")) || []
   );
 
+
   if (addButton.textContent === "Add to My Library") {
     addButton.textContent = "Remove from My Library";
 
@@ -145,3 +151,4 @@ fetchFilmData().then((filmData) => {
   createFilmCard(filmData);
 });
 src/js/upcoming-this-month/_index-up-th-mon.js
+
