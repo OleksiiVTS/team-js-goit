@@ -17,7 +17,7 @@ function createFilmCard(film) {
   const cardContainer = document.querySelector(".upcoming_film_card");
 
   if (!cardContainer) {
-    // Якщо елемент .upcoming_film_card не існує на поточній сторінці, припиняємо виконання функції
+    // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
     return;
   }
 
@@ -97,6 +97,15 @@ function createFilmCard(film) {
     const releaseDate = film.release_date;
     const formattedDate = formatDate(releaseDate);
     releaseDateElement.textContent = formattedDate;
+
+    // Обновляем состояние кнопки на основе наличия фильма в localStorage
+    const libraryFilms = new Set(JSON.parse(localStorage.getItem("libraryFilms")) || []);
+    const isFilmInLibrary = libraryFilms.has(film.original_title);
+    if (isFilmInLibrary) {
+      addButton.textContent = "Remove from My Library";
+    } else {
+      addButton.textContent = "Add to My Library";
+    }
   }
 }
 
