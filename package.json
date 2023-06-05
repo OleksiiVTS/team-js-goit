@@ -12,7 +12,7 @@
     "url": "git+https://github.com/OleksiiVTS/team-js-goit.git"
   },
   "keywords": [],
-  "author": "Alexander Repeta <alexander.repeta@gmail.com>",
+  "author": "Grope 9-78. GoIT>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/OleksiiVTS/team-js-goit/issues"
@@ -20,13 +20,12 @@
   "dependencies": {
     "axios": "^1.4.0",
     "modern-normalize": "^1.1.0",
-    "moviedb": "^0.2.12",
-    "notiflix": "^3.2.6"
+    "moviedb": "^0.2.12"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.6.0",
-    "buffer": "^6.0.3",
     "parcel": "^2.6.0",
+    "buffer": "^5.7.1",
     "parcel-reporter-clean-dist": "^1.0.4",
     "posthtml-include": "^1.7.4"
   },
