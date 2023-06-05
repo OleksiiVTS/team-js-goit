@@ -1,5 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
@@ -27,7 +28,7 @@ export default class Gallery {
       query: query,
     };
 
-    this.totalPage = 0;
+    this.totalPages = 0;
     this.totalResults = 0;
   }
 
@@ -45,15 +46,17 @@ export default class Gallery {
   // отримання даних з серверу
   async getList() {
     try {
+      enableSpinner();
       const params = new Object(this.params);
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
-      this.list = this.importFromLS();
+      this.listMovies = this.importFromLS();
 
-      this.totalPage = data.total_page;
-      this.totalResult = data.total_result;
-  
+      this.totalPages = data.total_pages;
+      this.totalResults = data.total_results;
+      disableSpinner();
+
       return data.results; 
 
     } catch (error) {
@@ -64,10 +67,10 @@ export default class Gallery {
   // отримання даних з додавання сторінки для пагінації
   async getMoviesList() {
     try {
-
+      enableSpinner();
       const data = await this.getList();
       this.incrementPage();
-
+      disableSpinner();
       return data; 
 
     } catch (error) {
@@ -113,16 +116,18 @@ export default class Gallery {
   /// trending/movie/day || week
   //
   // cписок фільмів у тренді за день \ неділю
-  async createNewCards() {
+  async createNewCards(cbTemplate) {
     try {
       // day -https://api.themoviedb.org/3/trending/movie/day
       // week - https://api.themoviedb.org/3/trending/movie/week
       // const url = '/trending/movie/day';
       // const query = 'language=en-US'
+      enableSpinner();
       const cards = await this.getMoviesList();
 
+      disableSpinner();
       return cards.reduce(
-           (acc, data) => acc + this.createCardGallery(data), "");
+           (acc, data) => acc + cbTemplate(data), "");
 
     } catch (error) {
       this.onError(error);  
@@ -131,11 +136,12 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup() { 
+  async onMarkup(cbTemplate = this.createCardGallery) { 
     try {
-
-      const markup = await this.createNewCards();
+      enableSpinner();
+      const markup = await this.createNewCards(cbTemplate);
       this.updateGallery(markup);
+      disableSpinner();
       return markup;
 
     } catch (error) {
@@ -178,7 +184,7 @@ export default class Gallery {
     </div>`
   }
 
-  convertId_to_Name(aGenre, list) {
+  convertId_to_Name(aGenre, list = genres.importFromLS()) {
 
       const result = aGenre.map(item => {
         const obj = list.find(el => el.id === item);
@@ -188,13 +194,103 @@ export default class Gallery {
       return result.join(', ');
   }
 
-  updateGallery(data) {
-    if (!data || !this.out) { 
-      throw new Error("No value or wrong selector");
+  updateGallery(data, selector = this.out) {
+    if (!data && (!this.out || selector)) { 
+      //throw new Error("No value or wrong selector");
       return;
     }
 
-    this.out.insertAdjacentHTML("beforeend", data);
+    selector.insertAdjacentHTML("beforeend", data);
+  }
+
+
+  // отримання одного фільму
+  async getFilmDetails(filmIndex) {
+    const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}?api_key=${API_KEY}`;
+
+    try {
+      enableSpinner();
+      const { data } = await axios(apiUrl);
+      disableSpinner();
+
+      return data;
+
+    } catch (error) {
+      this.onError('Film id not found:', error);
+    }
+  }
+
+  MarkupFilmDetails(data) { 
+    const {
+      filmTrailer,
+      backdrop_path,
+      original_title,
+      budget,
+      overview,
+      release_date,
+      genres,
+      vote_average,
+    } = data;
+
+    const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
+    const urlTrailer = `https://www.youtube.com/watch?v=${filmTrailer}`;
+
+    return `
+    <div class="movie-card">
+      <img class="image"
+        src="${urlImage}" 
+        alt="{${original_title}}" 
+        loading="lazy"
+        title="{${original_title}}"/>
+
+      <div class="info">
+        <p class="info-item">
+         <b>Title: </b>${original_title}
+        </p>
+        <p class="info-item">
+          <b>Budget: </b>$${budget}
+        </p>
+        <p class="info-item">
+          <b>Text: </b>${overview}
+        </p>
+        <p class="info-item">
+          <b>Release Date: </b>${release_date}
+        </p>
+        <p class="info-item">
+        <b>Genres: </b>${genres.map(e => e.name).join(', ')}
+        </p>
+        <p class="info-item">
+          <b>Vote: </b>${vote_average}
+        </p>
+      </div>
+    </div>`  
+  }
+
+  async onMarkupFilmDetails(idFilm, selector = this.out, cbMarkup = this.MarkupFilmDetails) { 
+    try {
+      enableSpinner();
+
+      const data = await this.getFilmDetails(idFilm);
+      const markup = cbMarkup(data);
+    //  console.log(markup);
+      this.updateFilmDetails(markup, selector);
+      
+      disableSpinner();
+  
+      return data;
+
+    } catch (error) {
+      this.onError('Film id not found:', error);
+    }
+  }
+
+    // вивід даних на хтмл-сторінку
+  updateFilmDetails(data, selector = this.out) {
+    if (!data && (!this.out || !selector)) { 
+      //throw new Error("No value or wrong selector");
+      return;
+    }
+    selector.insertAdjacentHTML("beforeend", data);
   }
 
   // якщо помилка

@@ -1,5 +1,5 @@
 // startModalWiNoTreiler()
-function startModalWiNoTreiler() {
+export default function startModalWiNoTreiler() {
     const refs = {
         closeModalBtn: document.querySelector("[data-modal-close]"),
         modal: document.querySelector("[data-modal]"),
