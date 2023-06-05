@@ -6,10 +6,9 @@ const currentURL = window.location.href;
 const navLinks = document.getElementsByClassName('menu-item-txt');
 menuBtnEl.addEventListener('click', onMenuBtnClick);
 
-console.log(currentURL);
 for (let i = 0; i < navLinks.length; i += 1) {
   let linkURL = navLinks[i].getAttribute('href');
-  console.log(linkURL);
+
   if (currentURL.includes(linkURL)) {
     navLinks[i].classList.add('current-page');
   }
@@ -48,7 +47,7 @@ function closeMobileMenu() {
 // THEME SWITCHING
 
 const dayThemeRefs = {
-  headerEl: document.querySelector('.header-container'),
+  headerEl: document.querySelector('.header-wrap'),
   mobileMenuModalEl: document.querySelector('.mobile-menu-wrap'),
   headerMenuEL: document.querySelector('.header-menu'),
   headerTitleEl: document.querySelector('.header-title'),

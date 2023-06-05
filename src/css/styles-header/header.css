@@ -2,9 +2,12 @@ body {
   background-color: var(--color-black);
 }
 
-.header-container {
-  position: relative;
+.header-wrap {
   background-color: #000000;
+  position: relative;
+}
+
+.header-container {
   padding-left: 20px;
   padding-right: 20px;
   max-width: 320px;
@@ -136,7 +139,7 @@ body {
   position: absolute;
   top: 0px;
   left: -100%;
-  width: 120vh;
+  width: 300vh;
   height: 100vh;
   background: rgba(255, 255, 255, 0.2);
 }
