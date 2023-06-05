@@ -104,7 +104,11 @@
   opacity: 0;
   visibility: hidden;
   z-index: 8;
-  background: var(--color-button);
+  /* background: var(--color-button); */
+  background-image: url(./pngwing.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50px 50px;
   border: 2px solid var(--color-black);   
   width: 50px;   
   height: 50px;
@@ -125,7 +129,7 @@
 .button-up:hover, 
 .button-up:focus {
   animation: animatebut step-start;
-  background: var(--color-button-hover);
+  /* background: var(--color-button-hover); */
 }
 .arrow-up {
   opacity: 0;
