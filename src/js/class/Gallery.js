@@ -27,7 +27,7 @@ export default class Gallery {
       query: query,
     };
 
-    this.totalPage = 0;
+    this.totalPages = 0;
     this.totalResults = 0;
   }
 
@@ -49,10 +49,10 @@ export default class Gallery {
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
-      this.list = this.importFromLS();
+      this.listMovies = this.importFromLS();
 
-      this.totalPage = data.total_page;
-      this.totalResult = data.total_result;
+      this.totalPages = data.total_pages;
+      this.totalResults = data.total_results;
   
       return data.results; 
 
@@ -113,7 +113,7 @@ export default class Gallery {
   /// trending/movie/day || week
   //
   // cписок фільмів у тренді за день \ неділю
-  async createNewCards() {
+  async createNewCards(cbTemplate) {
     try {
       // day -https://api.themoviedb.org/3/trending/movie/day
       // week - https://api.themoviedb.org/3/trending/movie/week
@@ -122,7 +122,7 @@ export default class Gallery {
       const cards = await this.getMoviesList();
 
       return cards.reduce(
-           (acc, data) => acc + this.createCardGallery(data), "");
+           (acc, data) => acc + cbTemplate(data), "");
 
     } catch (error) {
       this.onError(error);  
@@ -131,10 +131,10 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup() { 
+  async onMarkup(cbTemplate = this.createCardGallery) { 
     try {
 
-      const markup = await this.createNewCards();
+      const markup = await this.createNewCards(cbTemplate);
       this.updateGallery(markup);
       return markup;
 
@@ -190,7 +190,7 @@ export default class Gallery {
 
   updateGallery(data) {
     if (!data || !this.out) { 
-      throw new Error("No value or wrong selector");
+      //throw new Error("No value or wrong selector");
       return;
     }
 
