@@ -44,9 +44,10 @@ export default class Gallery {
   //
 
   // отримання даних з серверу
-  async getList() {
+  async getMoviesList() {
     try {
       enableSpinner();
+      this.params.page = this.page;
       const params = new Object(this.params);
       const { data } = await axios.get(this.url, { params });
       
@@ -58,20 +59,6 @@ export default class Gallery {
       disableSpinner();
 
       return data.results; 
-
-    } catch (error) {
-      this.onError(error)
-    }
-  }
-
-  // отримання даних з додавання сторінки для пагінації
-  async getMoviesList() {
-    try {
-      enableSpinner();
-      const data = await this.getList();
-      this.incrementPage();
-      disableSpinner();
-      return data; 
 
     } catch (error) {
       this.onError(error)
@@ -109,8 +96,9 @@ export default class Gallery {
   //очистити блок сторінок
   resetPage() { 
     this.page = 1;
-    this.totalPage = 0;
-    this.totalResult = 0;
+    this.totalPages = 0;
+    this.totalResults = 0;
+    localStorage.removeItem(this.name);
   }
 
   /// trending/movie/day || week
@@ -200,6 +188,7 @@ export default class Gallery {
       return;
     }
 
+    selector.innerHTML = '';
     selector.insertAdjacentHTML("beforeend", data);
   }
 
@@ -290,6 +279,7 @@ export default class Gallery {
       //throw new Error("No value or wrong selector");
       return;
     }
+    selector.innerHTML = '';
     selector.insertAdjacentHTML("beforeend", data);
   }
 
