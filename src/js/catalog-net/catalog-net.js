@@ -28,7 +28,7 @@ function TemplateTrendsWeek( data ) {
     </h2>
       <div class="ganres_rating">
         <p class="catalog_genres">
-        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids)} | ${release_date}
+        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids.slice(0, 2))} | ${release_date.slice(0, 4)}
         </p>
         <p class="catalog_rating">
         Rating: ${(vote_average / 2).toFixed(1)}
@@ -53,11 +53,11 @@ function TemplateTrendsWeek( data ) {
 // console.log(movie);
 
 
-moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
+moviesTrendsWeek.onMarkup(TemplateTrendsWeek, 9);
 
 const paginationOptions = {
    totalItems: 500,
-        itemsPerPage: 10,
+        itemsPerPage: 9,
         visiblePages: 5,
      page: 1,
      centerAlign: false,
@@ -81,23 +81,24 @@ const paginationOptions = {
      }
 };
 
-let pagination = new Pagination('.tui-pagination', paginationOptions);
+const container = document.querySelector('.tui-pagination');
+if (container) {
+  let pagination = new Pagination(container, paginationOptions);
 
+  //Pagination first start with response from API and create total_pages
+  //Go to Homepage-rendering.js
+  //
+  const paginationPage = pagination.getCurrentPage();
+  pagination.on('afterMove', function (eventData) {
+    moviesTrendsWeek.page = eventData.page;
+    moviesTrendsWeek.onMarkup(TemplateTrendsWeek, pagination._options.itemsPerPage);
+  });
 
-//Pagination first start with response from API and create total_pages
-//Go to Homepage-rendering.js
-//
-const paginationPage = pagination.getCurrentPage();
-pagination.on('afterMove', function(eventData) {
-  moviesTrendsWeek.page = eventData.page;
-  moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
-});
-
-function creatingTotalResultsPagination(res) {
+  function creatingTotalResultsPagination(res) {
     pagination.reset(res.data.total_results);
-};
+  };
 
-
+}
 
 
 

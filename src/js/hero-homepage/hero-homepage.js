@@ -1,5 +1,5 @@
 const heroRandomFilm = document.getElementById('hero-random-film');
-const heroSection = document.getElementById('hero-section');
+const heroContainer = document.getElementById('hero-container');
 const apiKey = '9073999c285844087924fd0e24160fae';
 let randomFilmIndex;
 
@@ -10,19 +10,22 @@ async function fetchFilmData() {
     const response = await fetch(apiUrl);
     const { results } = await response.json();
     const filmIndexes = results.map(({ id }) => id);
-    heroSection.classList.add('hero-hide');
-
+    heroContainer.classList.add('hero-hide');
     return filmIndexes;
   } catch (error) {
     console.log('Помилка при виконанні запиту до API:', error);
   }
 }
 
+let filmDetails;
+
 async function getRandomFilm() {
   const filmIndexes = await fetchFilmData();
   const randomIndex = Math.floor(Math.random() * filmIndexes.length);
   randomFilmIndex = filmIndexes[randomIndex];
   const filmDetails = await getFilmDetails(randomFilmIndex);
+
+  // console.log(filmDetails);
   return filmDetails;
 }
 
@@ -32,8 +35,7 @@ async function getFilmDetails(filmIndex) {
   try {
     const response = await fetch(apiUrl);
     const {
-      title: filmTitle,
-      vote_average: filmRating,
+      title,
       trailer_key: filmTrailer,
       backdrop_path: filmBackgroundPath,
       overview,
@@ -43,12 +45,12 @@ async function getFilmDetails(filmIndex) {
       popularity,
       genres,
     } = await response.json();
+
     const filmTrailerUrl = `https://www.youtube.com/watch?v=${filmTrailer}`;
     const filmBackgroundImage = `https://image.tmdb.org/t/p/original${filmBackgroundPath}`;
 
     return {
-      title: filmTitle,
-      rating: filmRating,
+      title,
       trailer: filmTrailerUrl,
       backgroundImage: filmBackgroundImage,
       overview,
@@ -63,7 +65,7 @@ async function getFilmDetails(filmIndex) {
   }
 }
 
-function createFilmBox({ title, rating, backgroundImage, overview }) {
+function createFilmBox({ title, popularity, backgroundImage, overview }) {
   const words = overview.split(' ');
   let truncatedOverview = words.slice(0, 30).join(' ');
 
@@ -72,14 +74,17 @@ function createFilmBox({ title, rating, backgroundImage, overview }) {
   }
 
   return `
-    <section class="hero-movie" style="background-image: linear-gradient(
+    <section class="hero-section">
+    <div class="container hero-container" style="background-image: linear-gradient(
       86.77deg,
       #111111 30.38%,
       rgba(17, 17, 17, 0) 65.61%
-    ), url(${backgroundImage})";>
-      <div class="container hero-container">
+    ), url(${backgroundImage});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;">
         <h1 class="hero-title">${title}</h1>
-        <p>Рейтинг: ${rating}</p>
+        <p class="hero-text">Рейтинг: ${popularity}</p>
         <p class="hero-text">${truncatedOverview}</p>
         <div class="hero-homepage-buttons">
           <button id="watchTrailerButton" class="button-watch-trailer">Watch trailer</button>
@@ -136,9 +141,6 @@ function outsideClickHandler(event) {
 
 // modal for More details
 const modalDetails = document.getElementById('moreDetails');
-const closeDetailsButton = document.getElementById('closeDetails');
-
-closeDetailsButton.addEventListener('click', closeDetails);
 
 function createDetailsBox({
   title,
@@ -150,51 +152,42 @@ function createDetailsBox({
   popularity,
   genres,
 }) {
-  return `
-    <div class="film-card">
-      <img src="https://image.tmdb.org/t/p/original/${backgroundImage}" alt="${title}" />
-      <div class="film-info">
-        <div class="info-item">
-          <h2 class="film-title">${title}</h2>
-        </div>
-
-        <div class="container-features">
-          <div class="column-struct">
-            <div class="date-vote">
-              <div class="info-item">
-                <span class="release">Release Date:</span> <span class="release-value release-date">${release_date}</span>
-              </div>
-              <div class="info-item">
-                <span class="vote">Vote / Votes:</span>
-                <span class="vote-value">
-                  <span class="vote-average">${vote_average}</span> /
-                  <span class="vote-count">${vote_count}</span>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="column-struct">
-            <div class="popularity-genre">
-              <div class="info-item">
-                <span class="popularity">Popularity:</span> <span class="popularity-value">${popularity}</span>
-              </div>
-              <div class="info-item genre-item">
-                <span class="genre">Genre:</span> <span class="genre-value">${genres
-                  .map(genre => genre.name)
-                  .join(', ')}</span>
-              </div>
-            </div>
-          </div>
-          <div class="description-item">
-            <span class="description-about">About:</span> <span class="about-value">${overview}</span>
-          </div>
-        </div>
-        <button class="button-rem-me">Add to My Library</button>
+  const detailsBoxHTML = `
+    <div class="more-details-modal">
+      <div class="close-button-box">
+        <button id="closeDetails" type="button">X</button>
       </div>
-    </div>`;
+      <div class="more-details-img-box">
+        <img class="more-detail-img" src="https://image.tmdb.org/t/p/original/${backgroundImage}" alt="${title}" />
+      </div>
+      <div class="more-details-info">
+        <h2 class="film-title">${title}</h2>
+        <span class="release">Release Date:</span>
+        <span class="release-value release-date">${release_date}</span>
+        <span class="vote">Vote / Votes:</span>
+        <span class="vote-value">
+          <span class="vote-average">${vote_average}</span> /
+          <span class="vote-count">${vote_count}</span>
+        </span>
+        <span class="popularity">Popularity:</span>
+        <span class="popularity-value">${popularity}</span>
+        <span class="genre">Genre:</span>
+        <span class="genre-value">${genres
+          .map(genre => genre.name)
+          .join(', ')}</span>
+        <span class="description-about">About:</span>
+        <span class="about-value">${overview}</span>
+      </div>
+      <div class="more-details-adml-box">
+        <button id="addToLibraryButton" class="button-rem-me">Add to My Library</button>
+      </div>
+    </div>
+  `;
+
+  return detailsBoxHTML;
 }
 
-createDetailsBox();
+const closeDetailsButton = document.getElementById('closeDetails');
 
 function createMoreDetails(markup) {
   clearDetailsBox();
@@ -202,7 +195,7 @@ function createMoreDetails(markup) {
 }
 
 async function openDetails() {
-  modalDetails.classList.toggle('m-w-t-is-hidden');
+  modalDetails.classList.toggle('more-details-is-hidden');
   document.addEventListener('keydown', escapeHandlerDetails);
   window.addEventListener('click', outsideClickHandlerDetails);
 
@@ -210,10 +203,55 @@ async function openDetails() {
 
   const detailsBoxHTML = createDetailsBox(filmDetails);
   createMoreDetails(detailsBoxHTML);
+
+  document
+    .getElementById('closeDetails')
+    .addEventListener('click', closeDetails);
+
+  document
+    .getElementById('addToLibraryButton')
+    .addEventListener('click', toggleLibraryFilm);
+}
+
+async function toggleLibraryFilm() {
+  const addButton = document.querySelector('.button-rem-me');
+  const filmDetails = await getFilmDetails(randomFilmIndex);
+  const libraryFilms = getLibraryFilms();
+
+  if (addButton.textContent === 'Add to My Library') {
+    addButton.textContent = 'Remove from My Library';
+
+    const index = libraryFilms.findIndex(
+      film => film.title === filmDetails.title
+    );
+    if (index === -1) {
+      libraryFilms.push(filmDetails);
+      localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+    }
+  } else {
+    addButton.textContent = 'Add to My Library';
+
+    const index = libraryFilms.findIndex(
+      film => film.title === filmDetails.title
+    );
+    if (index !== -1) {
+      libraryFilms.splice(index, 1);
+      localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+    }
+  }
+}
+
+function getLibraryFilms() {
+  const libraryFilmsString = localStorage.getItem('libraryFilms');
+  if (libraryFilmsString) {
+    return JSON.parse(libraryFilmsString);
+  } else {
+    return [];
+  }
 }
 
 function closeDetails() {
-  modalDetails.classList.toggle('m-w-t-is-hidden');
+  modalDetails.classList.toggle('more-details-is-hidden');
   document.removeEventListener('keydown', escapeHandlerDetails);
   window.removeEventListener('click', outsideClickHandlerDetails);
   detailsOpened = false;

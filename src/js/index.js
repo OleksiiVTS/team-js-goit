@@ -2,6 +2,7 @@
 
 // наприклад:    import './js/buttonup.js';
 // import './upcoming-this-month/index-up-th-mon.js';
+import './weekly-trends/weekly-trends.js';
 
 import './js-header/header.js';
 import './js-vs/spinner-js.js';
