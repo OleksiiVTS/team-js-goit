@@ -106,8 +106,10 @@ export default class GenreList {
       throw new Error("No value or wrong selector");
       return;
     }
-      
-    this.out.insertAdjacentHTML("beforeend", data);
+    
+    if (this.out) {
+      this.out.insertAdjacentHTML("beforeend", data);
+    }
   }
 
   // отримати список жанрів
