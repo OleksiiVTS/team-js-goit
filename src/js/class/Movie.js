@@ -32,13 +32,19 @@ export default class Movie {
   // запит 
   async getMovie(id = this.id) { 
     try {
-      enableSpinner()
-      const { api_key, page, query } = this.param;
-      // --url 'https://api.themoviedb.org/3/movie/603692?language=en-US' \
-      const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}&page=${page}`
-      this.movieDetails = await axios(urlMovie);
 
-      console.log(this.movieDetails);
+      enableSpinner()
+
+      const params = new Object(this.params);
+
+      // --url 'https://api.themoviedb.org/3/movie/603692?language=en-US' \
+      const url = this.url + `/${id}`
+      const { data } = await axios.get(url, { params });
+
+      //const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}&page=${page}`
+      //const movie = await axios(urlMovie, {});
+      this.movieDetails = await data;
+
       disableSpinner();
       return this.movieDetails;
 
@@ -47,17 +53,18 @@ export default class Movie {
     }
   }
 
-  async getTrailers() { 
+  async getTrailers(id = this.id) { 
     try {
 
-      enableSpinner(id = this.id)
-      const { api_key, page, query } = this.param;
-      // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US' \
-      const urlTrailers = `${this.url}/${id}/videos?$api_key=${api_key}&guery=${query}&page=${page}`
-      const trailers = await axios(urlTrailers);
-      this.trailers = await trailers.results;
+      enableSpinner()
+      
+      const params = new Object(this.params);
 
-      console.log(this.trailers);
+      // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US'
+      const url = this.url + `/${id}/videos`;
+      const { data } = await axios.get(url, { params });
+      this.trailers = await data.results;
+
       disableSpinner()
 
       return trailers.results;

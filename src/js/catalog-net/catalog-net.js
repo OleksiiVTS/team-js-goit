@@ -67,10 +67,10 @@ const paginationOptions = {
 };
 
 const movie = new Movie({
-  id: 603692,
-  selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
-  url: '/movie',   // частина шляху для запиту
-  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+  id: 603692,                       // id-askmve
+  selector: ".catalog-gallery",     // куди виводимо сформований HTML-код 
+  url: '/movie',                    // частина шляху для запиту
+  query: '""&language=en'           // сам запит, те що стоъть після знаку ?
 });
 
 movie.onMarkup();
