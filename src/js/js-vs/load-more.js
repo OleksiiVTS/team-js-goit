@@ -12,3 +12,8 @@ function disableBtnLoadMore() {
   loadMoreBtn.classList.add('is-hidden')
 }
 
+// const filterGenres = localStorage.getItem('moviesTrendsWeek')
+// const parseFilterGenres = JSON.parse(filterGenres)
+// if(parseFilterGenres.length >= 10) {
+//   enableBtnLoadMore()
+// }

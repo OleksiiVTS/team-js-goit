@@ -13,12 +13,18 @@
 @import url('./styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
+ /*Стилі hero-lib*/
+ @import url('./hero-lib.css/hero-lib.css');
+/* Стилі Фільтра бібліотеки */
+@import url('./styles-vs/filter-library.css');
 /* hero-homepage */
 @import url('./hero-homepage/hero-homepage.css');
 /* Стилі Load-more */
 @import url('./styles-vs/load-more.css');
 /* Стилі сітки каталога*/
-@import url('./styles-catalog_net/styles-catalog_net.css');
+@import url('./styles-catalog_net/mob-catalog_trends_week.css');
+@import url('./styles-catalog_net/tab-catalog_trends_week.css');
+@import url('./styles-catalog_net/desk-catalog_trends_week.css');
 
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');

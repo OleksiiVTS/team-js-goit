@@ -1,5 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
@@ -15,9 +16,10 @@ genres.getGenreList();
 
 export default class Gallery {
   constructor({ name, url, query, selector }) {
-    this.name = name;
+    this.name = name;                     // назва ключа у ЛС
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.page = 1;
+    this.perPage = 20;
     this.listMovies = this.importFromLS();  // список фільмів
 
     this.url = URL + url;
@@ -43,32 +45,21 @@ export default class Gallery {
   //
 
   // отримання даних з серверу
-  async getList() {
+  async getMoviesList() {
     try {
+      enableSpinner();
+      this.params.page = this.page;
       const params = new Object(this.params);
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
       this.listMovies = this.importFromLS();
 
-      this.totalPages = data.total_pages;
-      this.totalResults = data.total_results;
-  
+      this.totalPages = await data.total_pages;
+      this.totalResults = await data.total_results;
+      disableSpinner();
+
       return data.results; 
-
-    } catch (error) {
-      this.onError(error)
-    }
-  }
-
-  // отримання даних з додавання сторінки для пагінації
-  async getMoviesList() {
-    try {
-
-      const data = await this.getList();
-      this.incrementPage();
-
-      return data; 
 
     } catch (error) {
       this.onError(error)
@@ -103,26 +94,46 @@ export default class Gallery {
     this.page++;
   }
 
+  setPerPage(count){
+    this.perPage = count;
+  };
+
   //очистити блок сторінок
   resetPage() { 
     this.page = 1;
-    this.totalPage = 0;
-    this.totalResult = 0;
+    this.perPage = 20;
+    this.totalPages = 0;
+    this.totalResults = 0;
+    localStorage.removeItem(this.name);
   }
 
   /// trending/movie/day || week
   //
   // cписок фільмів у тренді за день \ неділю
-  async createNewCards(cbTemplate) {
+  // cbTemplate - callback function for markup one item, 
+  // count - скільки карток з масиву cards обробляти
+  async createNewCards(cbTemplate, count) {
     try {
       // day -https://api.themoviedb.org/3/trending/movie/day
       // week - https://api.themoviedb.org/3/trending/movie/week
       // const url = '/trending/movie/day';
       // const query = 'language=en-US'
+      enableSpinner();
+
       const cards = await this.getMoviesList();
 
+      if(!count || count > cards.lenght) {
+        count = cards.lenght;
+      }
+
+      disableSpinner();
       return cards.reduce(
-           (acc, data) => acc + cbTemplate(data), "");
+           (acc, item, index) => {
+            if (index < count){
+              return acc + cbTemplate(item)  
+            }
+            return acc
+          }, "");
 
     } catch (error) {
       this.onError(error);  
@@ -131,11 +142,14 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup(cbTemplate = this.createCardGallery) { 
+  async onMarkup( cbTemplate = this.createTestCardGallery, count = 20) { 
     try {
+      enableSpinner();
 
-      const markup = await this.createNewCards(cbTemplate);
+      this.setPerPage(count);
+      const markup = await this.createNewCards(cbTemplate, count);
       this.updateGallery(markup);
+      disableSpinner();
       return markup;
 
     } catch (error) {
@@ -145,7 +159,7 @@ export default class Gallery {
 
   // Шаблон картки для фільму
   //
-  createCardGallery( data ) {
+  createTestCardGallery( data ) {
   // частина посилання на картинку
   const url = 'https://image.tmdb.org/t/p/w300';
   const genreList = genres.importFromLS();
@@ -178,7 +192,7 @@ export default class Gallery {
     </div>`
   }
 
-  convertId_to_Name(aGenre, list) {
+  convertId_to_Name(aGenre, list = genres.importFromLS()) {
 
       const result = aGenre.map(item => {
         const obj = list.find(el => el.id === item);
@@ -188,13 +202,15 @@ export default class Gallery {
       return result.join(', ');
   }
 
-  updateGallery(data) {
-    if (!data || !this.out) { 
+  updateGallery(data, selector = this.out) {
+    if (!data && (!this.out || !selector)) { 
       //throw new Error("No value or wrong selector");
       return;
     }
-
-    this.out.insertAdjacentHTML("beforeend", data);
+    if (selector) {
+      selector.innerHTML = '';
+      selector.insertAdjacentHTML("beforeend", data);
+    }
   }
 
   // якщо помилка

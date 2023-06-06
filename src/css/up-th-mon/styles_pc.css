@@ -1,10 +1,21 @@
 @media screen and (min-width: 1280px){
+   .upcoming_centre{
+    /* justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column; */
+    margin-right: auto;
+    margin-left:auto;
+    max-width: fit-content;
+   }
+   
     .film-card{
         display: flex;
         margin-left: 45px;
         margin-right: 24px;
     }
 
+ 
 .container-features{
     display: block;
 }
@@ -36,17 +47,19 @@ line-height: 1.18;
     line-height: 1.18;
 }
 .description-item {
-    margin: 20px 0 20px 0;
+    margin: 20px 0 0;
   }
   .about-value{
      font-size: 14px;
     line-height: 1.42;
-   
+    height: 160px;
+    width: 390px;
+    overflow: auto;
 
   }
 
   .button-rem-me{
-    margin:20px 0 20px;
+    margin:40px 0 0px;
   }
 
 

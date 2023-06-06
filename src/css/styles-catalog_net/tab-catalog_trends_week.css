@@ -1,0 +1,51 @@
+@media screen and (min-width: 768px) {
+  .catlog_net {
+    /* display: flex; */
+    /* justify-content: center; */
+    min-width: 768px;
+    }
+  .catalog-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      /* min-width: 768px; */
+      margin-top: 36px;
+      column-gap: 16px;
+      row-gap: 28px; 
+  }
+     /* .overlay-card {
+       position: relative;
+     }
+  
+     .catalog_info {
+       position: absolute;
+       bottom: 20px;
+       left: 20px;
+       width: 100%;
+       color: var(--color-white);
+     } */
+  
+     .gallery__image {
+       /* background: linear-gradient(180deg, rgba(0, 0, 0, 0) 63.48%, rgba(0, 0, 0, 0.9) 92.16%);
+       border-radius: 5px; */
+       width: 224px;
+     }
+  
+     .catalog_title {
+       max-width: 214px;
+       font-size: 12px;
+       line-height: 1.58;
+     }
+  
+     .catalog_genres {
+      font-size: 12px;
+      line-height: 1.58;
+     }
+  
+     .ganres_rating {
+      margin-right: 12px;
+      margin-top: 5px;
+      font-size: 12px;
+      line-height: 1.58;
+     }
+}

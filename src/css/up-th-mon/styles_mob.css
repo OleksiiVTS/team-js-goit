@@ -1,3 +1,4 @@
+
 .upcoming_film {
   background-color: inherit;
 }
@@ -85,8 +86,8 @@
   margin-left: 4px;
 }
 .button-rem-me{
-    display: inline;
-    margin-bottom: 40px;
+    /* display: inline; */
+    margin-bottom: 20px;
 }
 
 @media screen and (min-width: 320px) {
@@ -114,6 +115,11 @@ line-height: 1.15;
     display: block;
     margin-top: 16px;
     overflow-wrap: break-word;
+    font-weight: 400;
+font-size: 14px;
+line-height: 1.43;
+height: 220px;
+    overflow: auto;
   }
   .release {
     margin-right: 57px;
@@ -134,5 +140,5 @@ line-height: 1.15;
     font-weight: 500;
 
   }
-  /* если слов больше 2-х, то не влазит в строку */
+  
 }
