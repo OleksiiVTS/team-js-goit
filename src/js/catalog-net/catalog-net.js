@@ -65,8 +65,7 @@ const paginationOptions = {
              '</a>'
      }
 };
-let pagination = new Pagination('.tui-pagination', paginationOptions);
-  
+
 const movie = Movie({
   id: 603692,
   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
@@ -77,6 +76,8 @@ const movie = Movie({
 movie.onMarkup();
 
 
+let pagination = new Pagination('.tui-pagination', paginationOptions);
+  
 //Pagination first start with response from API and create total_pages
 //Go to Homepage-rendering.js
 //
@@ -90,6 +91,10 @@ pagination.on('afterMove', function(eventData) {
 function creatingTotalResultsPagination(res) {
     pagination.reset(res.data.total_results);
 };
+
+
+
+
 
 // async function onFetchData() {
 //   try {
