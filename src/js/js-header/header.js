@@ -14,6 +14,7 @@ for (let i = 0; i < navLinks.length; i += 1) {
   }
 }
 function onMenuBtnClick() {
+  console.log('menu');
   mobileMenuEl.classList.remove('hidden');
   mobileBackdropEl.classList.remove('hidden');
 
@@ -62,6 +63,7 @@ const {
   menuItemEls,
 } = dayThemeRefs;
 
+const headerSpans = [...headerTitleEl.getElementsByTagName('span')];
 const themeSwitchEl = document.getElementById('checkbox');
 themeSwitchEl.addEventListener('change', onThemeSwitchToggle);
 
@@ -97,6 +99,12 @@ function switchThemeColors() {
   menuItemEls.forEach(item => {
     toggleClass(item, 'day-dark-text', !themeSwitchEl.checked);
   });
+
+  if (!themeSwitchEl.checked) {
+    headerSpans.forEach(item => {
+      item.style.color = '#000000';
+    });
+  }
 }
 
 function setCurrentTheme() {
