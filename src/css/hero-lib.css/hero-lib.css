@@ -11,18 +11,66 @@
 .container {
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  /*padding: 0 20px;*/
 }
 
-.hero-lib-background {
+/*.hero-lib-background {
   width: 100%;
-}
+}*/
 .section.hero-lib-background {
   margin: 0 auto;
 }
+@media screen and (max-width: 319px) {
+  .container {
+    min-width: 100%;
+  }
+  .hero-lib-background {
+    background: linear-gradient(
+        79.49deg,
+        #111111 34.1%,
+        rgba(17, 17, 17, 0) 64.67%
+      ),
+      url(rows-red-seats-theater.jpg);
+    background-image: url(../../images/hero-lib/31x-min.jpg);
+    min-width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  }
+
+  @media  (min-resolution: 2dppx) {
+    .hero-lib-background {
+    background-image: url('../../images/hero-lib/32x-min.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+  }
+
+ 
+
+  .hero-lib-name {
+    color: #fff;
+    width: 100%;
+    font-size: 32px;
+    line-height: 1.19;
+    padding-top: 40px;
+    padding-bottom: 8px;
+    
+  }
+  .hero-lib-txt {
+    color: #fff;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.14;
+    padding-bottom: 144px;
+    
+  }
+
+  
+}
 @media screen and (min-width: 320px) {
   .container {
-    min-width: 320px;
+    min-width: 100%;
   }
   .hero-lib-background {
     background: linear-gradient(
@@ -55,7 +103,7 @@
     line-height: 1.19;
     padding-top: 40px;
     padding-bottom: 8px;
-    margin: 0 auto;
+    
   }
   .hero-lib-txt {
     color: #fff;
@@ -63,7 +111,7 @@
     font-size: 14px;
     line-height: 1.14;
     padding-bottom: 144px;
-    margin: 0 auto;
+    
   }
 
   
@@ -82,9 +130,9 @@
       ),
       url(rows-red-seats-theater.jpg);
     background-image: url(../../images/hero-lib/tab1x.jpg);
-    min-width: 768px;
     background-repeat: no-repeat;
     background-size: cover;
+    min-width: 768px;
   }
   @media  (min-resolution: 2dppx) {
     .hero-lib-background {
@@ -100,7 +148,7 @@
     line-height: 1.18;
     padding-top: 62px;
     padding-bottom: 8px;
-    margin: 0 auto;
+    
   }
 
   .hero-lib-txt {
@@ -109,7 +157,7 @@
     font-size: 14px;
     line-height: 1.14;
     padding-bottom: 118px;
-    margin: 0 auto;
+    
   }
 }
 @media screen and (min-width: 1280px) {
@@ -126,7 +174,7 @@
     background-image: url(../../images/hero-lib/desc1x-min.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    min-width: 1280px;
+    width: 1280px;
    
   }
 
@@ -144,7 +192,7 @@
     line-height: 1.17;
     padding-top: 169px;
     padding-bottom: 8px;
-    margin: 0 auto;
+    
   }
 
   .hero-lib-txt {
@@ -153,6 +201,6 @@
     font-size: 16px;
     line-height: 1.19;
     padding-bottom: 249px;
-    margin: 0 auto;
+   
   }
 }
