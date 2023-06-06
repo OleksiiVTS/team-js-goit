@@ -16,10 +16,12 @@ export const moviesTrendsWeek = new Gallery({
 });
 
 function TemplateTrendsWeek( data ) {
-  const { poster_path, original_title, title, vote_average, release_date, genres} = data;
+  const { poster_path, original_title, title, vote_average, release_date, genres, id} = data;
 
-  return `<div class="movie-card overlay-card">
-  <img class= "gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy" />
+  return `<a href="" data-id-movie="${id}">
+  <div class="movie-card overlay-card">
+  <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
+  <div class="gallery__up_image"></div>
   <div class="catalog_info">
     <h2 class="catalog_title">
     ${title}
@@ -33,7 +35,8 @@ function TemplateTrendsWeek( data ) {
       </p>
       </div>
   </div>
-  </div>`
+  </div>
+  </a>`
 }
 
 moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
