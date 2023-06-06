@@ -25,7 +25,6 @@ async function getRandomFilm() {
   randomFilmIndex = filmIndexes[randomIndex];
   const filmDetails = await getFilmDetails(randomFilmIndex);
 
-  // console.log(filmDetails);
   return filmDetails;
 }
 
@@ -34,6 +33,7 @@ async function getFilmDetails(filmIndex) {
 
   try {
     const response = await fetch(apiUrl);
+
     const {
       title,
       trailer_key: filmTrailer,
@@ -152,6 +152,16 @@ function createDetailsBox({
   popularity,
   genres,
 }) {
+  let btn = 'Add to My Library';
+  const library = JSON.parse(localStorage.getItem('libraryFilms'));
+
+  for (const film of library) {
+
+    if (film.title === title) {
+      btn = 'Remove from My Library';
+    }
+  }
+
   const detailsBoxHTML = `
     <div class="more-details-modal">
       <div class="close-button-box">
@@ -179,7 +189,7 @@ function createDetailsBox({
         <span class="about-value">${overview}</span>
       </div>
       <div class="more-details-adml-box">
-        <button id="addToLibraryButton" class="button-rem-me">Add to My Library</button>
+        <button id="addToLibraryButton" class="button-rem-me">${btn}</button>
       </div>
     </div>
   `;
