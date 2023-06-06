@@ -54,8 +54,8 @@ export default class Gallery {
       this.exportToLS(data.results);
       this.listMovies = this.importFromLS();
 
-      this.totalPages = data.total_pages;
-      this.totalResults = data.total_results;
+      this.totalPages = await data.total_pages;
+      this.totalResults = await data.total_results;
       disableSpinner();
 
       return data.results; 
