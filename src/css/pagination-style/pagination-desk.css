@@ -1,0 +1,51 @@
+
+
+/* Стилі для основного блоку пагінації */
+.tui-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+}
+
+/* Стилі для кнопки "first" */
+.tui-page-btn.tui-first {
+    margin-right: 5px;
+}
+
+/* Стилі для кнопки "prev" */
+.tui-page-btn.tui-prev {
+    margin-right: 5px;
+}
+
+/* Стилі для виділеної активної сторінки */
+.tui-page-btn.tui-is-selected {
+    font-weight: bold;
+    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+    margin-right: 5px;
+}
+
+/* Стилі для посилань сторінок */
+.tui-page-btn {
+    color: #f20e0e;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+/* Стилі для вказівника підказки "..." */
+.tui-ico-ellip {
+    font-style: italic;
+}
+
+/* Стилі для кнопки "next" */
+.tui-page-btn.tui-next {
+    margin-left: 5px;
+}
+
+/* Стилі для кнопки "last" */
+.tui-page-btn.tui-last {
+    margin-left: 5px;
+}
