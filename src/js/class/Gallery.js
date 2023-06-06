@@ -104,18 +104,29 @@ export default class Gallery {
   /// trending/movie/day || week
   //
   // cписок фільмів у тренді за день \ неділю
-  async createNewCards(cbTemplate) {
+  // cbTemplate - callback function for markup one item, 
+  // count - скільки карток з масиву cards обробляти
+  async createNewCards(cbTemplate, count) {
     try {
       // day -https://api.themoviedb.org/3/trending/movie/day
       // week - https://api.themoviedb.org/3/trending/movie/week
       // const url = '/trending/movie/day';
       // const query = 'language=en-US'
       enableSpinner();
+
       const cards = await this.getMoviesList();
+
+      if(!count || count > cards.lenght) {
+        count = cards.lenght;
+      }
 
       disableSpinner();
       return cards.reduce(
-           (acc, data) => acc + cbTemplate(data), "");
+           (acc, item, index) => {
+            if (index < count){
+              return acc + cbTemplate(item)  
+            }
+          }, "");
 
     } catch (error) {
       this.onError(error);  
@@ -124,10 +135,10 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup(cbTemplate = this.createCardGallery) { 
+  async onMarkup( cbTemplate = this.createTestCardGallery, count = 20) { 
     try {
       enableSpinner();
-      const markup = await this.createNewCards(cbTemplate);
+      const markup = await this.createNewCards(cbTemplate, count);
       this.updateGallery(markup);
       disableSpinner();
       return markup;
@@ -139,7 +150,7 @@ export default class Gallery {
 
   // Шаблон картки для фільму
   //
-  createCardGallery( data ) {
+  createTestCardGallery( data ) {
   // частина посилання на картинку
   const url = 'https://image.tmdb.org/t/p/w300';
   const genreList = genres.importFromLS();
