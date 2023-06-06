@@ -5,6 +5,10 @@
 /* Стилі модального вікта відсутності трейлера */
 @import url('./styles/modal-wind-tr.css');
 
+
+/* Стилі секції WEEKLY TRENDS */
+@import url('./styles/weekly-trands/weekly-trends.css');
+
 /* Стилі секції UPCOMING THIS MONTH */
 @import url('./up-th-mon/styles_mob.css');
 @import url('./up-th-mon/styles_tab.css');
@@ -26,5 +30,7 @@
 @import url('./styles-catalog_net/tab-catalog_trends_week.css');
 @import url('./styles-catalog_net/desk-catalog_trends_week.css');
 
+/* Стилі пошуку каталогу */
+@import url('./styles/styles-catalog-search/catalog-search.css');
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');
