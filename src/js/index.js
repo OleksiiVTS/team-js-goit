@@ -5,9 +5,9 @@ import './upcoming-this-month/index-up-th-mon.js';
 
 import './js-header/header.js';
 import './js-vs/spinner-js.js';
-import './js-vs/load-more.js';
-import './js-vs/filter-library.js';
-import './js-vs/pruklad.js';
+// import './js-vs/load-more.js';
+// import './js-vs/filter-library.js';
+import './js-vs/pruklad';
 import './modal-w-litle/modal-w-litle.js';
 import './catalog-net/catalog-net.js';
 import './modal-w-litle/buttonup.js';
