@@ -150,3 +150,4 @@ fetchFilmData().then((filmData) => {
   console.log("Получены данные о фильме:", filmData);
   createFilmCard(filmData);
 });
+
