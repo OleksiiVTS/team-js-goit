@@ -3,7 +3,11 @@
 *::after {
   box-sizing: border-box;
 }
-
+.hero-lib-background {
+  background-size: cover;
+  width: 100%;
+  background-repeat: no-repeat;
+}
 .container {
   width: 100%;
   margin: 0 auto;
@@ -28,11 +32,20 @@
       url(rows-red-seats-theater.jpg);
     background-image: url(../../images/hero-lib/31x-min.jpg);
     min-width: 320px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
   }
 
-  .hero-lib-background {
+  @media  (min-resolution: 2dppx) {
+    .hero-lib-background {
+    background-image: url('../../images/hero-lib/32x-min.jpg');  
+    background-repeat: no-repeat;
     background-size: cover;
+    }
   }
+
+ 
 
   .hero-lib-name {
     color: #fff;
@@ -49,9 +62,12 @@
     font-size: 14px;
     line-height: 1.14;
     padding-bottom: 144px;
-    
   }
+
+  
 }
+
+
 @media screen and (min-width: 768px) {
   .container {
     min-width: 768px;
@@ -65,15 +81,23 @@
       url(rows-red-seats-theater.jpg);
     background-image: url(../../images/hero-lib/tab1x.jpg);
     min-width: 768px;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
-
+  @media  (min-resolution: 2dppx) {
+    .hero-lib-background {
+    background-image: url('../../images/hero-lib/tab2x.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+  }
   .hero-lib-name {
     color: #fff;
     width: 332px;
     font-size: 44px;
     line-height: 1.18;
     padding-top: 62px;
-    
+
     padding-bottom: 8px;
   }
 
@@ -83,13 +107,12 @@
     font-size: 14px;
     line-height: 1.14;
     padding-bottom: 118px;
-    
   }
 }
 @media screen and (min-width: 1280px) {
-    .container{
-        min-width: 1280px;
-    }
+  .container {
+    min-width: 1280px;
+  }
   .hero-lib-background {
     background: linear-gradient(
         80.53deg,
@@ -98,17 +121,26 @@
       ),
       url(rows-red-seats-theater.jpg);
     background-image: url(../../images/hero-lib/desc1x-min.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     min-width: 1280px;
     position: absolute;
   }
 
+  @media  (min-resolution: 2dppx) {
+    .hero-lib-background {
+    background-image: url('../../images/hero-lib/desc2x-min.jpg');  
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+  }
   .hero-lib-name {
     color: #fff;
     width: 464px;
     font-size: 64px;
     line-height: 1.17;
     padding-top: 169px;
-    
+
     padding-bottom: 8px;
   }
 
@@ -118,7 +150,5 @@
     font-size: 16px;
     line-height: 1.19;
     padding-bottom: 249px;
-    
   }
 }
-
