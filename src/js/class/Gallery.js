@@ -19,6 +19,7 @@ export default class Gallery {
     this.name = name;                     // назва ключа у ЛС
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.page = 1;
+    this.perPage = 20;
     this.listMovies = this.importFromLS();  // список фільмів
 
     this.url = URL + url;
@@ -93,9 +94,14 @@ export default class Gallery {
     this.page++;
   }
 
+  setPerPage(count){
+    this.perPage = count;
+  };
+
   //очистити блок сторінок
   resetPage() { 
     this.page = 1;
+    this.perPage = 20;
     this.totalPages = 0;
     this.totalResults = 0;
     localStorage.removeItem(this.name);
@@ -126,6 +132,7 @@ export default class Gallery {
             if (index < count){
               return acc + cbTemplate(item)  
             }
+            return acc
           }, "");
 
     } catch (error) {
@@ -138,6 +145,8 @@ export default class Gallery {
   async onMarkup( cbTemplate = this.createTestCardGallery, count = 20) { 
     try {
       enableSpinner();
+
+      this.setPerPage(count);
       const markup = await this.createNewCards(cbTemplate, count);
       this.updateGallery(markup);
       disableSpinner();
