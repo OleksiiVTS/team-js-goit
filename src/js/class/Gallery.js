@@ -119,12 +119,10 @@ export default class Gallery {
       if(!count || count > cards.lenght) {
         count = cards.lenght;
       }
-console.log(count);
 
       disableSpinner();
       return cards.reduce(
            (acc, item, index) => {
-            console.log(index, count);
             if (index < count){
               return acc + cbTemplate(item)  
             }
