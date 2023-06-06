@@ -88,10 +88,10 @@ function createFilmCard(film) {
 
 // Округляем значения до десятков
 const popularityValueElement = document.querySelector(".popularity-value");
-popularityValueElement.textContent = Math.round(film.popularity / 10) * 10;
+popularityValueElement.textContent = (Math.round(film.popularity / 10) * 10).toFixed(1);
 
 const voteAverageElement = document.querySelector(".vote-average");
-voteAverageElement.textContent = Math.round(film.vote_average / 10) * 10;
+voteAverageElement.textContent = (Math.round(film.vote_average / 10) * 10).toFixed(1);
 
 
     // Проверяем наличие фильма в Local Storage и обновляем состояние кнопки
