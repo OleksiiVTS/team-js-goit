@@ -16,7 +16,7 @@ genres.getGenreList();
 
 export default class Gallery {
   constructor({ name, url, query, selector }) {
-    this.name = name;
+    this.name = name;                     // назва ключа у ЛС
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.page = 1;
     this.listMovies = this.importFromLS();  // список фільмів
@@ -44,34 +44,21 @@ export default class Gallery {
   //
 
   // отримання даних з серверу
-  async getList() {
+  async getMoviesList() {
     try {
       enableSpinner();
+      this.params.page = this.page;
       const params = new Object(this.params);
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
       this.listMovies = this.importFromLS();
 
-      this.totalPages = data.total_pages;
-      this.totalResults = data.total_results;
+      this.totalPages = await data.total_pages;
+      this.totalResults = await data.total_results;
       disableSpinner();
 
       return data.results; 
-
-    } catch (error) {
-      this.onError(error)
-    }
-  }
-
-  // отримання даних з додавання сторінки для пагінації
-  async getMoviesList() {
-    try {
-      enableSpinner();
-      const data = await this.getList();
-      this.incrementPage();
-      disableSpinner();
-      return data; 
 
     } catch (error) {
       this.onError(error)
@@ -109,8 +96,9 @@ export default class Gallery {
   //очистити блок сторінок
   resetPage() { 
     this.page = 1;
-    this.totalPage = 0;
-    this.totalResult = 0;
+    this.totalPages = 0;
+    this.totalResults = 0;
+    localStorage.removeItem(this.name);
   }
 
   /// trending/movie/day || week
@@ -200,96 +188,7 @@ export default class Gallery {
       return;
     }
 
-    selector.insertAdjacentHTML("beforeend", data);
-  }
-
-
-  // отримання одного фільму
-  async getFilmDetails(filmIndex) {
-    const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}?api_key=${API_KEY}`;
-
-    try {
-      enableSpinner();
-      const { data } = await axios(apiUrl);
-      disableSpinner();
-
-      return data;
-
-    } catch (error) {
-      this.onError('Film id not found:', error);
-    }
-  }
-
-  MarkupFilmDetails(data) { 
-    const {
-      filmTrailer,
-      backdrop_path,
-      original_title,
-      budget,
-      overview,
-      release_date,
-      genres,
-      vote_average,
-    } = data;
-
-    const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
-    const urlTrailer = `https://www.youtube.com/watch?v=${filmTrailer}`;
-
-    return `
-    <div class="movie-card">
-      <img class="image"
-        src="${urlImage}" 
-        alt="{${original_title}}" 
-        loading="lazy"
-        title="{${original_title}}"/>
-
-      <div class="info">
-        <p class="info-item">
-         <b>Title: </b>${original_title}
-        </p>
-        <p class="info-item">
-          <b>Budget: </b>$${budget}
-        </p>
-        <p class="info-item">
-          <b>Text: </b>${overview}
-        </p>
-        <p class="info-item">
-          <b>Release Date: </b>${release_date}
-        </p>
-        <p class="info-item">
-        <b>Genres: </b>${genres.map(e => e.name).join(', ')}
-        </p>
-        <p class="info-item">
-          <b>Vote: </b>${vote_average}
-        </p>
-      </div>
-    </div>`  
-  }
-
-  async onMarkupFilmDetails(idFilm, selector = this.out, cbMarkup = this.MarkupFilmDetails) { 
-    try {
-      enableSpinner();
-
-      const data = await this.getFilmDetails(idFilm);
-      const markup = cbMarkup(data);
-    //  console.log(markup);
-      this.updateFilmDetails(markup, selector);
-      
-      disableSpinner();
-  
-      return data;
-
-    } catch (error) {
-      this.onError('Film id not found:', error);
-    }
-  }
-
-    // вивід даних на хтмл-сторінку
-  updateFilmDetails(data, selector = this.out) {
-    if (!data && (!this.out || !selector)) { 
-      //throw new Error("No value or wrong selector");
-      return;
-    }
+    selector.innerHTML = '';
     selector.insertAdjacentHTML("beforeend", data);
   }
 
