@@ -119,14 +119,15 @@ export default class Gallery {
       if(!count || count > cards.lenght) {
         count = cards.lenght;
       }
+console.log(count);
 
       disableSpinner();
       return cards.reduce(
            (acc, item, index) => {
-            if (index > count-1){
-              return
+            console.log(index, count);
+            if (index < count){
+              return acc + cbTemplate(item)  
             }
-            return acc + cbTemplate(item)
           }, "");
 
     } catch (error) {
@@ -136,7 +137,7 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup(count, cbTemplate = this.createTestCardGallery) { 
+  async onMarkup( cbTemplate = this.createTestCardGallery, count = 20) { 
     try {
       enableSpinner();
       const markup = await this.createNewCards(cbTemplate, count);
