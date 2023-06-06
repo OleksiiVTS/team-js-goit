@@ -33,7 +33,6 @@ body {
   display: block;
   width: 30px;
   height: 24px;
-  margin-left: 1px;
 }
 
 .logo-image {
@@ -105,9 +104,6 @@ body {
   animation: slideInFromLeft 0.2s forwards;
 }
 
-.mobile-menu-wrap > .header-logo {
-  margin-left: 1px;
-}
 .mobile-menu {
   margin: 44px 0 0 0;
 }
@@ -176,7 +172,7 @@ body {
   }
 
   .nav-wrap {
-    max-width: 170px;
+    min-width: 170px;
     align-items: center;
   }
 
@@ -207,6 +203,7 @@ body {
     margin: 0;
     display: flex;
     gap: 32px;
+    min-width: 245px;
   }
 
   .theme-switch-btn {

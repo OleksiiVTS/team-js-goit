@@ -183,13 +183,14 @@ export default class Gallery {
   }
 
   updateGallery(data, selector = this.out) {
-    if (!data && (!this.out || selector)) { 
+    if (!data && (!this.out || !selector)) { 
       //throw new Error("No value or wrong selector");
       return;
     }
-
-    selector.innerHTML = '';
-    selector.insertAdjacentHTML("beforeend", data);
+    if (selector) {
+      selector.innerHTML = '';
+      selector.insertAdjacentHTML("beforeend", data);
+    }
   }
 
   // якщо помилка
