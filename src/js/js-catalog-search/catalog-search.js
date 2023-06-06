@@ -1,6 +1,7 @@
 const url = 'https://api.themoviedb.org/3/search/movie?';
 const API_KEY = 'ddf41d08627025b2d6783befee0c5c94';
 let query = '';
+import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 const catalogSearchSubmitBtn = document.querySelector('.button-round-search');
@@ -13,16 +14,27 @@ const gallery = new Gallery({
   url: '/search/movie?',
   selector: '.catalogSearchForm',
 });
-console.dir(gallery.params.query);
+
+function onError(error) {
+  console.log(error);
+}
 console.log(5);
-function onSubmit(event) {
+
+async function onSubmit(event) {
   event.preventDefault();
 
   const value = catalogSearchForm.value.trim();
   if (value === '') return;
   else {
     gallery.params.query = value;
-    gallery.getList();
+
+    try {
+      const markup = await getThis();
+      console.log(markup);
+    } catch (err) {
+      onError(err);
+    }
+    // disableSpinner();
 
     //     OOPS...
     // We are very sorry!
@@ -33,5 +45,17 @@ function onSubmit(event) {
     //   return bader;
     // }
     // getMovie(query);
+  }
+}
+async function getThis() {
+  try {
+    const { results } = await gallery.getList();
+    if (!results) {
+      loadMoreBtn.hide();
+      return '';
+    }
+    return results.reduce((markup, el) => createMarkup(el) + markup, '');
+  } catch (err) {
+    onError(err);
   }
 }
