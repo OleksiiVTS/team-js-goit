@@ -1,9 +1,12 @@
 .catalog-search {
   margin: auto;
+  margin-bottom: 40px;
 }
 
 .form-search {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .catalog-search-input {
