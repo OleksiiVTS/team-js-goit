@@ -2,6 +2,8 @@ import Gallery from '../class/Gallery.js';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 
+import Movie from '../class/Movie.js';
+
 import filmsAPIService from './api-service';
 
 // const API_KEY = '45b8ac4dc4bcb28ba01349825b9d5176';
@@ -65,8 +67,14 @@ const paginationOptions = {
 };
 let pagination = new Pagination('.tui-pagination', paginationOptions);
   
+const movie = Movie({
+  id: 603692,
+  selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
+  url: '/movie',   // частина шляху для запиту
+  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+});
 
-
+movie.onMarkup();
 
 
 //Pagination first start with response from API and create total_pages

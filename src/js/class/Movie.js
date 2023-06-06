@@ -49,12 +49,13 @@ export default class Movie {
       const { api_key, page, query } = this.param;
       // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US' \
       const urlTrailers = `${this.url}/${id}/videos?$api_key=${api_key}&guery=${query}&page=${page}`
-      this.trailers = await axios(urlTrailers);
+      const trailers = await axios(urlTrailers);
+      this.trailers = await trailers.results;
 
       console.log(this.trailers);
       disableSpinner()
 
-      return this.trailers;
+      return trailers.results;
     
     } catch (error) {
       this.onError(`Cann't load trailers for movies_id=${id}:`, error);
