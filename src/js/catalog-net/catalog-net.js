@@ -53,11 +53,11 @@ function TemplateTrendsWeek( data ) {
 // console.log(movie);
 
 
-moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
+moviesTrendsWeek.onMarkup(TemplateTrendsWeek, 9);
 
 const paginationOptions = {
    totalItems: 500,
-        itemsPerPage: 10,
+        itemsPerPage: 9,
         visiblePages: 5,
      page: 1,
      centerAlign: false,
@@ -91,7 +91,7 @@ if (container) {
   const paginationPage = pagination.getCurrentPage();
   pagination.on('afterMove', function (eventData) {
     moviesTrendsWeek.page = eventData.page;
-    moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
+    moviesTrendsWeek.onMarkup(TemplateTrendsWeek, pagination._options.itemsPerPage);
   });
 
   function creatingTotalResultsPagination(res) {
