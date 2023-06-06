@@ -6,9 +6,7 @@
   align-items: center;
   text-align: center;
 }
-.footer-block {
-  display: block;
-}
+
 .footer__icon {
   margin-left: 7px;
   margin-right: 7px;
@@ -46,7 +44,7 @@
   /* display: flex;
   flex-wrap: wrap;
   gap: 10px; */
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 .footer-team-frame {
   position: relative;
@@ -95,11 +93,23 @@
 .footer-team-social-link:focus {
   background-color: #404bbf;
 }
+.footer-team-social-link.github {
+  background-color: #fff;
+}
 .footer-team-social-icon {
   width: 22px;
   height: 22px;
 }
+.footer-team-social-icon-github {
+  fill: #4d5ae5;
+  height: 40px;
 
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.footer-team-social-icon-github:hover,
+.footer-team-social-icon-github:focus {
+  fill: #404bbf;
+}
 .backdrop {
   position: fixed;
   top: 0;
@@ -141,32 +151,39 @@
 
   margin-left: auto;
   padding: 0;
-  border-radius: 50%;
+
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #e7e9fc;
+  background-color: #000000;
   cursor: pointer;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-.modal-close:hover,
+/* .modal-close:hover,
 .modal-close:focus,
 .modal-close:active {
   background-color: #404bbf;
-}
+} */
 .no-scroll {
   max-height: 100vh;
   overflow: hidden;
 }
 
 .icon-modal-close {
-  fill: #000000;
+  fill: #f8f8f8;
   height: 8px;
   width: 8px;
+  margin: auto;
+
   transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .modal-close:hover .icon-modal-close,
 .modal-close:focus .icon-modal-close,
 .modal-close:active .icon-modal-close {
-  fill: #ffffff;
+  fill: #f87719;
+}
+.footer-team-modal-title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 295px) {
@@ -196,10 +213,28 @@
     margin-right: 10px;
     margin-top: 0;
   }
+  .footer-team {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 570px;
+  }
+  .footer-team-frame:first-child {
+    margin-left: 146px;
+  }
 }
 @media screen and (min-width: 1280px) {
   .footer-container {
     margin-top: 100px;
     margin-bottom: 80px;
+  }
+  .footer-team {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 860px;
+  }
+  .footer-team-frame:first-child {
+    margin-left: 295px;
   }
 }
