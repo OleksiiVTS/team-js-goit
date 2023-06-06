@@ -7,12 +7,12 @@ const API_KEY = '347a4b587b74ee2a22d09434547acda6'
 const URL = 'https://api.themoviedb.org/3';
 
 export default class Movie {
-  constructor({ id, name, url, query, selector }) {
+  constructor({ id, url, query, selector }) {
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.url = URL + url;
     
     this.id = id;
-    this.nameMovie = name;
+    this.nameMovie = "";
     
     this.movieDetails = {};
     this.trailers = [];
@@ -44,7 +44,7 @@ export default class Movie {
       //const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}&page=${page}`
       //const movie = await axios(urlMovie, {});
       this.movieDetails = await data;
-      this.nameMovie = await data.name
+      this.nameMovie = await data.original_title;
       disableSpinner();
 
       return data;
