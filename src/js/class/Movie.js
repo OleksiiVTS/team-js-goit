@@ -1,0 +1,84 @@
+const axios = require("axios/dist/axios.min.js"); // node
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
+//import Notiflix from 'notiflix';
+
+// Класс + ключ
+const API_KEY = '347a4b587b74ee2a22d09434547acda6'
+const URL = 'https://api.themoviedb.org/3';
+
+export default class Movie {
+  constructor({ id, name, url, query, selector }) {
+    this.out = this.getSelect(selector);  // куди виводимо дані
+    this.url = URL + url;
+    
+    this.id = id;
+    this.nameMovie = name;
+    
+    this.movieDetails = {};
+    this.trailers = [];
+
+    this.params = {
+      api_key: API_KEY,
+      page: 1,
+      query: query,
+    };
+  }
+
+  // запит 
+  async getMovie(id = this.id) { 
+    const { api_key, page, query } = this.param;
+    // --url 'https://api.themoviedb.org/3/movie/603692?language=en-US' \
+    const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}`
+    this.movieDetails = await axios(urlMovie);
+
+    console.log(this.movieDetails);
+    
+    return this.movieDetails;
+  }
+
+  async getTrailers() { 
+    const { api_key, page, query } = this.param;
+    // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US' \
+    const urlTrailers = `${this.url}/${this.id}/videos?$api_key=${api_key}&guery=${query}`
+    this.trailers = await axios(urlTrailers);
+
+    console.log(this.trailers);
+
+    return this.trailers;
+  }
+
+  MarkupMovieDetails() { 
+
+  }
+
+  async onMarkup(idFilm = this.id, selector = this.out, cbMarkup = this.MarkupMovieDetails) { 
+    try {
+      enableSpinner();
+
+      const data = await this.getMovie(idFilm);
+      const trailers = await this.getTrailers(idFilm);
+      const markup = cbMarkup(data, trailers);
+
+      console.log(markup);
+      this.update(markup, selector);
+      
+      disableSpinner();
+  
+      return data;
+
+    } catch (error) {
+      this.onError('Film id not found:', error);
+    }
+  }
+
+    // вивід даних на хтмл-сторінку
+  update(data, selector = this.out) {
+    if (!data && (!this.out || !selector)) { 
+      //throw new Error("No value or wrong selector");
+      return;
+    }
+    selector.innerHTML = '';
+    selector.insertAdjacentHTML("beforeend", data);
+  }
+
+}
