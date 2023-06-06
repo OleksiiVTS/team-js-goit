@@ -8,42 +8,6 @@ const catalogSearchForm = document.querySelector('.catalog-search-input');
 const catalogSearchSubmitBtn = document.querySelector('.button-round-search');
 catalogSearchSubmitBtn.addEventListener('click', onSubmit);
 
-console.log(5);
-
-// Запит локально
-// async function onSubmit(event) {
-//   try {
-//     event.preventDefault();
-
-//     const value = catalogSearchForm.value.trim();
-//     if (value === '') return;
-//     else {
-//       enableSpinner();
-
-//       const { data } = await getMovies(value);
-
-//       if (data.results.length === 0) throw new Error('No data');
-//       disableSpinner();
-//       console.log(data.results);
-//     }
-//   } catch (error) {
-//     onError(error);
-//   }
-// }
-
-// // Запит на сервер
-// async function getMovies(query) {
-//   try {
-//     const response = await axios.get(
-//       `${url}?query=${query}&api_key=${API_KEY}`
-//     );
-
-//     return response;
-//   } catch (error) {
-//     onError(error);
-//   }
-// }
-
 function onError(error) {
   console.log(error);
   disableSpinner();
@@ -102,7 +66,7 @@ function onSubmit(event) {
     else {
       gallery.params.query = value;
       gallery.resetPage();
-      if (gallery.totalResults === 0) throw new Error('No data');
+      // if (gallery.totalResults === 0) throw new Error('No data');
       gallery.onMarkup(templateTest);
 
       creatingTotalResultsPagination();
