@@ -63,7 +63,57 @@ export default class Movie {
   }
 
   MarkupMovieDetails(data, trailers) { 
-    return ``;
+MarkupFilmDetails(data) { 
+    const {
+      filmTrailer,
+      backdrop_path,
+      original_title,
+      budget,
+      overview,
+      release_date,
+      genres,
+      vote_average,
+    } = data;
+
+    const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
+      
+      const urlTrailer = trailers.filter(e => { e.name.includes('Official'); return e.key })
+        `https://www.youtube.com/watch?v=${urlTrailer}`;
+      
+
+    return `
+    <div class="movie-card">
+      <img class="image"
+        src="${urlImage}" 
+        alt="{${original_title}}" 
+        loading="lazy"
+        title="{${original_title}}"/>
+
+      <div class="info">
+        <p class="info-item">
+         <b>Title: </b>${original_title}
+        </p>
+        <p class="info-item">
+          <b>Budget: </b>$${budget}
+        </p>
+        <p class="info-item">
+          <b>Traler: </b>$${urlTrailer}
+        </p>
+        <p class="info-item">
+          <b>Text: </b>${overview}
+        </p>
+        <p class="info-item">
+          <b>Release Date: </b>${release_date}
+        </p>
+        <p class="info-item">
+        <b>Genres: </b>${genres.map(e => e.name).join(', ')}
+        </p>
+        <p class="info-item">
+          <b>Vote: </b>${vote_average}
+        </p>
+
+      </div>
+    </div>`  
   }
 
   async onMarkup(id = this.id, selector = this.out, cbMarkup = this.MarkupMovieDetails) { 
