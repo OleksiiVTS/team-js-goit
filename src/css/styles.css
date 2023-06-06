@@ -7,3 +7,6 @@
 @import url('./styles//styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
+
+ /*Стилі hero-lib*/
+ @import url('./hero-lib.css/hero-lib.css');
