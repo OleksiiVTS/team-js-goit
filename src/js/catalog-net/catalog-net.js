@@ -39,6 +39,20 @@ function TemplateTrendsWeek( data ) {
   </a>`
 }
 
+
+// Детальна інформація по фільму з працюючим трейлером
+// ===============================
+// const movie = new Movie({
+//   id: 603692,                       // id-фільму
+//   selector: ".catalog-gallery",     // куди виводимо сформований HTML-код 
+//   url: '/movie',                    // частина шляху для запиту
+//   query: '""&language=en'           // сам запит, те що стоїть після знаку ?
+// });
+
+// movie.onMarkup();
+// console.log(movie);
+
+
 moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
 
 const paginationOptions = {
@@ -66,10 +80,8 @@ const paginationOptions = {
              '</a>'
      }
 };
+
 let pagination = new Pagination('.tui-pagination', paginationOptions);
-  
-
-
 
 
 //Pagination first start with response from API and create total_pages
@@ -84,6 +96,10 @@ pagination.on('afterMove', function(eventData) {
 function creatingTotalResultsPagination(res) {
     pagination.reset(res.data.total_results);
 };
+
+
+
+
 
 // async function onFetchData() {
 //   try {
