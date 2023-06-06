@@ -2,13 +2,15 @@ import Gallery from '../class/Gallery.js';
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.min.css';
 
+import Movie from '../class/Movie.js';
+
 import filmsAPIService from './api-service';
 
 // const API_KEY = '45b8ac4dc4bcb28ba01349825b9d5176';
 // const URL = 'https://api.themoviedb.org/3/trending/all/week';
 
 // екземпляр класа до відображення трендових фільмів на неділю
-export const moviesTrendsWeek = new Gallery({
+const moviesTrendsWeek = new Gallery({
   name: 'moviesTrendsWeek',
   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/week',   // частина шляху для запиту
@@ -26,7 +28,7 @@ function TemplateTrendsWeek( data ) {
     </h2>
       <div class="ganres_rating">
         <p class="catalog_genres">
-        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids)} | ${release_date}
+        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids, genres)} | ${release_date}
         </p>
         <p class="catalog_rating">
         Rating: ${(vote_average / 2).toFixed(1)}
@@ -39,7 +41,7 @@ function TemplateTrendsWeek( data ) {
 moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
 
 const paginationOptions = {
-   totalItems: 500,
+   totalItems: 500, //moviesTrendsWeek.totalPages,
         itemsPerPage: 10,
         visiblePages: 5,
      page: 1,
@@ -63,24 +65,36 @@ const paginationOptions = {
              '</a>'
      }
 };
+
+const movie = Movie({
+  id: 603692,
+  selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
+  url: '/movie',   // частина шляху для запиту
+  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+});
+
+movie.onMarkup();
+
+
 let pagination = new Pagination('.tui-pagination', paginationOptions);
   
-
-
-
-
 //Pagination first start with response from API and create total_pages
 //Go to Homepage-rendering.js
 //
 const paginationPage = pagination.getCurrentPage();
 pagination.on('afterMove', function(eventData) {
   moviesTrendsWeek.page = eventData.page;
+  moviesTrendsWeek.params.page = eventData.page;
   moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
 });
 
 function creatingTotalResultsPagination(res) {
     pagination.reset(res.data.total_results);
 };
+
+
+
+
 
 // async function onFetchData() {
 //   try {
