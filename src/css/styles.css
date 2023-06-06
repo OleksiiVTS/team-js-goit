@@ -18,7 +18,9 @@
 /* Стилі Load-more */
 @import url('./styles-vs/load-more.css');
 /* Стилі сітки каталога*/
-@import url('./styles-catalog_net/styles-catalog_net.css');
+@import url('./styles-catalog_net/mob-catalog_trends_week.css');
+@import url('./styles-catalog_net/tab-catalog_trends_week.css');
+@import url('./styles-catalog_net/desk-catalog_trends_week.css');
 
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');
