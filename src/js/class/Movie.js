@@ -24,6 +24,11 @@ export default class Movie {
     };
   }
 
+  // куди виводимо дані
+  getSelect(selector) {
+    return document.querySelector(selector);
+  }
+
   // запит 
   async getMovie(id = this.id) { 
     try {

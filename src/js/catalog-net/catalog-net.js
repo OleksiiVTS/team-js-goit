@@ -66,7 +66,7 @@ const paginationOptions = {
      }
 };
 
-const movie = Movie({
+const movie = new Movie({
   id: 603692,
   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
   url: '/movie',   // частина шляху для запиту
