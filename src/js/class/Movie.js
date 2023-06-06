@@ -29,7 +29,7 @@ export default class Movie {
     return document.querySelector(selector);
   }
 
-  // запит 
+  // запит для отримання фільму по id
   async getMovie(id = this.id) { 
     try {
 
@@ -44,30 +44,30 @@ export default class Movie {
       //const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}&page=${page}`
       //const movie = await axios(urlMovie, {});
       this.movieDetails = await data;
-
       disableSpinner();
-      return this.movieDetails;
+
+      return data;
 
     } catch (error) {
       this.onError(`Cann't load movie for movies_id=${id}:`, error);
     }
   }
 
+  // запит для отримання списку трейлерів для фільму по його id
   async getTrailers(id = this.id) { 
     try {
 
       enableSpinner()
-      
+
       const params = new Object(this.params);
 
       // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US'
       const url = this.url + `/${id}/videos`;
       const { data } = await axios.get(url, { params });
       this.trailers = await data.results;
-
       disableSpinner()
 
-      return trailers.results;
+      return data.results;
     
     } catch (error) {
       this.onError(`Cann't load trailers for movies_id=${id}:`, error);
@@ -87,11 +87,10 @@ export default class Movie {
       vote_average,
     } = data;
 
-    console.log(data, trailers);
     const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
-      
-    const urlTrailer = trailers.filter(e => { e.name.includes('Official'); return e.key })
-        `https://www.youtube.com/watch?v=${urlTrailer}`;
+    const [ offTrailer ] = trailers.filter(e => e.name === "Official Trailer");
+
+    const urlTrailer = `https://www.youtube.com/watch?v=${offTrailer.key}`;
       
 
     return `
@@ -107,10 +106,10 @@ export default class Movie {
          <b>Title: </b>${original_title}
         </p>
         <p class="info-item">
-          <b>Budget: </b>$${budget}
+          <b>Budget: </b>${budget}
         </p>
         <p class="info-item">
-          <b>Traler: </b>$${urlTrailer}
+          <b>Trailer: </b><a href='${urlTrailer}'>${offTrailer.name}</a>
         </p>
         <p class="info-item">
           <b>Text: </b>${overview}
@@ -135,10 +134,8 @@ export default class Movie {
 
       const data = await this.getMovie(id);
       const trailers = await this.getTrailers(id);
-      console.log(data, trailers);
       const markup = cbMarkup(data, trailers);
 
-      console.log(markup);
       this.update(markup, selector);
       
       disableSpinner();
