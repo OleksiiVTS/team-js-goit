@@ -1,3 +1,4 @@
+
 .upcoming_film {
   background-color: inherit;
 }
@@ -137,5 +138,5 @@ line-height: 1.43;
     font-weight: 500;
 
   }
-  /* если слов больше 2-х, то не влазит в строку */
+  
 }
