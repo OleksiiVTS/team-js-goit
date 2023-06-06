@@ -5,6 +5,10 @@
 /* Стилі модального вікта відсутності трейлера */
 @import url('./styles/modal-wind-tr.css');
 
+
+/* Стилі секції WEEKLY TRENDS */
+@import url('./styles/weekly-trands/weekly-trends.css');
+
 /* Стилі секції UPCOMING THIS MONTH */
 @import url('./up-th-mon/styles_mob.css');
 @import url('./up-th-mon/styles_tab.css');
