@@ -66,15 +66,17 @@ const paginationOptions = {
      }
 };
 
-const movie = new Movie({
-  id: 603692,                       // id-askmve
-  selector: ".catalog-gallery",     // куди виводимо сформований HTML-код 
-  url: '/movie',                    // частина шляху для запиту
-  query: '""&language=en'           // сам запит, те що стоъть після знаку ?
-});
+//Детальна інформація по фільму з працюючим трейлером
+//===============================
+// const movie = new Movie({
+//   id: 603692,                       // id-фільму
+//   selector: ".catalog-gallery",     // куди виводимо сформований HTML-код 
+//   url: '/movie',                    // частина шляху для запиту
+//   query: '""&language=en'           // сам запит, те що стоїть після знаку ?
+// });
 
-movie.onMarkup();
-console.log(movie.);
+// movie.onMarkup();
+// console.log(movie);
 
 
 let pagination = new Pagination('.tui-pagination', paginationOptions);
