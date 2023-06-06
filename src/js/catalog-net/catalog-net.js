@@ -28,7 +28,7 @@ function TemplateTrendsWeek( data ) {
     </h2>
       <div class="ganres_rating">
         <p class="catalog_genres">
-        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids)} | ${release_date}
+        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids.slice(0, 2))} | ${release_date.slice(0, 4)}
         </p>
         <p class="catalog_rating">
         Rating: ${(vote_average / 2).toFixed(1)}
