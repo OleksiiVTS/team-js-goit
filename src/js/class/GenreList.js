@@ -123,22 +123,6 @@ export default class GenreList {
     }
   }
 
-  // преоразовати усі категорії які є у фільмі з id на назву
-  // async convertId_to_Name(aGenre, list = this.list) {
-  //   try {
-  //     enableSpinner();
-  //     const result = aGenre.map(item => {
-  //       const obj = list.find(el => el.id === item);
-  //       return obj ? obj.name : null;
-  //     })
-  //     disableSpinner();
-
-  //     return result;
-  //   } catch (error) {
-  //     this.onError(error)
-  //   }
-  // }
-
   // якщо помилка
   onError(error){
     console.log(error);
