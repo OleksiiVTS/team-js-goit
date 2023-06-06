@@ -29,5 +29,7 @@
 @import url('./styles-catalog_net/tab-catalog_trends_week.css');
 @import url('./styles-catalog_net/desk-catalog_trends_week.css');
 
+/* Стилі пошуку каталогу */
+@import url('./styles/styles-catalog-search/catalog-search.css');
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');

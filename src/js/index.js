@@ -14,3 +14,5 @@ import './catalog-net/catalog-net.js';
 import './modal-w-litle/buttonup.js';
 
 import './addtolibrary/addtolibrary.js';
+
+import './js-catalog-search/catalog-search.js';
