@@ -50,8 +50,41 @@ function onError(error) {
 }
 
 // Запит через клас
-
+import Pagination from 'tui-pagination';
 import Gallery from '../class/Gallery.js';
+import MoviesTrendsWeek from '../catalog-net/catalog-net.js';
+
+import 'tui-pagination/dist/tui-pagination.min.css';
+
+import filmsAPIService from '../catalog-net/api-service.js';
+
+const container = document.querySelector('.tui-pagination');
+const paginationOptions = {
+  totalItems: 500,
+  itemsPerPage: 9,
+  visiblePages: 5,
+  page: 1,
+  centerAlign: false,
+  firstItemClassName: 'tui-first-child',
+  lastItemClassName: 'tui-last-child',
+  template: {
+    page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+    currentPage:
+      '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+    moveButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</a>',
+    disabledMoveButton:
+      '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+      '<span class="tui-ico-{{type}}">{{type}}</span>' +
+      '</span>',
+    moreButton:
+      '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+      '<span class="tui-ico-ellip">...</span>' +
+      '</a>',
+  },
+};
 
 const gallery = new Gallery({
   name: 'searchTest',
@@ -68,8 +101,11 @@ function onSubmit(event) {
     if (value === '') return;
     else {
       gallery.params.query = value;
-
+      gallery.resetPage();
+      if (gallery.totalResults === 0) throw new Error('No data');
       gallery.onMarkup(templateTest);
+
+      creatingTotalResultsPagination();
     }
   } catch (error) {
     onError(error);
@@ -108,4 +144,17 @@ function templateTest(data) {
   </div>
   </div>
   </a>`;
+}
+function creatingTotalResultsPagination() {
+  paginationSearch.reset();
+}
+
+if (container) {
+  const paginationSearch = new Pagination(container, paginationOptions);
+
+  const paginationPage = paginationSearch.getCurrentPage();
+  paginationSearch.on('afterMove', function (eventData) {
+    gallery.page = eventData.page;
+    gallery.onMarkup(templateTest, paginationSearch._options.itemsPerPage);
+  });
 }
