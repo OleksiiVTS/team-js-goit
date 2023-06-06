@@ -26,37 +26,53 @@ export default class Movie {
 
   // запит 
   async getMovie(id = this.id) { 
-    const { api_key, page, query } = this.param;
-    // --url 'https://api.themoviedb.org/3/movie/603692?language=en-US' \
-    const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}`
-    this.movieDetails = await axios(urlMovie);
+    try {
+      enableSpinner()
+      const { api_key, page, query } = this.param;
+      // --url 'https://api.themoviedb.org/3/movie/603692?language=en-US' \
+      const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}&page=${page}`
+      this.movieDetails = await axios(urlMovie);
 
-    console.log(this.movieDetails);
-    
-    return this.movieDetails;
+      console.log(this.movieDetails);
+      disableSpinner();
+      return this.movieDetails;
+
+    } catch (error) {
+      this.onError(`Cann't load movie for movies_id=${id}:`, error);
+    }
   }
 
   async getTrailers() { 
-    const { api_key, page, query } = this.param;
-    // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US' \
-    const urlTrailers = `${this.url}/${this.id}/videos?$api_key=${api_key}&guery=${query}`
-    this.trailers = await axios(urlTrailers);
+    try {
 
-    console.log(this.trailers);
+      enableSpinner(id = this.id)
+      const { api_key, page, query } = this.param;
+      // --url 'https://api.themoviedb.org/3/movie/603692/videos?language=en-US' \
+      const urlTrailers = `${this.url}/${id}/videos?$api_key=${api_key}&guery=${query}&page=${page}`
+      this.trailers = await axios(urlTrailers);
 
-    return this.trailers;
+      console.log(this.trailers);
+      disableSpinner()
+
+      return this.trailers;
+    
+    } catch (error) {
+      this.onError(`Cann't load trailers for movies_id=${id}:`, error);
+    }
+
   }
 
-  MarkupMovieDetails() { 
-
+  MarkupMovieDetails(data, trailers) { 
+    return ``;
   }
 
-  async onMarkup(idFilm = this.id, selector = this.out, cbMarkup = this.MarkupMovieDetails) { 
+  async onMarkup(id = this.id, selector = this.out, cbMarkup = this.MarkupMovieDetails) { 
     try {
       enableSpinner();
 
-      const data = await this.getMovie(idFilm);
-      const trailers = await this.getTrailers(idFilm);
+      const data = await this.getMovie(id);
+      const trailers = await this.getTrailers(id);
+      console.log(data, trailers);
       const markup = cbMarkup(data, trailers);
 
       console.log(markup);
@@ -67,7 +83,7 @@ export default class Movie {
       return data;
 
     } catch (error) {
-      this.onError('Film id not found:', error);
+      this.onError(`Movie with movie_id=${id} not found:`, error);
     }
   }
 
@@ -81,4 +97,8 @@ export default class Movie {
     selector.insertAdjacentHTML("beforeend", data);
   }
 
+  // якщо помилка
+  onError(error){
+    console.log(error);
+  } 
 }
