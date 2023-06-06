@@ -29,9 +29,7 @@
 }
 
 .catalog_title {
-  /* font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 500; */
+  min-width: 385px;
   font-size: 20px;
   line-height: 1.2;
 }

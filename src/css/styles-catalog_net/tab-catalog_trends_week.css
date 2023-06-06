@@ -32,9 +32,7 @@
      }
   
      .catalog_title {
-       /* font-family: 'Roboto';
-       font-style: normal;
-       font-weight: 500; */
+       max-width: 214px;
        font-size: 12px;
        line-height: 1.58;
      }
