@@ -81,23 +81,24 @@ const paginationOptions = {
      }
 };
 
-let pagination = new Pagination('.tui-pagination', paginationOptions);
+const container = document.querySelector('.tui-pagination');
+if (container) {
+  let pagination = new Pagination(container, paginationOptions);
 
+  //Pagination first start with response from API and create total_pages
+  //Go to Homepage-rendering.js
+  //
+  const paginationPage = pagination.getCurrentPage();
+  pagination.on('afterMove', function (eventData) {
+    moviesTrendsWeek.page = eventData.page;
+    moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
+  });
 
-//Pagination first start with response from API and create total_pages
-//Go to Homepage-rendering.js
-//
-const paginationPage = pagination.getCurrentPage();
-pagination.on('afterMove', function(eventData) {
-  moviesTrendsWeek.page = eventData.page;
-  moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
-});
-
-function creatingTotalResultsPagination(res) {
+  function creatingTotalResultsPagination(res) {
     pagination.reset(res.data.total_results);
-};
+  };
 
-
+}
 
 
 
