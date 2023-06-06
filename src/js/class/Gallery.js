@@ -1,6 +1,7 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
-import Notiflix from 'notiflix';
+import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
+//import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6'
@@ -14,9 +15,11 @@ const genres = new GenreList({
 genres.getGenreList();
 
 export default class Gallery {
-  constructor({url, query, selector}) {
+  constructor({ name, url, query, selector }) {
+    this.name = name;                     // назва ключа у ЛС
     this.out = this.getSelect(selector);  // куди виводимо дані
     this.page = 1;
+    this.listMovies = this.importFromLS();  // список фільмів
 
     this.url = URL + url;
     this.params = { 
@@ -25,7 +28,7 @@ export default class Gallery {
       query: query,
     };
 
-    this.totalPage = 0;
+    this.totalPages = 0;
     this.totalResults = 0;
   }
 
@@ -39,28 +42,22 @@ export default class Gallery {
   // @string - pathUrl - частина url після URL 
   // https://api.themoviedb.org/3/trending/movie/day?api_key=999999&page=1&
   //
+
+  // отримання даних з серверу
   async getMoviesList() {
     try {
-
-      const data = await this.getList();
-      this.incrementPage();
-
-      return data; 
-
-    } catch (error) {
-      this.onError(error)
-    }
-
-  }
-
-  async getList() {
-    try {
+      enableSpinner();
+      this.params.page = this.page;
       const params = new Object(this.params);
-      const { data }  = await axios.get(this.url, { params });
+      const { data } = await axios.get(this.url, { params });
       
-      this.totalPage = data.total_page;
-      this.totalResult = data.total_result;
-  
+      this.exportToLS(data.results);
+      this.listMovies = this.importFromLS();
+
+      this.totalPages = await data.total_pages;
+      this.totalResults = await data.total_results;
+      disableSpinner();
+
       return data.results; 
 
     } catch (error) {
@@ -68,29 +65,57 @@ export default class Gallery {
     }
   }
 
+  // запис списку фільмів у LS
+  exportToLS(data) {
+    if (!this.name.trim()) { 
+        throw new Error("no field name in create Class");
+        return;
+    }
+      
+    const str = JSON.stringify(data);
+    localStorage.setItem(this.name, str);
+  }
+
+  // зчитування списку фільмів з LS
+  importFromLS() {
+    try {
+      const str = localStorage.getItem(this.name);
+      const arr = JSON.parse(str);
+      return arr
+    } catch (error) {
+        throw new Error("Wrong read data from LS");
+        return null;
+    }
+  }
+
+  // додавання сторінки
   incrementPage() {
     this.page++;
   }
 
+  //очистити блок сторінок
   resetPage() { 
     this.page = 1;
-    this.totalPage = 0;
-    this.totalResult = 0;
+    this.totalPages = 0;
+    this.totalResults = 0;
+    localStorage.removeItem(this.name);
   }
 
   /// trending/movie/day || week
   //
   // cписок фільмів у тренді за день \ неділю
-  async createNewCards() {
+  async createNewCards(cbTemplate) {
     try {
       // day -https://api.themoviedb.org/3/trending/movie/day
       // week - https://api.themoviedb.org/3/trending/movie/week
       // const url = '/trending/movie/day';
       // const query = 'language=en-US'
+      enableSpinner();
       const cards = await this.getMoviesList();
 
+      disableSpinner();
       return cards.reduce(
-           (acc, data) => acc + this.createCardGallery(data), "");
+           (acc, data) => acc + cbTemplate(data), "");
 
     } catch (error) {
       this.onError(error);  
@@ -99,12 +124,12 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup() { 
+  async onMarkup(cbTemplate = this.createCardGallery) { 
     try {
-
-      const markup = await this.createNewCards();
+      enableSpinner();
+      const markup = await this.createNewCards(cbTemplate);
       this.updateGallery(markup);
-
+      disableSpinner();
       return markup;
 
     } catch (error) {
@@ -147,7 +172,7 @@ export default class Gallery {
     </div>`
   }
 
-  convertId_to_Name(aGenre, list) {
+  convertId_to_Name(aGenre, list = genres.importFromLS()) {
 
       const result = aGenre.map(item => {
         const obj = list.find(el => el.id === item);
@@ -157,13 +182,14 @@ export default class Gallery {
       return result.join(', ');
   }
 
-  updateGallery(data) {
-    if (!data || !this.out) { 
-      throw new Error("No value or wrong selector");
+  updateGallery(data, selector = this.out) {
+    if (!data && (!this.out || selector)) { 
+      //throw new Error("No value or wrong selector");
       return;
     }
 
-    this.out.insertAdjacentHTML("beforeend", data);
+    selector.innerHTML = '';
+    selector.insertAdjacentHTML("beforeend", data);
   }
 
   // якщо помилка

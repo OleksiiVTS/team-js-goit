@@ -2,11 +2,29 @@
 @import url('./styles/reset.css');
 /* все що стосується кнопок, назви кнопок скопіевані вам у кожен css */
 @import url('./styles/buttons.css');
+/* Стилі модального вікта відсутності трейлера */
+@import url('./styles/modal-wind-tr.css');
 
+/* Стилі секції UPCOMING THIS MONTH */
+@import url('./up-th-mon/styles_mob.css');
+@import url('./up-th-mon/styles_tab.css');
+@import url('./up-th-mon/styles_pc.css');
 /* header */
-@import url('./styles//styles-header/header.css');
+@import url('./styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
-
  /*Стилі hero-lib*/
  @import url('./hero-lib.css/hero-lib.css');
+/* Стилі Фільтра бібліотеки */
+@import url('./styles-vs/filter-library.css');
+/* hero-homepage */
+@import url('./hero-homepage/hero-homepage.css');
+/* Стилі Load-more */
+@import url('./styles-vs/load-more.css');
+/* Стилі сітки каталога*/
+@import url('./styles-catalog_net/mob-catalog_trends_week.css');
+@import url('./styles-catalog_net/tab-catalog_trends_week.css');
+@import url('./styles-catalog_net/desk-catalog_trends_week.css');
+
+/* Стилі Footer */
+@import url('./styles/styles-footer/footer.css');
