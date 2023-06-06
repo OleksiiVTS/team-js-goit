@@ -150,5 +150,5 @@ fetchFilmData().then((filmData) => {
   console.log("Получены данные о фильме:", filmData);
   createFilmCard(filmData);
 });
-src/js/upcoming-this-month/_index-up-th-mon.js
+// src/js/upcoming-this-month/_index-up-th-mon.js
 
