@@ -64,7 +64,6 @@ export default class Movie {
   }
 
   MarkupMovieDetails(data, trailers) { 
-MarkupFilmDetails(data) { 
     const {
       filmTrailer,
       backdrop_path,
@@ -76,9 +75,10 @@ MarkupFilmDetails(data) {
       vote_average,
     } = data;
 
+    console.log(data, trailers);
     const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
       
-      const urlTrailer = trailers.filter(e => { e.name.includes('Official'); return e.key })
+    const urlTrailer = trailers.filter(e => { e.name.includes('Official'); return e.key })
         `https://www.youtube.com/watch?v=${urlTrailer}`;
       
 
