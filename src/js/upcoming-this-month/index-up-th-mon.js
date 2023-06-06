@@ -22,10 +22,12 @@ function createFilmCard(film) {
     // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
     return;
   }
+
   if (film === null) {
     // Если фильмы не найдены, отображаем модальное окно
     startModalWiNoTreiler();
   } else {
+
     // Если фильмы найдены, создаем карточку фильма
     const cardHTML = `
       <div class="film-card">
@@ -83,6 +85,13 @@ function createFilmCard(film) {
     `;
   
     cardContainer.innerHTML = cardHTML;
+
+// Округляем значения до десятков
+const popularityValueElement = document.querySelector(".popularity-value");
+popularityValueElement.textContent = Math.round(film.popularity / 10) * 10;
+
+const voteAverageElement = document.querySelector(".vote-average");
+voteAverageElement.textContent = Math.round(film.vote_average / 10) * 10;
 
 
     // Проверяем наличие фильма в Local Storage и обновляем состояние кнопки
@@ -147,7 +156,7 @@ function toggleLibraryFilm() {
 
 // Вызываем функцию для получения данных о фильме и создания карточки
 fetchFilmData().then((filmData) => {
-  console.log("Получены данные о фильме:", filmData);
+  // console.log("Получены данные о фильме:", filmData);
   createFilmCard(filmData);
 });
 
