@@ -44,6 +44,7 @@ export default class Movie {
       //const urlMovie = `${this.url}/${id}?$api_key=${api_key}&guery=${query}&page=${page}`
       //const movie = await axios(urlMovie, {});
       this.movieDetails = await data;
+      this.nameMovie = await data.name
       disableSpinner();
 
       return data;

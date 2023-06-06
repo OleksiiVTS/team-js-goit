@@ -74,6 +74,7 @@ const movie = new Movie({
 });
 
 movie.onMarkup();
+console.log(movie.);
 
 
 let pagination = new Pagination('.tui-pagination', paginationOptions);
