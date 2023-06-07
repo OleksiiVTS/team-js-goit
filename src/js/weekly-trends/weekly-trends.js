@@ -19,34 +19,36 @@ function TemplateTrendsWeek(data) {
 
 
   return `<a href="" data-id-movie="${id}">
-    <div class="movie-card overlay-card weekly-movie-card">
-    <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
-    <div class="gallery__up_image"></div>
-    <div class="catalog_info">
-      <h2 class="catalog_title">
-      ${title}
-      </h2>
-        <div class="ganres_rating">
-          <p class="catalog_genres">
+    <div class="weekly-movie-card">
+      <img src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" class="weekly-movie-image" loading="lazy"/>
+      <div class="weekly-movie-details">
+        <h2 class="weekly-movie-title">${title}</h2>
+        
+        <div class="weekly-movie-genre-stars">
+          <p class="weekly-movie-genre">
           ${moviesTrendsWeek.convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
           </p>
-          <div class="rating">
-          <div class="rating__body">
-            <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
-            <div class="rating__items">
-              <input type="radio" class="rating__item" name="rating" value="1">
-              <input type="radio" class="rating__item" name="rating" value="2">
-              <input type="radio" class="rating__item" name="rating" value="3">
-              <input type="radio" class="rating__item" name="rating" value="4">
-              <input type="radio" class="rating__item" name="rating" value="5">
+
+          
+          <!-- Зірочки рейтингу -->
+          <div class="rating weekly-rating-positions">
+            <div class="rating__body">
+              <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+              <div class="rating__items">
+                <input type="radio" class="rating__item" name="rating" value="1">
+                <input type="radio" class="rating__item" name="rating" value="2">
+                <input type="radio" class="rating__item" name="rating" value="3">
+                <input type="radio" class="rating__item" name="rating" value="4">
+                <input type="radio" class="rating__item" name="rating" value="5">
+              </div>
             </div>
           </div>
+          
         </div>
-        </div>
+      </div>
     </div>
-    </div>
-    </a>`
-  }
+  </a>`;
+}
 
 
 
