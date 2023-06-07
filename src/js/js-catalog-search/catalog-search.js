@@ -9,7 +9,11 @@ import Pagination from 'tui-pagination';
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
 window.addEventListener('click', function (event) {
-  if (event.view.location.pathname === '/catalog.html') {
+
+  console.log('event', event);
+  console.log(event.view.location.pathname);
+  
+  if (event.view.location.pathname == '/catalog.html') {
     return document
       .getElementById('btn-search')
       .addEventListener('click', onSubmit);
@@ -33,7 +37,10 @@ const moviesTrendsWeek = new Gallery({
   query: '""&language=en'          // сам запит, те що стоъть після знаку ?
 });
 
-moviesTrendsWeek.onMarkup(moviesTrendsWeek.TemplateMovieCard, moviesTrendsWeek.perPage);
+moviesTrendsWeek.onMarkup(
+  moviesTrendsWeek.TemplateMovieCard,
+  moviesTrendsWeek.perPage
+);
 initPagination(moviesTrendsWeek);
 
 // для пошуку
@@ -48,9 +55,17 @@ function onSubmit(event) {
   try {
     event.preventDefault();
 
+    console.log("movie", moviesTrendsWeek);
+    console.log("gallery", gallery);
+
     const value = catalogSearchForm.value.trim();
     if (value === '') {
-      moviesTrendsWeek.onMarkup();
+
+      moviesTrendsWeek.onMarkup(
+        moviesTrendsWeek.TemplateMovieCard,
+        moviesTrendsWeek.perPage
+      );
+
       initPagination(moviesTrendsWeek);
       return;
     }
@@ -59,7 +74,12 @@ function onSubmit(event) {
      
       gallery.resetPage();
       // if (gallery.totalResults === 0) throw new Error('No data');
-      gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
+      
+      gallery.onMarkup(
+        gallery.TemplateMovieCard,
+        gallery.perPage
+      );
+
       initPagination(gallery);
 
     }
@@ -68,7 +88,9 @@ function onSubmit(event) {
   }
 }
 
+/// Пагінація
 export function initPagination(objGallery) {
+  console.log('Pagin-objGallery', objGallery);
   const paginationOptions = {
     totalItems: 500,
     itemsPerPage: objGallery.perPage,
