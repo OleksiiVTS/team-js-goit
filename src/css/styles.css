@@ -5,7 +5,6 @@
 /* Стилі модального вікта відсутності трейлера */
 @import url('./styles/modal-wind-tr.css');
 
-
 /* Стилі секції WEEKLY TRENDS */
 @import url('./styles/weekly-trands/weekly-trends.css');
 
@@ -17,8 +16,8 @@
 @import url('./styles-header/header.css');
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
- /*Стилі hero-lib*/
- @import url('./hero-lib.css/hero-lib.css');
+/*Стилі hero-lib*/
+@import url('./hero-lib/hero-lib.css');
 /* Стилі Фільтра бібліотеки */
 @import url('./styles-vs/filter-library.css');
 /* hero-homepage */
@@ -29,8 +28,11 @@
 @import url('./styles-catalog_net/mob-catalog_trends_week.css');
 @import url('./styles-catalog_net/tab-catalog_trends_week.css');
 @import url('./styles-catalog_net/desk-catalog_trends_week.css');
+@import url('./pagination/pagination-desk.css');
 
 /* Стилі пошуку каталогу */
 @import url('./styles/styles-catalog-search/catalog-search.css');
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');
+/* Рейтинг зірочки */
+@import url('../css/styles/stars-rating/stars-rating.css');

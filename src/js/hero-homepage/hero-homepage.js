@@ -25,7 +25,6 @@ async function getRandomFilm() {
   randomFilmIndex = filmIndexes[randomIndex];
   const filmDetails = await getFilmDetails(randomFilmIndex);
 
-  // console.log(filmDetails);
   return filmDetails;
 }
 
@@ -34,6 +33,7 @@ async function getFilmDetails(filmIndex) {
 
   try {
     const response = await fetch(apiUrl);
+
     const {
       title,
       trailer_key: filmTrailer,
@@ -44,6 +44,7 @@ async function getFilmDetails(filmIndex) {
       release_date,
       popularity,
       genres,
+      poster_path,
     } = await response.json();
 
     const filmTrailerUrl = `https://www.youtube.com/watch?v=${filmTrailer}`;
@@ -59,6 +60,7 @@ async function getFilmDetails(filmIndex) {
       release_date,
       popularity,
       genres,
+      poster_path,
     };
   } catch (error) {
     console.log('Error occurred while making API request:', error);
@@ -100,6 +102,14 @@ function createHTML(markup) {
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
+  let libraryFilms = [];
+  const libraryFilmsString = localStorage.getItem('libraryFilms');
+  if (libraryFilmsString) {
+    libraryFilms = JSON.parse(libraryFilmsString);
+  } else {
+    localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+  }
+
   const filmDetails = await getRandomFilm();
   const filmBoxHTML = createFilmBox(filmDetails);
   createHTML(filmBoxHTML);
@@ -119,12 +129,14 @@ function openModal() {
   modalHero.classList.toggle('m-w-t-is-hidden');
   document.addEventListener('keydown', escapeHandler);
   window.addEventListener('click', outsideClickHandler);
+  disableScroll();
 }
 
 function closeModal() {
   modalHero.classList.toggle('m-w-t-is-hidden');
   document.removeEventListener('keydown', escapeHandler);
   window.removeEventListener('click', outsideClickHandler);
+  enableScroll();
 }
 
 function escapeHandler(event) {
@@ -144,43 +156,78 @@ const modalDetails = document.getElementById('moreDetails');
 
 function createDetailsBox({
   title,
-  backgroundImage,
   overview,
   vote_average,
   vote_count,
   release_date,
   popularity,
   genres,
+  poster_path,
 }) {
+  let btn = 'Add to My Library';
+  const library = JSON.parse(localStorage.getItem('libraryFilms'));
+
+  for (const film of library) {
+    if (film.title === title) {
+      btn = 'Remove from My Library';
+    }
+  }
+
   const detailsBoxHTML = `
     <div class="more-details-modal">
       <div class="close-button-box">
-        <button id="closeDetails" type="button">X</button>
+        <button class="more-details-close-button" id="closeDetails" type="button">X
+       </button>
       </div>
+      <div class="details-wrapper">
+
       <div class="more-details-img-box">
-        <img class="more-detail-img" src="https://image.tmdb.org/t/p/original/${backgroundImage}" alt="${title}" />
+        <img width="380px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
       </div>
+
+
+      
       <div class="more-details-info">
         <h2 class="film-title">${title}</h2>
-        <span class="release">Release Date:</span>
-        <span class="release-value release-date">${release_date}</span>
-        <span class="vote">Vote / Votes:</span>
-        <span class="vote-value">
-          <span class="vote-average">${vote_average}</span> /
+
+
+
+   
+   
+      
+        <table>
+        <tr>
+          <td class="table-row table-column-name">Vote / Votes:</td>
+          <td ><span class="vote-average">${vote_average}</span> /
           <span class="vote-count">${vote_count}</span>
-        </span>
-        <span class="popularity">Popularity:</span>
-        <span class="popularity-value">${popularity}</span>
-        <span class="genre">Genre:</span>
-        <span class="genre-value">${genres
-          .map(genre => genre.name)
-          .join(', ')}</span>
-        <span class="description-about">About:</span>
-        <span class="about-value">${overview}</span>
+       </td>
+        </tr>
+        <tr>
+          <td class="table-row table-column-name">Popularity:</td>
+          <td>${popularity}</td>
+        </tr>
+        <tr>
+        <td class="table-row table-column-name">Genre:</td>
+        <td >${genres.map(genre => genre.name).join(', ')}</td>
+      </tr>
+      </table>
+
+
+
+               <span class="description-about">About:</span>
+        <span class="more-details-about">${overview}</span>
+
+
+        <div class="more-details-adml-box">
+        <button id="addToLibraryButton" class="button-rem-me">${btn}</button>
       </div>
-      <div class="more-details-adml-box">
-        <button id="addToLibraryButton" class="button-rem-me">Add to My Library</button>
       </div>
+
+
+     
+
+      </div>
+     </div>
     </div>
   `;
 
@@ -195,12 +242,14 @@ function createMoreDetails(markup) {
 }
 
 async function openDetails() {
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+
   modalDetails.classList.toggle('more-details-is-hidden');
   document.addEventListener('keydown', escapeHandlerDetails);
   window.addEventListener('click', outsideClickHandlerDetails);
 
   const filmDetails = await getFilmDetails(randomFilmIndex);
-
   const detailsBoxHTML = createDetailsBox(filmDetails);
   createMoreDetails(detailsBoxHTML);
 
@@ -242,15 +291,21 @@ async function toggleLibraryFilm() {
 }
 
 function getLibraryFilms() {
+  let libraryFilms = [];
   const libraryFilmsString = localStorage.getItem('libraryFilms');
   if (libraryFilmsString) {
-    return JSON.parse(libraryFilmsString);
+    libraryFilms = JSON.parse(libraryFilmsString);
   } else {
-    return [];
+    localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
   }
+  return libraryFilms;
 }
 
 function closeDetails() {
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
+
+  enableScroll();
   modalDetails.classList.toggle('more-details-is-hidden');
   document.removeEventListener('keydown', escapeHandlerDetails);
   window.removeEventListener('click', outsideClickHandlerDetails);
@@ -272,4 +327,14 @@ function outsideClickHandlerDetails(event) {
 
 function clearDetailsBox() {
   modalDetails.innerHTML = '';
+}
+
+function disableScroll() {
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+}
+
+function enableScroll() {
+  document.body.style.overflow = '';
+  document.documentElement.style.overflow = '';
 }
