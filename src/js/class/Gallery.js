@@ -216,9 +216,18 @@ export default class Gallery {
           <p class="catalog_genres">
           ${convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
           </p>
-          <p class="catalog_rating">
-          Rating: ${(vote_average / 2).toFixed(1)}
-        </p>
+          <div class="rating">
+          <div class="rating__body">
+            <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+            <div class="rating__items">
+              <input type="radio" class="rating__item" name="rating" value="1">
+              <input type="radio" class="rating__item" name="rating" value="2">
+              <input type="radio" class="rating__item" name="rating" value="3">
+              <input type="radio" class="rating__item" name="rating" value="4">
+              <input type="radio" class="rating__item" name="rating" value="5">
+            </div>
+          </div>
+        </div>
         </div>
     </div>
     </div>
