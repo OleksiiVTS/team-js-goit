@@ -92,7 +92,7 @@ export function initPagination(objGallery) {
   //console.log('Pagin-objGallery', objGallery);
   
   const paginationOptions = {
-    totalItems: 500,
+    totalItems: objGallery.totalPages > 1 ? objGallery.totalPages : 500,
     itemsPerPage: objGallery.perPage,
     visiblePages: 5,
     page: 1,
