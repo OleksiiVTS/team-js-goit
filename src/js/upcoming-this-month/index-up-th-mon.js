@@ -51,7 +51,7 @@ function createFilmCard(film) {
                 </div>
                 <div class="info-item">
                   <span class="vote">Vote / Votes:</span>
-                  <span class="vote-value">
+                  <span >
                     <span class="vote-average">${film.vote_average}</span> /
                     <span class="vote-count">${film.vote_count}</span>
                   </span>
