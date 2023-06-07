@@ -1,5 +1,5 @@
 import Gallery from '../class/Gallery.js';
-// import Pagination from 'tui-pagination';
+import Pagination from 'tui-pagination';
 // import 'tui-pagination/dist/tui-pagination.min.css';
 
 // import filmsAPIService from './api-service';
@@ -18,31 +18,6 @@ export const moviesTrendsWeek = new Gallery({
 moviesTrendsWeek.onMarkup();
 
 
-// function TemplateTrendsWeek( data ) {
-//   const { poster_path, original_title, title, vote_average, release_date, genres, id} = data;
-
-//   return `<a href="" data-id-movie="${id}">
-//   <div class="movie-card overlay-card">
-//   <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
-//   <div class="gallery__up_image"></div>
-//   <div class="catalog_info">
-//     <h2 class="catalog_title">
-//     ${title}
-//     </h2>
-//       <div class="ganres_rating">
-//         <p class="catalog_genres">
-//         ${moviesTrendsWeek.convertId_to_Name(data.genre_ids.slice(0, 2))} | ${release_date.slice(0, 4)}
-//         </p>
-//         <p class="catalog_rating">
-//         Rating: ${(vote_average / 2).toFixed(1)}
-//       </p>
-//       </div>
-//   </div>
-//   </div>
-//   </a>`
-// }
-
-
 // Детальна інформація по фільму з працюючим трейлером
 // ===============================
 // const movie = new Movie({
@@ -56,52 +31,50 @@ moviesTrendsWeek.onMarkup();
 // console.log(movie);
 
 
+const paginationOptions = {
+   totalItems: 500,
+        itemsPerPage: moviesTrendsWeek.perPage,
+        visiblePages: 5,
+     page: 1,
+     centerAlign: false,
+     firstItemClassName: 'tui-first-child',
+     lastItemClassName: 'tui-last-child',
+     template: {
+         page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+         currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+         moveButton:
+             '<a href="#" class="tui-page-btn tui-{{type}}">' +
+                 '<span class="tui-ico-{{type}}">{{type}}</span>' +
+             '</a>',
+         disabledMoveButton:
+             '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+                 '<span class="tui-ico-{{type}}">{{type}}</span>' +
+             '</span>',
+         moreButton:
+             '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+                 '<span class="tui-ico-ellip">...</span>' +
+             '</a>'
+     }
+};
 
+const container = document.querySelector('.tui-pagination');
+if (container) {
+  let pagination = new Pagination(container, paginationOptions);
 
-// const paginationOptions = {
-//    totalItems: 500,
-//         itemsPerPage: moviesTrendsWeek.perPage,
-//         visiblePages: 5,
-//      page: 1,
-//      centerAlign: false,
-//      firstItemClassName: 'tui-first-child',
-//      lastItemClassName: 'tui-last-child',
-//      template: {
-//          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-//          currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-//          moveButton:
-//              '<a href="#" class="tui-page-btn tui-{{type}}">' +
-//                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
-//              '</a>',
-//          disabledMoveButton:
-//              '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-//                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
-//              '</span>',
-//          moreButton:
-//              '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-//                  '<span class="tui-ico-ellip">...</span>' +
-//              '</a>'
-//      }
-// };
+  //Pagination first start with response from API and create total_pages
+  //Go to Homepage-rendering.js
+  //
+  const paginationPage = pagination.getCurrentPage();
+  pagination.on('afterMove', function (eventData) {
+    moviesTrendsWeek.page = eventData.page;
+    moviesTrendsWeek.onMarkup();
+  });
 
-// const container = document.querySelector('.tui-pagination');
-// if (container) {
-//   let pagination = new Pagination(container, paginationOptions);
+  function creatingTotalResultsPagination(res) {
+    pagination.reset(res.data.total_results);
+  };
 
-//   //Pagination first start with response from API and create total_pages
-//   //Go to Homepage-rendering.js
-//   //
-//   const paginationPage = pagination.getCurrentPage();
-//   pagination.on('afterMove', function (eventData) {
-//     moviesTrendsWeek.page = eventData.page;
-//     moviesTrendsWeek.onMarkup();
-//   });
-
-//   function creatingTotalResultsPagination(res) {
-//     pagination.reset(res.data.total_results);
-//   };
-
-// }
+}
 
 
 
