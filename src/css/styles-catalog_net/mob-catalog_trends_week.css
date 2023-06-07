@@ -64,16 +64,13 @@
     margin-top: 16px;
     row-gap: 16px;
   }
-    
   .gallery__image {
     width: 280px;
   }
-
   .catalog_title {
     max-width: 275px;
   }
-
-        .ganres_rating {
-          margin-right: 20px;
-        }     
+  .ganres_rating {
+    margin-right: 20px;
+  }     
 }

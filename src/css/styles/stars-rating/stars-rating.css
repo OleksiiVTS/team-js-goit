@@ -1,21 +1,22 @@
 .rating {
   display: flex;
   align-items: flex-end;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 0.75;
 }
 @media screen and (min-width: 768px) {
   .rating {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 @media screen and (min-width: 1280px) {
   .rating {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 .rating__body {
   position: relative;
+  /* border-color: #F87719; */
 }
 .rating__body::before {
   content: "★★★★★";
@@ -31,12 +32,12 @@
 }
 .rating__active::before {
   content: "★★★★★";
-  position: absolute;
+  position: absolute; 
   width: 100%;
   height: 100px;
   top: 0;
   left: 0;
-  color: #F87719
+  color: #F87719;
 }
 .rating__items {
   display: flex;

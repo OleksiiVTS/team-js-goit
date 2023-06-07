@@ -223,11 +223,11 @@ export default class Gallery {
       <h2 class="catalog_title">
       ${title}
       </h2>
-        <div class="ganres_rating">
+      <div class="ganres_rating">
           <p class="catalog_genres">
           ${convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
           </p>
-          <div class="rating">
+        <div class="rating">
           <div class="rating__body">
             <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
             <div class="rating__items">
@@ -239,7 +239,7 @@ export default class Gallery {
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </div>
     </div>
     </a>`

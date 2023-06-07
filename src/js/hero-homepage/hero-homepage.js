@@ -67,7 +67,7 @@ async function getFilmDetails(filmIndex) {
   }
 }
 
-function createFilmBox({ title, popularity, backgroundImage, overview }) {
+function createFilmBox({ title, vote_average, backgroundImage, overview }) {
   const words = overview.split(' ');
   let truncatedOverview = words.slice(0, 30).join(' ');
 
@@ -86,7 +86,18 @@ function createFilmBox({ title, popularity, backgroundImage, overview }) {
     background-position: center;
     background-size: cover;">
         <h1 class="hero-title">${title}</h1>
-        <p class="hero-text">Рейтинг: ${popularity}</p>
+        <div class="hero-rating">
+          <div class="rating__body">
+            <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+            <div class="rating__items">
+              <input type="radio" class="rating__item" name="rating" value="1">
+              <input type="radio" class="rating__item" name="rating" value="2">
+              <input type="radio" class="rating__item" name="rating" value="3">
+              <input type="radio" class="rating__item" name="rating" value="4">
+              <input type="radio" class="rating__item" name="rating" value="5">
+            </div>
+          </div>
+        </div>
         <p class="hero-text">${truncatedOverview}</p>
         <div class="hero-homepage-buttons">
           <button id="watchTrailerButton" class="button-watch-trailer">Watch trailer</button>
