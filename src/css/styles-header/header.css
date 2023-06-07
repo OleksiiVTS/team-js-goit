@@ -385,6 +385,10 @@ body {
 }
 
 /* COLORS FOR THE LIGHT THEME */
+.svg-sec-black-fill {
+  fill: var(--color-second-black);
+}
+
 .secondary-white-background {
   background-color: var(--color-text-description);
 }
@@ -401,7 +405,7 @@ body {
   background-color: #000000;
 }
 
-.day-dark-text {
+.lightdark-text-color {
   color: var(--color-text-header-l);
 }
 
@@ -415,6 +419,10 @@ body {
 
 .darkest-text-color {
   color: var(--color-black-header);
+}
+
+.light-backdrop-background {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .header-menu:hover,

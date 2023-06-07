@@ -14,7 +14,6 @@ for (let i = 0; i < navLinks.length; i += 1) {
   }
 }
 function onMenuBtnClick() {
-  console.log('menu');
   mobileMenuEl.classList.remove('hidden');
   mobileBackdropEl.classList.remove('hidden');
 
@@ -49,7 +48,7 @@ function closeMobileMenu() {
 
 const themeSwitchEl = document.getElementById('checkbox');
 themeSwitchEl.addEventListener('change', onThemeSwitchToggle);
-
+setCurrentTheme();
 // 11111
 
 const secBlackTxtEls = {
@@ -58,8 +57,6 @@ const secBlackTxtEls = {
   genreValueEl: document.querySelector('.genre-value'),
   aboutValueEl: document.querySelector('.about-value'),
 };
-
-setCurrentTheme();
 
 function onThemeSwitchToggle() {
   localStorage.setItem(
@@ -85,6 +82,7 @@ function switchThemeColors() {
     document.querySelector('.popularity'),
     document.querySelector('.genre'),
     document.querySelector('.description-about'),
+    document.querySelector('.m-w-t-text'),
   ];
 
   const toSecBlackTxtEls = [
@@ -95,43 +93,23 @@ function switchThemeColors() {
     document.querySelector('.about-value'),
   ];
 
+  const toSecBlackSvg = [document.querySelector('.m-w-t-button-close')];
+
   const toDarkestTxtEl = [
     ...document.querySelector('.header-title').getElementsByTagName('span'),
   ];
-  console.log(toDarkestTxtEl);
 
-  const toWhiteBackgr = [bodyEl, document.querySelector('.header-wrap')];
+  const toLightdarkTxt = [
+    ...document.getElementsByClassName('menu-item-txt'),
+    document.querySelector('.header-menu'),
+  ];
+
+  const toWhiteBackgr = [
+    bodyEl,
+    document.querySelector('.header-wrap'),
+    document.querySelector('.m-w-t-window'),
+  ];
   const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
-
-  const headerRefs = {
-    headerMenuEL: document.querySelector('.header-menu'),
-    menuItemEls: [...document.getElementsByClassName('menu-item-txt')],
-  };
-
-  // const {
-  //
-  //   mobileMenuModalEl,
-  //   headerMenuEL,
-  //   headerTitleEl,
-  //   menuItemEls,
-  // } = headerRefs;
-
-  // toggleClass(
-  //   mobileMenuModalEl,
-  //   'secondary-white-background',
-  // !themeSwitchEl.checked
-  // );
-  // toggleClass(headerMenuEL, 'day-dark-text', !themeSwitchEl.checked);
-
-  // menuItemEls.forEach(item => {
-  //   toggleClass(item, 'day-dark-text', !themeSwitchEl.checked);
-  // });
-
-  // if (!themeSwitchEl.checked) {
-  //   headerSpans.forEach(item => {
-  //     item.style.color = '#000000';
-  //   });
-  // }
 
   for (element of toBlackTxtEls) {
     toggleClass(element, 'black-text-color', !themeSwitchEl.checked);
@@ -141,6 +119,10 @@ function switchThemeColors() {
     toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
   }
 
+  for (element of toLightdarkTxt) {
+    toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
+  }
+
   for (element of toWhiteBackgr) {
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
@@ -148,19 +130,31 @@ function switchThemeColors() {
   for (element of toSecWhiteBackgr) {
     toggleClass(element, 'secondary-white-background', !themeSwitchEl.checked);
   }
+  for (element of toSecBlackSvg) {
+    toggleClass(element, 'svg-sec-black-fill', !themeSwitchEl.checked);
+  }
+
+  toggleClass(
+    mobileBackdropEl,
+    'light-backdrop-background',
+    !themeSwitchEl.checked
+  );
 
   for (element of toDarkestTxtEl) {
-    element.style.color === '#000000' ? '#fff' : '#000000';
+    if (element.style.color === 'rgb(0, 0, 0)') {
+      element.style.color = 'rgb(255, 255, 255)';
+    } else element.style.color = 'rgb(0, 0, 0)';
   }
 }
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
     localStorage.setItem('ui-theme', 'dark');
+    themeSwitchEl.checked = true;
   } else if (localStorage.getItem('ui-theme') === 'dark') {
     themeSwitchEl.checked = true;
-  } else {
-    localStorage.setItem('ui-theme', 'light');
+  } else if (localStorage.getItem('ui-theme') === 'light') {
     themeSwitchEl.checked = false;
     switchThemeColors();
+    console.log('light light');
   }
 }
