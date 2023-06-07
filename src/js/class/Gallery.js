@@ -157,7 +157,7 @@ export default class Gallery {
       enableSpinner();
 
       const cards = await this.getMoviesList();
-
+    
       if(!count || count > cards.lenght) {
         count = cards.lenght;
       }
@@ -165,6 +165,7 @@ export default class Gallery {
       disableSpinner();
       return cards.reduce(
            (acc, item, index) => {
+            
             if (index < count){
               return acc + cbTemplate(item)  
             }
@@ -183,12 +184,14 @@ export default class Gallery {
       enableSpinner();
 
 
-      this.hide();
+      //this.hide();
       
       const markup = await this.createNewCards(cbTemplate, count);
       // console.log(markup);
       this.updateGallery(markup);
-      this.show();
+      //this.createModal();
+      this.managerModal();
+      //this.show();
 
       disableSpinner();
       return markup;
@@ -214,9 +217,12 @@ export default class Gallery {
     } = data;
 
     const aGenres = data.genre_ids.slice(0, 2);
-
-    return `<a href="" data-id-movie="${id}">
-    <div class="movie-card overlay-card">
+    const json = JSON.stringify(data)
+    console.log(json);
+    //console.log(data);
+    return `<div class="movie-card overlay-card" data-id-movie="${id}" data-data="${json}">
+    <a href="" data-id-movie="${id}">
+    <div>
     <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
     <div class="gallery__up_image"></div>
     <div class="catalog_info">
@@ -242,7 +248,8 @@ export default class Gallery {
         </div>
     </div>
     </div>
-    </a>`
+    </a>
+    </div>`
   }
 
   convertId_to_Name(aGenre, list = genres.importFromLS()) {
@@ -266,8 +273,76 @@ export default class Gallery {
     }
   }
 
+  createModal(data) {
+    const { title, poster_path, vote_average, vote_count, popularity, overview } = data;
+
+    const aGenres = data.genre_ids.slice(0, 2);
+
+    const modal = document.getElementById('moreDetails');
+    modal.classList.remove('more-details-is-hidden');
+
+    modal.innerHTML = `
+      <div class="close-button-box">
+        <button class="more-details-close-button" id="closeDetails" type="button">X</button>
+      </div>
+      <div class="details-wrapper">
+        <div class="more-details-img-box">
+          <img width="380px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
+        </div>
+        <div class="more-details-info">
+          <h2 class="film-title">${title}</h2>
+          <table>
+            <tr>
+              <td class="table-row table-column-name">Vote / Votes:</td>
+              <td><span class="vote-average">${vote_average}</span> / <span class="vote-count">${vote_count}</span></td>
+            </tr>
+            <tr>
+              <td class="table-row table-column-name">Popularity:</td>
+              <td>${popularity}</td>
+            </tr>
+            <tr>
+              <td class="table-row table-column-name">Genre:</td>
+              <td>${convertId_to_Name(aGenres)}</td>
+            </tr>
+          </table>
+          <span class="description-about">About:</span>
+          <span class="more-details-about">${overview}</span>
+          <div class="more-details-adml-box">
+            <button id="addToLibraryButton" class="button-rem-me">Add to Library</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const closeBtn = modal.querySelector('#closeDetails');
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('more-details-is-hidden');
+    });
+  }
+
+  managerModal() {
+    const movieCards = this.out.querySelectorAll('.movie-card');
+
+    movieCards.forEach((card) => {
+      const movieId = card.dataset.idMovie;
+      const d = JSON.parse(card.dataset.data);
+      console.log(d);
+      const list = this.importFromLS()
+      const data = list.filter(item => {
+        //console.log(item.id, movieId);
+        return item.id === movieId}
+        )
+
+      card.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.createModal(data);
+      });
+    });
+  }
+
   // якщо помилка
   onError(error){
     console.log(error);
   } 
 }
+
