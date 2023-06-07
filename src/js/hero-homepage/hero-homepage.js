@@ -252,6 +252,22 @@ async function openDetails() {
   const filmDetails = await getFilmDetails(randomFilmIndex);
   const detailsBoxHTML = createDetailsBox(filmDetails);
   createMoreDetails(detailsBoxHTML);
+  if (localStorage.getItem('ui-theme') === 'dark') {
+  } else {
+    document.querySelector('.more-details-modal').style.backgroundColor =
+      '#FFFFFF';
+    document.querySelector('.more-details-modal').style.boxShadow =
+      '1px 1px 14px 4px rgba(0, 0, 0, 0.22)';
+    document.querySelector('.more-details-close-button').style.color =
+      '#282828';
+    document.querySelector('.film-title').style.color = '#111111';
+    document.querySelector('.more-details-about').style.color = '#282828';
+    document.querySelector('.description-about').style.color = '#111111';
+    const aboutTableEl = [...document.getElementsByTagName('td')];
+    for (let element of aboutTableEl) {
+      element.style.color = '#111111';
+    }
+  }
 
   document
     .getElementById('closeDetails')
