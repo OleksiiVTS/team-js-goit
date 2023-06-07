@@ -30,92 +30,63 @@ if (film === null) {
 // Если фильмы не найдены, отображаем модальное окно
 startModalWiNoTreiler();
 } else {
-  // Если фильмы найдены, создаем карточку фильма
-const cardHTML = `
-<div class="film-card">
-  <img src="https://image.tmdb.org/t/p/original/${
-    film.backdrop_path
-  }" alt="${film.original_title}" />
-  <div class="film-info">
-    <div class="info-item">
-      <h2 class="film-title">${film.original_title}</h2>
-    </div>
-
-    <div class="container-features">
-      <div class="column-struct">
-        <div class="date-vote">
-          <div class="info-item">
-            <span class="release">Release Date:</span>
-            <span class="release-value release-date">${
-              film.release_date
-            }</span>
-          </div>
-
-          <div class="container-features">
-            <div class="column-struct">
-              <div class="date-vote">
-                <div class="info-item">
-                  <span class="release">Release Date:</span>
-                  <span class="release-value release-date">${
-                    film.release_date
-                  }</span>
-                </div>
-                <div class="info-item">
-                  <span class="vote">Vote / Votes:</span>
-                  <span >
-                    <span class="vote-average">${film.vote_average}</span> /
-                    <span class="vote-count">${film.vote_count}</span>
-                  </span>
+        // Если фильмы найдены, создаем карточку фильма
+        const cardHTML = `
+        <div class="film-card">
+          <img src="https://image.tmdb.org/t/p/original/${
+            film.backdrop_path
+          }" alt="${film.original_title}" />
+          <div class="film-info">
+            <div class="info-item">
+              <h2 class="film-title">${film.original_title}</h2>
+  
+            </div>
+  
+            <div class="container-features">
+              <div class="column-struct">
+                <div class="date-vote">
+                  <div class="info-item">
+                    <span class="release">Release Date:</span>
+                    <span class="release-value release-date">${
+                      film.release_date
+                    }</span>
+                  </div>
+                  <div class="info-item">
+                    <span class="vote">Vote / Votes:</span>
+                    <span class="vote-value">
+                      <span class="vote-average">${film.vote_average}</span> /
+                      <span class="vote-count">${film.vote_count}</span>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="column-struct">
-              <div class="popularity-genre">
-                <div class="info-item">
-                  <span class="popularity">Popularity:</span>
-                  <span class="popularity-value">${film.popularity}</span>
-                </div>
-                <div class="info-item genre-item">
-                  <span class="genre">Genre:</span>
-                  <span class="genre-value">${film.genres
-                    .map((genre) => genre.name)
-                    .join(", ")}</span>
+              <div class="column-struct">
+                <div class="popularity-genre">
+                  <div class="info-item">
+                    <span class="popularity">Popularity:</span>
+                    <span class="popularity-value">${film.popularity}</span>
+                  </div>
+                  <div class="info-item genre-item">
+                    <span class="genre">Genre:</span>
+                    <span class="genre-value">${film.genres
+                      .map((genre) => genre.name)
+                      .join(", ")}</span>
+                  </div>
                 </div>
               </div>
+              <div class="description-item">
+                <span class="description-about">About:</span>
+                <span class="about-value">${film.overview}</span>
+              </div>
             </div>
-            <div class="description-item">
-              <span class="description-about">About:</span>
-              <span class="about-value">${film.overview}</span>
-            </div>
+  
+  
+            <button class="button-rem-me">Add to My Library</button>
           </div>
         </div>
-      </div>
-      <div class="column-struct">
-        <div class="popularity-genre">
-          <div class="info-item">
-            <span class="popularity">Popularity:</span>
-            <span class="popularity-value">${film.popularity}</span>
-          </div>
-          <div class="info-item genre-item">
-            <span class="genre">Genre:</span>
-            <span class="genre-value">${film.genres
-              .map((genre) => genre.name)
-              .join(", ")}</span>
-          </div>
-        </div>
-      </div>
-      <div class="description-item">
-        <span class="description-about">About:</span>
-        <span class="about-value">${film.overview}</span>
-      </div>
-    </div>
-
-    <button class="button-rem-me">Add to My Library</button>
-  </div>
-</div>
-`;
-
-cardContainer.innerHTML = cardHTML;
+      `;
+    
+      cardContainer.innerHTML = cardHTML;
 
 // Округляем значения до десятков
 const popularityValueElement = document.querySelector(".popularity-value");
