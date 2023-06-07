@@ -1,0 +1,56 @@
+/* .catlog_net {
+  margin-left: auto;
+  margin-right: auto;
+} */
+/* @import url('./styles/reset.css'); */
+.catalog-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 48px;
+  gap: 16px;
+  row-gap: 32px;
+}
+
+.overlay-card {
+  position: relative;
+}
+
+.catalog_info {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 100%;
+  color: #ffffff;
+}
+
+.gallery__image {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 63.48%, rgba(0, 0, 0, 0.9) 92.16%);
+  border-radius: 5px;
+  width: 395px;
+}
+
+.catalog_title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.catalog_genres {
+  color: var(--color-text-header-d);
+}
+
+.ganres_rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 40px;
+  margin-top: 10px;
+}
+
+
+
+

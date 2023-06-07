@@ -1,4 +1,4 @@
-@media screen and (min-width: 1280px) {
+/*@media screen and (min-width: 1280px) {
     .container{
         min-width: 1280px;
     }
@@ -11,8 +11,8 @@
       url(rows-red-seats-theater.jpg);
     background-image: url(../../images/hero-lib/desc1x-min.jpg);
     min-width: 1280px;
-    position: absolute;
     
+
   }
 
   .hero-lib-name {
@@ -33,4 +33,4 @@
     padding-bottom: 249px;
     padding-left: 20px;
   }
-}
+}*/
