@@ -1,7 +1,10 @@
 .hero-section {
   background-color: var(--color-black);
 }
-
+.hero-rating {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
 .hero-hide {
   display: none;
 }
@@ -114,6 +117,10 @@
       url(../../images/hero-homepage/hero-homepage-tab-1x.png);
   }
 
+  .hero-rating {
+     font-size: 20px;
+     margin-bottom: 20px;
+  }
   @media (min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
@@ -168,7 +175,10 @@
     margin-bottom: 32px;
     width: 465px;
   }
-
+  .hero-rating {
+    margin-bottom: 28px;
+    font-size: 24px;
+  }
   .hero-container {
     padding-top: 170px;
     padding-bottom: 170px;
