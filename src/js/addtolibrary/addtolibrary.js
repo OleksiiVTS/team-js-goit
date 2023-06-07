@@ -14,7 +14,17 @@ setTimeout(() => {
 
 // filter
 
-// selectEl.addEventListener('input', () => {});
+selectEl.addEventListener('input', () => {
+  for (const film of library) {
+    for (const { id } of film.genres) {
+      if (id === Number(selectEl.value)) {
+        
+        
+
+      }
+    }
+  }
+});
 
 // filter
 
@@ -27,6 +37,7 @@ function loadLibrary(library) {
         overview,
         vote_average,
         vote_count,
+        poster_path,
         release_date,
         popularity,
         genres,
@@ -34,7 +45,7 @@ function loadLibrary(library) {
         return `<a href="" data-id-movie="">
   <div class="movie-card overlay-card">
   <img class="gallery__image" src="${
-    'https://image.tmdb.org/t/p/w400' + backgroundImage
+    'https://image.tmdb.org/t/p/w400' + poster_path
   }" alt="${title}" loading="lazy"/>
   <div class="gallery__up_image"></div>
   <div class="catalog_info">
@@ -46,7 +57,7 @@ function loadLibrary(library) {
 
         </p>
         <p class="catalog_rating">
-        Rating: ${(vote_count / 2).toFixed(1)}
+        Rating: ${vote_average}
       </p>
       </div>
   </div>
