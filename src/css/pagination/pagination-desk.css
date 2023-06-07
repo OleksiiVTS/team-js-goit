@@ -48,9 +48,7 @@
     /* border-width: 1px 0; */
 }
 
-/* .tui-pagination .tui-page-btn:hover {
-    background-color: #f4f4f4;
-} */
+
 
 .tui-pagination .tui-is-selected,
 .tui-pagination strong {
@@ -119,12 +117,14 @@
     width: 40px;
     height: 40px;
     border: none;
+    display: none;
     
 }
 .tui-page-btn.tui-prev {
     width: 40px;
     height: 40px;
     border: none;
+    display: none;
 
 }
 
@@ -171,7 +171,7 @@
 }
 
 .tui-pagination .tui-is-disabled:hover {
-    background: #fff;
+    /* background: #fff; */
     cursor: pointer;
 }
 
@@ -219,3 +219,12 @@
     padding: 8px 0 6px;
     /* vertical-align: top */
 }
+.tui-pagination .tui-page-btn:hover {
+    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+    }
+.tui-pagination .tui-is-selected:hover {
+    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);}
+.tui-pagination .tui-is-disabled:hover {
+    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+}
+
