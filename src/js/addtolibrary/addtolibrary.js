@@ -5,22 +5,17 @@ const boxLibrary = document.querySelector('.library');
 
 const library = JSON.parse(localStorage.getItem('libraryFilms'));
 
-// console.log(library);
-// loadLibrary(library);
-setTimeout(() => {
+
+loadLibrary(library);
   boxLibrary.innerHTML = '';
   boxLibrary.insertAdjacentHTML('beforeend', loadLibrary(library));
-}, 500);
 
-// filter
+
 
 selectEl.addEventListener('input', () => {
   for (const film of library) {
     for (const { id } of film.genres) {
       if (id === Number(selectEl.value)) {
-        
-        
-
       }
     }
   }
@@ -42,27 +37,48 @@ function loadLibrary(library) {
         popularity,
         genres,
       }) => {
-        return `<a href="" data-id-movie="">
-  <div class="movie-card overlay-card">
-  <img class="gallery__image" src="${
-    'https://image.tmdb.org/t/p/w400' + poster_path
-  }" alt="${title}" loading="lazy"/>
-  <div class="gallery__up_image"></div>
-  <div class="catalog_info">
-    <h2 class="catalog_title">
-    ${title}
-    </h2>
-      <div class="ganres_rating">
-        <p class="catalog_genres">
+        if (library.length <= 9) {
+          1
+        }
 
-        </p>
-        <p class="catalog_rating">
-        Rating: ${vote_average}
-      </p>
+        let nameOfGanre = [];
+        // const aGenres = data.genre_ids.slice(0, 2);
+        for (const { name } of genres) {
+          nameOfGanre.push(name);
+        }
+
+        return `<a href="" data-id-movie="">
+      <div class="movie-card overlay-card">
+      <img class="gallery__image" src="${
+        'https://image.tmdb.org/t/p/w400' + poster_path
+      }" alt="${title}" loading="lazy"/>
+      <div class="gallery__up_image"></div>
+      <div class="catalog_info">
+        <h2 class="catalog_title">
+        ${title}
+        </h2>
+          <div class="ganres_rating">
+            <p class="catalog_genres">
+            ${nameOfGanre.slice(0, 2).join(', ')} | ${release_date.slice(0, 4)}
+            </p>
+            <div class="rating">
+            <div class="rating__body">
+              <div class="rating__active" style="width: ${
+                vote_average.toFixed(1) * 10
+              }%;"></div>
+              <div class="rating__items">
+                <input type="radio" class="rating__item" name="rating" value="1">
+                <input type="radio" class="rating__item" name="rating" value="2">
+                <input type="radio" class="rating__item" name="rating" value="3">
+                <input type="radio" class="rating__item" name="rating" value="4">
+                <input type="radio" class="rating__item" name="rating" value="5">
+              </div>
+            </div>
+          </div>
+          </div>
       </div>
-  </div>
-  </div>
-  </a>`;
+      </div>
+      </a>`;
       }
     )
     .join('');

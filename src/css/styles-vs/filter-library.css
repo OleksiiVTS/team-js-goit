@@ -1,18 +1,52 @@
-.library-filter {
-  background-color: inherit;
-  cursor: pointer;
-  width: 144px;
-  color: var(--color-text-button);
-  border-color: #0000 #0000 #fff;
-  margin-top: 200px;
-  margin-left: 100px;
-  margin-right: 15px;
-  font-size: 14px;
+
+.library-filter > option {
+  background-color: #1c1c1c;
+}
+
+
+@media screen and (max-width: 767px) {
+  .library-filter {
+    border-radius: 8px;
+    background-color: inherit;
+    cursor: pointer;
+    width: 173px;
+    height: 40px;
+    padding-left: 20px;
+    color: var(--color-white);
+    border-color: b7b7b7; 
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-bottom: 16px;
+    margin-right: 15px;
+    font-size: 14px;
+  }
 }
 
 
 
+@media screen and (min-width: 768px) {
+.library-filter {
+  border-radius: 8px;
+    background-color: inherit;
+    cursor: pointer;
+    width: 144px;
+    height: 44px;
+    padding-left: 20px;
+    color: var(--color-white);
+    border-color: b7b7b7; 
+    margin-top: 68px;
+    margin-bottom: 36px;
+    margin-left: 32px;
+    margin-right: 15px;
+    font-size: 14px;
+}
+}
 
-.library-filter > option {
-  background-color: var(--color-text-header-l);
+@media screen and (min-width: 1280px) {
+  .library-filter {
+    margin-top: 80px;
+    margin-bottom: 48px;
+    width: 260px;
+    height: 48px;
+  }
 }

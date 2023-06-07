@@ -4,6 +4,7 @@
     closeFooterTeamBtn: document.querySelector('[data-team-close]'),
     footerTeam: document.querySelector('[data-team]'),
     body: document.querySelector('body'),
+    footer: document.querySelector('.footer-container'),
   };
 
   refs.openFooterTeamLink.addEventListener('click', openTeamModal);
@@ -35,11 +36,11 @@
     }
   }
 
-  // const main = document.querySelector('main');
-  // console.log(
-  //   refs.body.clientHeight,
-  //   refs.body.scrollHeight,
-  //   refs.body.offsetHeight
-  // );
-  // console.log(main.clientHeight, main.scrollHeight, main.offsetHeight);
+  const greet = () => {
+    if (refs.body.clientHeight < window.innerHeight) {
+      refs.footer.classList.add('footer-fixed');
+    }
+    console.log(refs.body.clientHeight, window.innerHeight);
+  };
+  const timerId = setTimeout(greet, 300);
 })();
