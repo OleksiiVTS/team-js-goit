@@ -64,7 +64,7 @@ function TemplateMovieCard( data ) {
 
   const aGenres = data.genres.slice(0, 2);
 
-  return `<a href="" data-id-movie="${id}">
+  return `<a href="${data}" data-id-movie="${id}">
   <div class="movie-card overlay-card">
   <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
   <div class="gallery__up_image"></div>
