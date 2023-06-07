@@ -12,32 +12,32 @@ export const moviesTrendsWeek = new Gallery({
   name: 'moviesTrendsWeek',
   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/week',   // частина шляху для запиту
-  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+  query: '""&language=en'          // сам запит, те що стоъть після знаку ?
 });
 
-function TemplateTrendsWeek( data ) {
-  const { poster_path, original_title, title, vote_average, release_date, genres, id} = data;
+// function TemplateTrendsWeek( data ) {
+//   const { poster_path, original_title, title, vote_average, release_date, genres, id} = data;
 
-  return `<a href="" data-id-movie="${id}">
-  <div class="movie-card overlay-card">
-  <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
-  <div class="gallery__up_image"></div>
-  <div class="catalog_info">
-    <h2 class="catalog_title">
-    ${title}
-    </h2>
-      <div class="ganres_rating">
-        <p class="catalog_genres">
-        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids.slice(0, 2))} | ${release_date.slice(0, 4)}
-        </p>
-        <p class="catalog_rating">
-        Rating: ${(vote_average / 2).toFixed(1)}
-      </p>
-      </div>
-  </div>
-  </div>
-  </a>`
-}
+//   return `<a href="" data-id-movie="${id}">
+//   <div class="movie-card overlay-card">
+//   <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
+//   <div class="gallery__up_image"></div>
+//   <div class="catalog_info">
+//     <h2 class="catalog_title">
+//     ${title}
+//     </h2>
+//       <div class="ganres_rating">
+//         <p class="catalog_genres">
+//         ${moviesTrendsWeek.convertId_to_Name(data.genre_ids.slice(0, 2))} | ${release_date.slice(0, 4)}
+//         </p>
+//         <p class="catalog_rating">
+//         Rating: ${(vote_average / 2).toFixed(1)}
+//       </p>
+//       </div>
+//   </div>
+//   </div>
+//   </a>`
+// }
 
 
 // Детальна інформація по фільму з працюючим трейлером
@@ -53,11 +53,11 @@ function TemplateTrendsWeek( data ) {
 // console.log(movie);
 
 
-moviesTrendsWeek.onMarkup(TemplateTrendsWeek, 9);
+moviesTrendsWeek.onMarkup();
 
 const paginationOptions = {
    totalItems: 500,
-        itemsPerPage: 9,
+        itemsPerPage: moviesTrendsWeek.perPage,
         visiblePages: 5,
      page: 1,
      centerAlign: false,
@@ -91,7 +91,7 @@ if (container) {
   const paginationPage = pagination.getCurrentPage();
   pagination.on('afterMove', function (eventData) {
     moviesTrendsWeek.page = eventData.page;
-    moviesTrendsWeek.onMarkup(TemplateTrendsWeek, pagination._options.itemsPerPage);
+    moviesTrendsWeek.onMarkup();
   });
 
   function creatingTotalResultsPagination(res) {
