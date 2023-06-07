@@ -154,8 +154,11 @@ export default class Movie {
       //throw new Error("No value or wrong selector");
       return;
     }
-    selector.innerHTML = '';
-    selector.insertAdjacentHTML("beforeend", data);
+
+    if (selector) {
+      selector.innerHTML = '';
+      selector.insertAdjacentHTML("beforeend", data);
+    }
   }
 
   // якщо помилка

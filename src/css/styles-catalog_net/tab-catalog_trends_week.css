@@ -32,15 +32,13 @@
      }
   
      .catalog_title {
-       /* font-family: 'Roboto';
-       font-style: normal;
-       font-weight: 500; */
+       max-width: 214px;
        font-size: 12px;
        line-height: 1.58;
      }
   
      .catalog_genres {
-      font-size: 12px;
+      font-size: 11px;
       line-height: 1.58;
      }
   
@@ -50,4 +48,5 @@
       font-size: 12px;
       line-height: 1.58;
      }
+     
 }
