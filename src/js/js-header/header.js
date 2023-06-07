@@ -14,7 +14,6 @@ for (let i = 0; i < navLinks.length; i += 1) {
   }
 }
 function onMenuBtnClick() {
-  console.log('menu');
   mobileMenuEl.classList.remove('hidden');
   mobileBackdropEl.classList.remove('hidden');
 
@@ -47,26 +46,8 @@ function closeMobileMenu() {
 
 // THEME SWITCHING
 
-const dayThemeRefs = {
-  headerEl: document.querySelector('.header-wrap'),
-  mobileMenuModalEl: document.querySelector('.mobile-menu-wrap'),
-  headerMenuEL: document.querySelector('.header-menu'),
-  headerTitleEl: document.querySelector('.header-title'),
-  menuItemEls: [...document.getElementsByClassName('menu-item-txt')],
-};
-
-const {
-  headerEl,
-  mobileMenuModalEl,
-  headerMenuEL,
-  headerTitleEl,
-  menuItemEls,
-} = dayThemeRefs;
-
-const headerSpans = [...headerTitleEl.getElementsByTagName('span')];
 const themeSwitchEl = document.getElementById('checkbox');
 themeSwitchEl.addEventListener('change', onThemeSwitchToggle);
-
 setCurrentTheme();
 
 function onThemeSwitchToggle() {
@@ -77,43 +58,115 @@ function onThemeSwitchToggle() {
   switchThemeColors();
 }
 
+console.log(document.querySelector('.more-details-modal'));
+
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
-    if (addClass) {
+    if (element && addClass) {
       element.classList.add(className);
-    } else {
+    } else if (element) {
       element.classList.remove(className);
     }
   };
+  const toBlackTxtEls = [
+    document.querySelector('.upcoming_title'),
+    ...document.getElementsByClassName('film-title'),
+    document.querySelector('.release'),
+    document.querySelector('.vote'),
+    document.querySelector('.popularity'),
+    document.querySelector('.genre'),
+    document.querySelector('.description-about'),
+    document.querySelector('.m-w-t-text'),
+    document.querySelector('.weekly-section-name'),
+    document.querySelector('.description-about'),
+    ...document.getElementsByTagName('table'),
+  ];
 
-  toggleClass(bodyEl, 'body-white-background', !themeSwitchEl.checked);
-  toggleClass(headerEl, 'header-white-background', !themeSwitchEl.checked);
+  const toSecBlackTxtEls = [
+    document.querySelector('.header-title'),
+    document.querySelector('.vote-value'),
+    document.querySelector('.genre-value'),
+    document.querySelector('.popularity-value'),
+    document.querySelector('.about-value'),
+    document.querySelector('.more-details-about'),
+  ];
+
+  const toSecBlackSvg = [
+    document.querySelector('.m-w-t-button-close'),
+    document.querySelector('.more-details-close-button'),
+  ];
+
+  const toLightBoxShadow = [
+    document.querySelector('.m-w-t-window'),
+    document.querySelector('.more-details-modal'),
+  ];
+
+  const toDarkestTxtEl = [
+    ...document.querySelector('.header-title').getElementsByTagName('span'),
+  ];
+
+  const toLightdarkTxt = [
+    ...document.getElementsByClassName('menu-item-txt'),
+    document.querySelector('.header-menu'),
+    document.querySelector('.footer-text'),
+  ];
+
+  const toWhiteBackgr = [
+    bodyEl,
+    document.querySelector('.header-wrap'),
+    document.querySelector('.m-w-t-window'),
+    document.querySelector('.more-details-modal'),
+  ];
+
+  const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
+
+  for (element of toBlackTxtEls) {
+    toggleClass(element, 'black-text-color', !themeSwitchEl.checked);
+  }
+
+  for (element of toSecBlackTxtEls) {
+    toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
+  }
+
+  for (element of toLightBoxShadow) {
+    toggleClass(element, 'light-theme-box-shadow', !themeSwitchEl.checked);
+  }
+
+  for (element of toLightdarkTxt) {
+    toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
+  }
+
+  for (element of toWhiteBackgr) {
+    console.log(element);
+    toggleClass(element, 'white-background', !themeSwitchEl.checked);
+  }
+
+  for (element of toSecWhiteBackgr) {
+    toggleClass(element, 'secondary-white-background', !themeSwitchEl.checked);
+  }
+  for (element of toSecBlackSvg) {
+    toggleClass(element, 'svg-sec-black-fill', !themeSwitchEl.checked);
+  }
+
   toggleClass(
-    mobileMenuModalEl,
-    'secondary-white-background',
+    mobileBackdropEl,
+    'light-backdrop-background',
     !themeSwitchEl.checked
   );
-  toggleClass(headerMenuEL, 'day-dark-text', !themeSwitchEl.checked);
-  toggleClass(headerTitleEl, 'day-secondary-black', !themeSwitchEl.checked);
 
-  menuItemEls.forEach(item => {
-    toggleClass(item, 'day-dark-text', !themeSwitchEl.checked);
-  });
-
-  if (!themeSwitchEl.checked) {
-    headerSpans.forEach(item => {
-      item.style.color = '#000000';
-    });
+  for (element of toDarkestTxtEl) {
+    if (element.style.color === 'rgb(0, 0, 0)') {
+      element.style.color = 'rgb(255, 255, 255)';
+    } else element.style.color = 'rgb(0, 0, 0)';
   }
 }
-
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
     localStorage.setItem('ui-theme', 'dark');
+    themeSwitchEl.checked = true;
   } else if (localStorage.getItem('ui-theme') === 'dark') {
     themeSwitchEl.checked = true;
-  } else {
-    localStorage.setItem('ui-theme', 'light');
+  } else if (localStorage.getItem('ui-theme') === 'light') {
     themeSwitchEl.checked = false;
     switchThemeColors();
   }
