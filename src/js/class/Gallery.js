@@ -2,46 +2,11 @@ const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js'
 
-// Пагінація
-import Pagination from 'tui-pagination';
-//import 'tui-pagination/dist/tui-pagination.min.css';
-import filmsAPIService from '../catalog-net/api-service.js';
-
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
 const API_KEY = '347a4b587b74ee2a22d09434547acda6';
 const URL = 'https://api.themoviedb.org/3';
-const paginationOptions = {
-      totalItems: 500,
-      itemsPerPage: 20,
-      visiblePages: 5,
-      page: 1,
-      centerAlign: false,
-      firstItemClassName: 'tui-first-child',
-      lastItemClassName: 'tui-last-child',
-      template: {
-          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-          currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-          moveButton:
-              '<a href="#" class="tui-page-btn tui-{{type}}">' +
-                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
-              '</a>',
-          disabledMoveButton:
-              '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
-              '</span>',
-          moreButton:
-              '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-                  '<span class="tui-ico-ellip">...</span>' +
-              '</a>'
-     }
-    };
-  
-const paginationContainer = document.querySelector('.tui-pagination');
-const pagination = new Pagination(paginationContainer, paginationOptions);
-let paginationPage = pagination.getCurrentPage();
-  
 
 const genres = new GenreList({
   selector: ".select",
@@ -84,8 +49,6 @@ export default class Gallery {
     this.totalPages = 0;
     this.totalResults = 0;
 
-    this.paginationPage = pagination.getCurrentPage();
-    
   }
 
   // куди виводимо дані
@@ -117,8 +80,6 @@ export default class Gallery {
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
-
-      this.initPagination(this);
 
       disableSpinner();
 
@@ -223,7 +184,6 @@ export default class Gallery {
 
 
       this.hide();
-      //this.setPerPage(count);
       
       const markup = await this.createNewCards(cbTemplate, count);
       // console.log(markup);
@@ -305,17 +265,6 @@ export default class Gallery {
       selector.insertAdjacentHTML("beforeend", data);
     }
   }
-
-  initPagination(objGallery) { 
-    // console.log(objGallery);
-    paginationPage = objGallery.paginationPage
-    pagination.on('afterMove', function (eventData) {
-        objGallery.page = eventData.page;
-        objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
-    });   
-  }
-
-  
 
   // якщо помилка
   onError(error){
