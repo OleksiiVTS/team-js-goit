@@ -104,7 +104,8 @@ export function initPagination(objGallery) {
     //Pagination first start with response from API and create total_pages
     //Go to Homepage-rendering.js
     //
-    const paginationPage = pagination.getCurrentPage(objGallery.page);
+    pagination.movePageTo(objGallery.page)
+    const paginationPage = pagination.getCurrentPage();
     pagination.on('afterMove', function (eventData) {
       objGallery.page = eventData.page;
       objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
