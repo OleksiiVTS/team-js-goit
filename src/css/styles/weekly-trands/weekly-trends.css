@@ -82,7 +82,6 @@
         text-transform: uppercase;
         color: var(--color-white);
         padding-left: 12px;
-
       }
     
       .weekly-movie-genre {
@@ -149,6 +148,7 @@
         color: var(--color-text-button);
         cursor: pointer;
         margin-bottom: 24px;
+        transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
     
       .weekly-see-all:hover,
@@ -167,16 +167,24 @@
       .weekly-movie-card {
         position: relative;
         flex-grow: 1;
+        transition: transform 0.3s ease;
+        
         /* max-width: calc(33.33% - 16px); */
+      }
+
+      .weekly-movie-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 5px rgba(150, 150, 150, 0.7);
+       
       }
       
       .weekly-movie-image {
         border-radius: 5px;
         width: 100%;
         height: auto;
+
       }
-      
-    
+
       .weekly-movie-details {
         position: absolute;
         bottom: 0;
@@ -197,6 +205,7 @@
         line-height: 1.5;
         color: var(--color-white);
         padding-left: 12px;
+       
       }
     
       .weekly-movie-genre {
@@ -261,6 +270,7 @@
     color: var(--color-text-button);
     cursor: pointer;
     margin-bottom: 28px;
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .weekly-see-all:hover,
@@ -279,19 +289,39 @@
 
   .weekly-movie-card {
     position: relative;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+
+  /* .weekly-movie-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
+  } */
+
+  .weekly-movie-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 5px rgba(150, 150, 150, 0.7);
   }
 
   .weekly-movie-image {
     border-radius: 5px;
     width: 395px;
     height: 574px;
+
   }
+
 
   .weekly-movie-details {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
+    z-index: 3;
   }
 
   .weekly-movie-genre-stars {
@@ -307,6 +337,7 @@
     line-height: 1.15;
     color: var(--color-white);
     padding-left: 20px;
+    margin-bottom: 14px;
 
   }
 
@@ -323,6 +354,9 @@
     padding-bottom: 20px;
   }
 }
+
+
+
 
 
   /* ================================ </STYLE FOR LAPTOP>============================ */
