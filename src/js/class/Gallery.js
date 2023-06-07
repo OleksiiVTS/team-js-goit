@@ -14,20 +14,36 @@ const genres = new GenreList({
 })
 genres.getGenreList();
 
+function convertId_to_Name(aGenre, list = genres.importFromLS()) {
+
+  const result = aGenre.map(item => {
+    const obj = list.find(el => el.id === item);
+    return obj ? obj.name : null;
+  })
+
+  return result.join(', ');
+}
+
 export default class Gallery {
+  static classes = {
+    hidden: "hidden",
+  }
+
   constructor({ name, url, query, selector }) {
-    this.name = name;
+    this.name = name;                     // назва ключа у ЛС
+    this.url = URL + url;
     this.out = this.getSelect(selector);  // куди виводимо дані
-    this.page = 1;
+
     this.listMovies = this.importFromLS();  // список фільмів
 
-    this.url = URL + url;
     this.params = { 
       api_key: API_KEY,
       page: this.page,
       query: query,
     };
 
+    this.page = 1;
+    this.perPage = 20;
     this.totalPages = 0;
     this.totalResults = 0;
   }
@@ -44,34 +60,21 @@ export default class Gallery {
   //
 
   // отримання даних з серверу
-  async getList() {
+  async getMoviesList() {
     try {
       enableSpinner();
+      this.params.page = this.page;
       const params = new Object(this.params);
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
       this.listMovies = this.importFromLS();
 
-      this.totalPages = data.total_pages;
-      this.totalResults = data.total_results;
+      this.totalPages = await data.total_pages;
+      this.totalResults = await data.total_results;
       disableSpinner();
 
       return data.results; 
-
-    } catch (error) {
-      this.onError(error)
-    }
-  }
-
-  // отримання даних з додавання сторінки для пагінації
-  async getMoviesList() {
-    try {
-      enableSpinner();
-      const data = await this.getList();
-      this.incrementPage();
-      disableSpinner();
-      return data; 
 
     } catch (error) {
       this.onError(error)
@@ -106,28 +109,58 @@ export default class Gallery {
     this.page++;
   }
 
+  setPerPage(count){
+    this.perPage = count;
+  };
+
   //очистити блок сторінок
   resetPage() { 
     this.page = 1;
-    this.totalPage = 0;
-    this.totalResult = 0;
+    this.perPage = 20;
+    this.totalPages = 0;
+    this.totalResults = 0;
+    localStorage.removeItem(this.name);
+  }
+
+  hide() {
+    if (this.out) {
+      this.out.classList.add(Gallery.classes.hidden);
+    }
+  }
+
+  show() {
+    if (this.out) {
+      this.out.classList.remove(Gallery.classes.hidden);
+    }
   }
 
   /// trending/movie/day || week
   //
   // cписок фільмів у тренді за день \ неділю
-  async createNewCards(cbTemplate) {
+  // cbTemplate - callback function for markup one item, 
+  // count - скільки карток з масиву cards обробляти
+  async createNewCards(cbTemplate, count) {
     try {
       // day -https://api.themoviedb.org/3/trending/movie/day
       // week - https://api.themoviedb.org/3/trending/movie/week
       // const url = '/trending/movie/day';
       // const query = 'language=en-US'
       enableSpinner();
+
       const cards = await this.getMoviesList();
+
+      if(!count || count > cards.lenght) {
+        count = cards.lenght;
+      }
 
       disableSpinner();
       return cards.reduce(
-           (acc, data) => acc + cbTemplate(data), "");
+           (acc, item, index) => {
+            if (index < count){
+              return acc + cbTemplate(item)  
+            }
+            return acc
+          }, "");
 
     } catch (error) {
       this.onError(error);  
@@ -136,11 +169,16 @@ export default class Gallery {
 
   // View Next card gallery
   //
-  async onMarkup(cbTemplate = this.createCardGallery) { 
+  async onMarkup(cbTemplate = this.TemplateMovieCard, count = this.perPage) { 
     try {
       enableSpinner();
-      const markup = await this.createNewCards(cbTemplate);
+
+      this.hide();
+      this.setPerPage(count);
+      const markup = await this.createNewCards(cbTemplate, count);
       this.updateGallery(markup);
+      this.show();
+
       disableSpinner();
       return markup;
 
@@ -151,37 +189,49 @@ export default class Gallery {
 
   // Шаблон картки для фільму
   //
-  createCardGallery( data ) {
-  // частина посилання на картинку
-  const url = 'https://image.tmdb.org/t/p/w300';
-  const genreList = genres.importFromLS();
+  // // частина посилання на картинку
+  // const url = 'https://image.tmdb.org/t/p/w300';
+  //
+  TemplateMovieCard( data ) {
+    const { 
+      poster_path, 
+      original_title, 
+      title, 
+      vote_average, 
+      release_date, 
+      id
+    } = data;
 
-  return `
-    <div class="movie-card">
-      <img class="image"
-        src="${url + data.backdrop_path}" 
-        alt="{${data.original_title}}" 
-        loading="lazy"
-        title="{${data.original_title}}"/>
+    const aGenres = data.genre_ids.slice(0, 2);
 
-      <div class="info">
-        <p class="info-item">
-         <b>Title: </b>${data.original_title}
-        </p>
-        <p class="info-item">
-          <b>Text: </b>${data.overview}
-        </p>
-        <p class="info-item">
-          <b>Release Date: </b>${data.release_date}
-        </p>
-        <p class="info-item">
-        <b>Genres: </b>${this.convertId_to_Name(data.genre_ids, genreList)  }
-        </p>
-        <p class="info-item">
-          <b>Vote: </b>${data.vote_average}
-        </p>
-      </div>
-    </div>`
+    return `<a href="" data-id-movie="${id}">
+    <div class="movie-card overlay-card">
+    <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
+    <div class="gallery__up_image"></div>
+    <div class="catalog_info">
+      <h2 class="catalog_title">
+      ${title}
+      </h2>
+        <div class="ganres_rating">
+          <p class="catalog_genres">
+          ${convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
+          </p>
+          <div class="rating">
+          <div class="rating__body">
+            <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+            <div class="rating__items">
+              <input type="radio" class="rating__item" name="rating" value="1">
+              <input type="radio" class="rating__item" name="rating" value="2">
+              <input type="radio" class="rating__item" name="rating" value="3">
+              <input type="radio" class="rating__item" name="rating" value="4">
+              <input type="radio" class="rating__item" name="rating" value="5">
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+    </div>
+    </a>`
   }
 
   convertId_to_Name(aGenre, list = genres.importFromLS()) {
@@ -195,102 +245,14 @@ export default class Gallery {
   }
 
   updateGallery(data, selector = this.out) {
-    if (!data && (!this.out || selector)) { 
-      //throw new Error("No value or wrong selector");
-      return;
-    }
-
-    selector.insertAdjacentHTML("beforeend", data);
-  }
-
-
-  // отримання одного фільму
-  async getFilmDetails(filmIndex) {
-    const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}?api_key=${API_KEY}`;
-
-    try {
-      enableSpinner();
-      const { data } = await axios(apiUrl);
-      disableSpinner();
-
-      return data;
-
-    } catch (error) {
-      this.onError('Film id not found:', error);
-    }
-  }
-
-  MarkupFilmDetails(data) { 
-    const {
-      filmTrailer,
-      backdrop_path,
-      original_title,
-      budget,
-      overview,
-      release_date,
-      genres,
-      vote_average,
-    } = data;
-
-    const urlImage = `https://image.tmdb.org/t/p/original${backdrop_path}`;
-    const urlTrailer = `https://www.youtube.com/watch?v=${filmTrailer}`;
-
-    return `
-    <div class="movie-card">
-      <img class="image"
-        src="${urlImage}" 
-        alt="{${original_title}}" 
-        loading="lazy"
-        title="{${original_title}}"/>
-
-      <div class="info">
-        <p class="info-item">
-         <b>Title: </b>${original_title}
-        </p>
-        <p class="info-item">
-          <b>Budget: </b>$${budget}
-        </p>
-        <p class="info-item">
-          <b>Text: </b>${overview}
-        </p>
-        <p class="info-item">
-          <b>Release Date: </b>${release_date}
-        </p>
-        <p class="info-item">
-        <b>Genres: </b>${genres.map(e => e.name).join(', ')}
-        </p>
-        <p class="info-item">
-          <b>Vote: </b>${vote_average}
-        </p>
-      </div>
-    </div>`  
-  }
-
-  async onMarkupFilmDetails(idFilm, selector = this.out, cbMarkup = this.MarkupFilmDetails) { 
-    try {
-      enableSpinner();
-
-      const data = await this.getFilmDetails(idFilm);
-      const markup = cbMarkup(data);
-    //  console.log(markup);
-      this.updateFilmDetails(markup, selector);
-      
-      disableSpinner();
-  
-      return data;
-
-    } catch (error) {
-      this.onError('Film id not found:', error);
-    }
-  }
-
-    // вивід даних на хтмл-сторінку
-  updateFilmDetails(data, selector = this.out) {
     if (!data && (!this.out || !selector)) { 
       //throw new Error("No value or wrong selector");
       return;
     }
-    selector.insertAdjacentHTML("beforeend", data);
+    if (selector) {
+      selector.innerHTML = '';
+      selector.insertAdjacentHTML("beforeend", data);
+    }
   }
 
   // якщо помилка

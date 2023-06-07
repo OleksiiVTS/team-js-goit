@@ -1,0 +1,12 @@
+.library-filter {
+  background-color: inherit;
+
+  cursor: pointer;
+  width: 85px;
+  color: red;
+  border-color: #0000 #0000 #fff;
+  margin-top: 200px;
+  margin-left: 100px;
+  margin-right: 15px;
+  font-size: 14px;
+}

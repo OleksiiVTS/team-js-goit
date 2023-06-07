@@ -8,39 +8,56 @@ import filmsAPIService from './api-service';
 // const URL = 'https://api.themoviedb.org/3/trending/all/week';
 
 // екземпляр класа до відображення трендових фільмів на неділю
-const moviesTrendsWeek = new Gallery({
+export const moviesTrendsWeek = new Gallery({
   name: 'moviesTrendsWeek',
   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/week',   // частина шляху для запиту
-  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+  query: '""&language=en'          // сам запит, те що стоъть після знаку ?
 });
 
-function TemplateTrendsWeek( data ) {
-  const { poster_path, original_title, title, vote_average, release_date, genres} = data;
+// function TemplateTrendsWeek( data ) {
+//   const { poster_path, original_title, title, vote_average, release_date, genres, id} = data;
 
-  return `<div class="movie-card overlay-card">
-  <img class= "gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy" />
-  <div class="catalog_info">
-    <h2 class="catalog_title">
-    ${title}
-    </h2>
-      <div class="ganres_rating">
-        <p class="catalog_genres">
-        ${moviesTrendsWeek.convertId_to_Name(data.genre_ids, genres)} | ${release_date}
-        </p>
-        <p class="catalog_rating">
-        Rating: ${(vote_average / 2).toFixed(1)}
-      </p>
-      </div>
-  </div>
-  </div>`
-}
+//   return `<a href="" data-id-movie="${id}">
+//   <div class="movie-card overlay-card">
+//   <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
+//   <div class="gallery__up_image"></div>
+//   <div class="catalog_info">
+//     <h2 class="catalog_title">
+//     ${title}
+//     </h2>
+//       <div class="ganres_rating">
+//         <p class="catalog_genres">
+//         ${moviesTrendsWeek.convertId_to_Name(data.genre_ids.slice(0, 2))} | ${release_date.slice(0, 4)}
+//         </p>
+//         <p class="catalog_rating">
+//         Rating: ${(vote_average / 2).toFixed(1)}
+//       </p>
+//       </div>
+//   </div>
+//   </div>
+//   </a>`
+// }
 
-moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
+
+// Детальна інформація по фільму з працюючим трейлером
+// ===============================
+// const movie = new Movie({
+//   id: 603692,                       // id-фільму
+//   selector: ".catalog-gallery",     // куди виводимо сформований HTML-код 
+//   url: '/movie',                    // частина шляху для запиту
+//   query: '""&language=en'           // сам запит, те що стоїть після знаку ?
+// });
+
+// movie.onMarkup();
+// console.log(movie);
+
+
+moviesTrendsWeek.onMarkup();
 
 const paginationOptions = {
-   totalItems: 500, //moviesTrendsWeek.totalPages,
-        itemsPerPage: 10,
+   totalItems: 500,
+        itemsPerPage: moviesTrendsWeek.perPage,
         visiblePages: 5,
      page: 1,
      centerAlign: false,
@@ -63,25 +80,27 @@ const paginationOptions = {
              '</a>'
      }
 };
-let pagination = new Pagination('.tui-pagination', paginationOptions);
-  
 
+const container = document.querySelector('.tui-pagination');
+if (container) {
+  let pagination = new Pagination(container, paginationOptions);
 
+  //Pagination first start with response from API and create total_pages
+  //Go to Homepage-rendering.js
+  //
+  const paginationPage = pagination.getCurrentPage();
+  pagination.on('afterMove', function (eventData) {
+    moviesTrendsWeek.page = eventData.page;
+    moviesTrendsWeek.onMarkup();
+  });
 
-
-//Pagination first start with response from API and create total_pages
-//Go to Homepage-rendering.js
-//
-const paginationPage = pagination.getCurrentPage();
-pagination.on('afterMove', function(eventData) {
-  moviesTrendsWeek.page = eventData.page;
-  moviesTrendsWeek.params.page = eventData.page;
-  moviesTrendsWeek.onMarkup(TemplateTrendsWeek);
-});
-
-function creatingTotalResultsPagination(res) {
+  function creatingTotalResultsPagination(res) {
     pagination.reset(res.data.total_results);
-};
+  };
+
+}
+
+
 
 // async function onFetchData() {
 //   try {
