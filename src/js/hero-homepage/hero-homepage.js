@@ -60,7 +60,7 @@ async function getFilmDetails(filmIndex) {
       release_date,
       popularity,
       genres,
-      poster_path
+      poster_path,
     };
   } catch (error) {
     console.log('Error occurred while making API request:', error);
@@ -153,7 +153,7 @@ function createDetailsBox({
   release_date,
   popularity,
   genres,
-  poster_path
+  poster_path,
 }) {
   let btn = 'Add to My Library';
   const library = JSON.parse(localStorage.getItem('libraryFilms'));
@@ -168,10 +168,7 @@ function createDetailsBox({
   const detailsBoxHTML = `
     <div class="more-details-modal">
       <div class="close-button-box">
-        <button class="more-details-close-button" id="closeDetails" type="button">
-<svg>
-        <use href="../images/sprite.svg#close"></use>
-</svg>
+        <button class="more-details-close-button" id="closeDetails" type="button">X
        </button>
       </div>
       <div class="details-wrapper">
@@ -192,9 +189,15 @@ function createDetailsBox({
         <span>Popularity:</span>
         <span>${popularity}</span>
         <span>Genre:</span>
+<<<<<<< Updated upstream
         <span>${genres
           .map(genre => genre.name)
           .join(', ')}</span>
+=======
+        <span>${genres.map(genre => genre.name).join(', ')}</span>
+        <span>About:</span>
+        <span>${overview}</span>
+>>>>>>> Stashed changes
 
         <span class="description-about">About:</span>
         <span class="about-value">${overview}</span>
