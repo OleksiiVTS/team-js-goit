@@ -1,5 +1,5 @@
 .hero-section {
-  background-color: var(--color-black)
+  background-color: var(--color-black);
 }
 
 .hero-hide {
@@ -9,7 +9,7 @@
 .hero-container {
   padding-top: 40px;
   padding-bottom: 80px;
-  max-width: 320px;
+  min-width: 320px;
 
   background-image: linear-gradient(
       86.77deg,
@@ -21,7 +21,6 @@
   background-position: center;
   background-size: contain;
 }
-
 
 .hero-movie {
   padding-top: 40px;
@@ -128,7 +127,6 @@
     }
   }
 
-
   .button-more-details {
     font-size: 14px;
     line-height: 1.43;
@@ -210,10 +208,7 @@
     font-size: 16px;
     line-height: 1.5;
   }
-
 }
-
-
 
 /* more details modal */
 
@@ -226,7 +221,7 @@
   transition-property: opacity scale visibility;
   transition-duration: 200ms;
   transition-timing-function: linear;
-  
+
   position: fixed;
   display: flex;
   align-items: center;
@@ -242,29 +237,98 @@
   transform: scale(1);
   transition-duration: 200ms;
   transition-timing-function: linear;
-   
   position: fixed;
-  max-width: 800px;
-  min-height: auto;
-  padding: 24px;
-  padding-bottom: 8px;
-  
+
   background: var(--color-black);
-  box-shadow: 1px 1px 14px 4px 
-              rgba(255, 107, 8, 0.42);
+  box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 0.42);
+  border-radius: 16px;
+}
+.more-details-modal {
+  width: auto;
+  max-width: 850px;
+  transform: scale(1);
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+  position: fixed;
+  padding: 60px;
+
+
+  background: var(--color-black);
+  box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 0.42);
   border-radius: 16px;
 }
 
-.more-details-modal {
-width: 800px;
-height: 600px;
-
-background-color: antiquewhite;
+.more-details-img-box {
+  width: 380px;
+  height: 480px;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.more-detail-img {
-  width: 250px;
+.more-details-img-box img {
+  max-width: 100%;
+  max-height: 100%;
 }
 
+.close-button-box {
+  display: flex;
+  justify-content: flex-end;
 
+}
 
+.more-details-close-button {
+  transition-property: background-color, border-radius, fill;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+width: 24px;
+  height: 24px; 
+
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--color-white);
+}
+
+.details-wrapper {
+  display: flex;
+}
+
+.more-details-info {
+  flex: 1;
+  min-width: 250px;
+  color: var(--color-white);
+}
+
+h2,
+span {
+  color: var(--color-white);
+}
+
+/* Додані стилі для різних пристроїв */
+
+/* Desktop */
+@media screen and (min-width: 1280px) {
+  .more-details-modal {
+    max-width: 850px;
+  }
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .more-details-modal {
+    max-width: 700px;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  .more-details-modal {
+    width: 320px;
+  }
+  .more-details-info {
+    flex: 0;
+  }
+}
