@@ -148,6 +148,7 @@ function switchThemeColors() {
   }
 
   for (element of toLightdarkTxt) {
+    console.log(element);
     toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
   }
 
