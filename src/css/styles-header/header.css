@@ -415,6 +415,9 @@ body {
 .secondary-black-text-color {
   color: var(--color-second-black);
 }
+.secondary-light-text-color {
+  color: #f8f8f8;
+}
 
 .black-text-color {
   color: var(--color-black);
@@ -426,6 +429,10 @@ body {
 
 .light-backdrop-background {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.white-text-color {
+  color: #ffffff;
 }
 
 .header-menu:hover,

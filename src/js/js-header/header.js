@@ -13,6 +13,7 @@ for (let i = 0; i < navLinks.length; i += 1) {
     navLinks[i].classList.add('current-page');
   }
 }
+
 function onMenuBtnClick() {
   mobileMenuEl.classList.remove('hidden');
   mobileBackdropEl.classList.remove('hidden');
@@ -58,8 +59,6 @@ function onThemeSwitchToggle() {
   switchThemeColors();
 }
 
-console.log(document.querySelector('.more-details-modal'));
-
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
     if (element && addClass) {
@@ -89,6 +88,13 @@ function switchThemeColors() {
     document.querySelector('.popularity-value'),
     document.querySelector('.about-value'),
     document.querySelector('.more-details-about'),
+  ];
+
+  const toSecWhiteText = [document.querySelector('.about-value')];
+
+  const toWhiteText = [
+    document.querySelector('.genre-value'),
+    document.querySelector('.popularity-value'),
   ];
 
   const toSecBlackSvg = [
@@ -121,11 +127,20 @@ function switchThemeColors() {
   const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
 
   for (element of toBlackTxtEls) {
+    console.log(element);
     toggleClass(element, 'black-text-color', !themeSwitchEl.checked);
   }
 
   for (element of toSecBlackTxtEls) {
     toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
+  }
+
+  for (element of toSecWhiteText) {
+    toggleClass(element, 'secondary-light-text-color', themeSwitchEl.checked);
+  }
+
+  for (element of toWhiteText) {
+    toggleClass(element, 'white-text-color', themeSwitchEl.checked);
   }
 
   for (element of toLightBoxShadow) {
@@ -137,7 +152,6 @@ function switchThemeColors() {
   }
 
   for (element of toWhiteBackgr) {
-    console.log(element);
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
 
