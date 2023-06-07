@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 .hero-lib-background {
+  color: #111111;
   background-size: cover;
   width: 100%;
   background-repeat: no-repeat;
