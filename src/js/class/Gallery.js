@@ -4,7 +4,7 @@ import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js'
 
 // Пагінація
 import Pagination from 'tui-pagination';
-import 'tui-pagination/dist/tui-pagination.min.css';
+//import 'tui-pagination/dist/tui-pagination.min.css';
 import filmsAPIService from '../catalog-net/api-service.js';
 
 //import Notiflix from 'notiflix';
