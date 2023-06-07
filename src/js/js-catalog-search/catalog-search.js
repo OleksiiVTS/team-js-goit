@@ -5,8 +5,15 @@ let query = '';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
-const catalogSearchSubmitBtn = document.querySelector('.button-round-search');
-catalogSearchSubmitBtn.addEventListener('click', onSubmit);
+
+window.addEventListener('click', function (event) {
+  if (event.view.location.pathname === '/catalog.html') {
+    return document
+      .getElementById('btn-search')
+      .addEventListener('click', onSubmit);
+  }
+  return;
+});
 
 function onError(error) {
   console.log(error);
