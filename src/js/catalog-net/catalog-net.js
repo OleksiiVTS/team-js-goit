@@ -8,14 +8,14 @@ import Pagination from 'tui-pagination';
 // const URL = 'https://api.themoviedb.org/3/trending/all/week';
 
 // екземпляр класа до відображення трендових фільмів на неділю
-export const moviesTrendsWeek = new Gallery({
-  name: 'moviesTrendsWeek',
-  selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
-  url: '/trending/movie/week',   // частина шляху для запиту
-  query: '""&language=en'          // сам запит, те що стоъть після знаку ?
-});
+// export const moviesTrendsWeek = new Gallery({
+//   name: 'moviesTrendsWeek',
+//   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
+//   url: '/trending/movie/week',   // частина шляху для запиту
+//   query: '""&language=en'          // сам запит, те що стоъть після знаку ?
+// });
 
-moviesTrendsWeek.onMarkup();
+// moviesTrendsWeek.onMarkup();
 
 
 // Детальна інформація по фільму з працюючим трейлером
@@ -31,50 +31,50 @@ moviesTrendsWeek.onMarkup();
 // console.log(movie);
 
 
-const paginationOptions = {
-   totalItems: 500,
-        itemsPerPage: moviesTrendsWeek.perPage,
-        visiblePages: 5,
-     page: 1,
-     centerAlign: false,
-     firstItemClassName: 'tui-first-child',
-     lastItemClassName: 'tui-last-child',
-     template: {
-         page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-         currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-         moveButton:
-             '<a href="#" class="tui-page-btn tui-{{type}}">' +
-                 '<span class="tui-ico-{{type}}">{{type}}</span>' +
-             '</a>',
-         disabledMoveButton:
-             '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-                 '<span class="tui-ico-{{type}}">{{type}}</span>' +
-             '</span>',
-         moreButton:
-             '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-                 '<span class="tui-ico-ellip">...</span>' +
-             '</a>'
-     }
-};
+// const paginationOptions = {
+//    totalItems: 500,
+//         itemsPerPage: moviesTrendsWeek.perPage,
+//         visiblePages: 5,
+//      page: 1,
+//      centerAlign: false,
+//      firstItemClassName: 'tui-first-child',
+//      lastItemClassName: 'tui-last-child',
+//      template: {
+//          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+//          currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+//          moveButton:
+//              '<a href="#" class="tui-page-btn tui-{{type}}">' +
+//                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
+//              '</a>',
+//          disabledMoveButton:
+//              '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+//                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
+//              '</span>',
+//          moreButton:
+//              '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+//                  '<span class="tui-ico-ellip">...</span>' +
+//              '</a>'
+//      }
+// };
 
-const container = document.querySelector('.tui-pagination');
-if (container) {
-  let pagination = new Pagination(container, paginationOptions);
+// const container = document.querySelector('.tui-pagination');
+// if (container) {
+//   let pagination = new Pagination(container, paginationOptions);
 
-  //Pagination first start with response from API and create total_pages
-  //Go to Homepage-rendering.js
-  //
-  const paginationPage = pagination.getCurrentPage();
-  pagination.on('afterMove', function (eventData) {
-    moviesTrendsWeek.page = eventData.page;
-    moviesTrendsWeek.onMarkup();
-  });
+//   //Pagination first start with response from API and create total_pages
+//   //Go to Homepage-rendering.js
+//   //
+//   const paginationPage = pagination.getCurrentPage();
+//   pagination.on('afterMove', function (eventData) {
+//     moviesTrendsWeek.page = eventData.page;
+//     moviesTrendsWeek.onMarkup();
+//   });
 
-  function creatingTotalResultsPagination(res) {
-    pagination.reset(res.data.total_results);
-  };
+//   function creatingTotalResultsPagination(res) {
+//     pagination.reset(res.data.total_results);
+//   };
 
-}
+// }
 
 
 
