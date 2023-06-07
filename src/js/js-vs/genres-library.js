@@ -1,4 +1,28 @@
 
+const boxLibraryCinema = document.querySelector('.library');
+const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+
+window.addEventListener('input', (event) => {
+  console.log(event.view.location.pathname);
+  if ( event.view.location.pathname === '/library.html' ||
+       event.view.location.pathname === '/team-js-goit/library.html') {
+    return document
+      .querySelector('.library-filter')
+      .addEventListener('input', onLibreryFilter);
+  }
+  return;
+});
+
+
+function onLibreryFilter(event) {
+  console.log(event.currentTarget.value);
+  const genre = Number(event.currentTarget.value);
+
+
+
+}
+
+
 // const libraryFilter = document.querySelector('.library-filter');
 // const boxLibraryCinema = document.querySelector('.library');
 // const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
