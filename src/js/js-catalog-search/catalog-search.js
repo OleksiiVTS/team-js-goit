@@ -33,7 +33,7 @@ const moviesTrendsWeek = new Gallery({
   query: '""&language=en'          // сам запит, те що стоъть після знаку ?
 });
 
-moviesTrendsWeek.onMarkup();
+moviesTrendsWeek.onMarkup(moviesTrendsWeek.TemplateMovieCard, moviesTrendsWeek.perPage);
 initPagination(moviesTrendsWeek);
 
 // для пошуку
@@ -59,7 +59,7 @@ function onSubmit(event) {
      
       gallery.resetPage();
       // if (gallery.totalResults === 0) throw new Error('No data');
-      gallery.onMarkup();
+      gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
       initPagination(gallery);
 
     }
@@ -104,10 +104,11 @@ export function initPagination(objGallery) {
     //Pagination first start with response from API and create total_pages
     //Go to Homepage-rendering.js
     //
-    const paginationPage = pagination.getCurrentPage(objGallery.page);
+    pagination.movePageTo(objGallery.page)
+    const paginationPage = pagination.getCurrentPage();
     pagination.on('afterMove', function (eventData) {
       objGallery.page = eventData.page;
-      objGallery.onMarkup();
+      objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
     });
 
   }
