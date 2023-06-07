@@ -18,17 +18,11 @@
 /* Стилі Load-more */
 @import url('./styles-vs/load-more.css');
 /* Стилі сітки каталога*/
-<<<<<<< Updated upstream
 @import url('./styles-catalog_net/styles-catalog_net.css');
-
-=======
+@import url('./styles-catalog_net/pagination-desk.css');
 @import url('./styles-catalog_net/mob-catalog_trends_week.css');
 @import url('./styles-catalog_net/tab-catalog_trends_week.css');
 @import url('./styles-catalog_net/desk-catalog_trends_week.css');
-/* Стилі пагінації */
-@import url('./pagination-style/pagination-desk.css');
-@import url('./pagination-style/pagination-tablet.css');
-@import url('./pagination-style/pagination-mob.css');
->>>>>>> Stashed changes
+
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');
