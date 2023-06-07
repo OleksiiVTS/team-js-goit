@@ -123,11 +123,15 @@ export default class Gallery {
   }
 
   hide() {
-    this.out.classList.add(Gallery.classes.hidden);
+    if (this.out) {
+      this.out.classList.add(Gallery.classes.hidden);
+    }
   }
 
   show() {
-    this.out.classList.remove(Gallery.classes.hidden);
+    if (this.out) {
+      this.out.classList.remove(Gallery.classes.hidden);
+    }
   }
 
   /// trending/movie/day || week
