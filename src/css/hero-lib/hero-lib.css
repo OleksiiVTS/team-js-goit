@@ -3,8 +3,11 @@
 *::after {
   box-sizing: border-box;
 }
+.hero-lib-section {
+  background-color: #111111;
+}
 .hero-lib-background {
-  color: #111111;
+  background-color: #111111;
   background-size: cover;
   width: 100%;
   background-repeat: no-repeat;
