@@ -110,6 +110,7 @@ function switchThemeColors() {
     bodyEl,
     document.querySelector('.header-wrap'),
     document.querySelector('.m-w-t-window'),
+    document.querySelector('.more-details-modal'),
   ];
   const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
 
