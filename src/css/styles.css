@@ -17,7 +17,7 @@
 /* Стилі спінера */
 @import url('./styles-vs/spinner.css');
 /*Стилі hero-lib*/
-@import url('./hero-lib.css/hero-lib.css');
+@import url('./hero-lib/hero-lib.css');
 /* Стилі Фільтра бібліотеки */
 @import url('./styles-vs/filter-library.css');
 /* hero-homepage */
