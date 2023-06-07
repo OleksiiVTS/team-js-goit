@@ -44,6 +44,7 @@ async function getFilmDetails(filmIndex) {
       release_date,
       popularity,
       genres,
+      poster_path,
     } = await response.json();
 
     const filmTrailerUrl = `https://www.youtube.com/watch?v=${filmTrailer}`;
@@ -59,6 +60,7 @@ async function getFilmDetails(filmIndex) {
       release_date,
       popularity,
       genres,
+      poster_path
     };
   } catch (error) {
     console.log('Error occurred while making API request:', error);
@@ -151,36 +153,46 @@ function createDetailsBox({
   release_date,
   popularity,
   genres,
+  poster_path
 }) {
   const detailsBoxHTML = `
     <div class="more-details-modal">
       <div class="close-button-box">
-        <button id="closeDetails" type="button">X</button>
+        <button class="more-details-close-button" id="closeDetails" type="button">
+<svg>
+        <use href="../images/sprite.svg#close"></use>
+</svg>
+       </button>
       </div>
+      <div class="details-wrapper">
       <div class="more-details-img-box">
-        <img class="more-detail-img" src="https://image.tmdb.org/t/p/original/${backgroundImage}" alt="${title}" />
+
+
+        <img height="500px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
       </div>
       <div class="more-details-info">
-        <h2 class="film-title">${title}</h2>
-        <span class="release">Release Date:</span>
-        <span class="release-value release-date">${release_date}</span>
-        <span class="vote">Vote / Votes:</span>
-        <span class="vote-value">
-          <span class="vote-average">${vote_average}</span> /
-          <span class="vote-count">${vote_count}</span>
+        <h2>${title}</h2>
+        <span >Release Date:</span>
+        <span>${release_date}</span>
+        <span>Vote / Votes:</span>
+        <span>
+          <span>${vote_average}</span> /
+          <span>${vote_count}</span>
         </span>
-        <span class="popularity">Popularity:</span>
-        <span class="popularity-value">${popularity}</span>
-        <span class="genre">Genre:</span>
-        <span class="genre-value">${genres
+        <span>Popularity:</span>
+        <span>${popularity}</span>
+        <span>Genre:</span>
+        <span>${genres
           .map(genre => genre.name)
           .join(', ')}</span>
-        <span class="description-about">About:</span>
-        <span class="about-value">${overview}</span>
-      </div>
-      <div class="more-details-adml-box">
+        <span>About:</span>
+        <span>${overview}</span>
+
+        <div class="more-details-adml-box">
         <button id="addToLibraryButton" class="button-rem-me">Add to My Library</button>
       </div>
+      </div>
+     </div>
     </div>
   `;
 
