@@ -83,6 +83,7 @@ function switchThemeColors() {
     document.querySelector('.genre'),
     document.querySelector('.description-about'),
     document.querySelector('.m-w-t-text'),
+    document.querySelector('.weekly-section-name'),
   ];
 
   const toSecBlackTxtEls = [
@@ -102,6 +103,7 @@ function switchThemeColors() {
   const toLightdarkTxt = [
     ...document.getElementsByClassName('menu-item-txt'),
     document.querySelector('.header-menu'),
+    document.querySelector('.footer-text'),
   ];
 
   const toWhiteBackgr = [
@@ -155,6 +157,5 @@ function setCurrentTheme() {
   } else if (localStorage.getItem('ui-theme') === 'light') {
     themeSwitchEl.checked = false;
     switchThemeColors();
-    console.log('light light');
   }
 }
