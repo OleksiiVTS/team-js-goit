@@ -33,7 +33,6 @@ body {
   display: block;
   width: 30px;
   height: 24px;
-  margin-left: 1px;
 }
 
 .logo-image {
@@ -53,9 +52,8 @@ body {
 
 .nav-wrap {
   display: flex;
-  width: 157px;
+  max-width: 157px;
   justify-content: space-between;
-  align-items: center;
 }
 
 .theme-switch-btn {
@@ -79,7 +77,7 @@ body {
     opacity: 1;
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(100%);
     opacity: 0;
   }
 }
@@ -88,29 +86,24 @@ body {
   position: absolute;
   z-index: 2;
   top: 0;
-  left: 0;
+  left: 0%;
   padding: 12px 0px 12px 20px;
   height: 100vh;
-  width: 204px;
+  width: 63.75%;
   background: #171717;
   border-radius: 0px 8px 8px 0px;
 }
 
 .mobile-menu-wrap.hidden {
   display: block;
-  animation: slideOutToLeft 0.2s forwards;
-  transform: translateX(-204px);
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  left: -400%;
+  animation: slideOutToLeft 1s forwards;
 }
 
 .mobile-menu-wrap:not(.hidden) {
   animation: slideInFromLeft 0.2s forwards;
 }
 
-.mobile-menu-wrap > .header-logo {
-  margin-left: 1px;
-}
 .mobile-menu {
   margin: 44px 0 0 0;
 }
@@ -139,7 +132,7 @@ body {
   position: absolute;
   top: 0px;
   left: -100%;
-  width: 300vh;
+  width: 400vw;
   height: 100vh;
   background: rgba(255, 255, 255, 0.2);
 }
@@ -154,54 +147,51 @@ body {
   display: none;
 }
 
-.header-menu:hover,
-.header-menu:focus,
-.header-title:hover,
-.header-title:focus,
-.menu-item-txt:hover,
-.menu-item-txt:focus,
-.current-page {
-  color: var(--color-text-button);
-  cursor: pointer;
-}
 /* TABLET */
 
 @media screen and (min-width: 768px) {
+  .mobile-menu-wrap,
+  .mobile-menu-backdrop {
+    display: none;
+  }
+
   .header-container {
     box-sizing: border-box;
     padding: 12px 32px;
     max-width: 768px;
   }
 
+  .logo-wrap {
+    width: 170px;
+    margin-right: 59px;
+  }
   .header {
-    justify-content: flex-start;
     padding-top: 0px;
     padding-bottom: 0px;
     height: 36px;
   }
 
   .nav-wrap {
-    justify-content: flex-start;
-    width: fit-content;
+    min-width: 170px;
+    align-items: center;
   }
 
   .header-logo {
     width: 45px;
     height: 36px;
   }
-  .logo-image {
+  img.logo-image {
     width: 45px;
     height: 36px;
   }
 
   .header-title {
-    display: block;
+    display: inline-block;
     font-weight: 400;
     font-size: 24px;
     line-height: 1.17;
     color: var(--color-white);
     margin-left: 9.5px;
-    margin-right: 59px;
   }
 
   .header-menu {
@@ -213,6 +203,7 @@ body {
     margin: 0;
     display: flex;
     gap: 32px;
+    min-width: 245px;
   }
 
   .theme-switch-btn {
@@ -233,7 +224,7 @@ body {
     max-width: 1280px;
   }
 
-  .header-title {
+  .logo-wrap {
     margin-right: 307px;
   }
 
@@ -266,6 +257,60 @@ body {
 .header-title,
 .logo-image {
   animation: bounce 2s 1;
+}
+
+.header-title span {
+  font-family: inherit;
+  font-size: inherit;
+  color: white;
+  display: inline-block;
+  transition: all 0.5s;
+  animation: animate 5s infinite;
+}
+
+.header-title span:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.header-title span:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.header-title span:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+.header-title span:nth-child(4) {
+  animation-delay: 0.8s;
+}
+
+.header-title span:nth-child(5) {
+  animation-delay: 1s;
+}
+
+.header-title span:nth-child(6) {
+  animation-delay: 1.2s;
+}
+
+.header-title span:nth-child(7) {
+  animation-delay: 1.4s;
+}
+.header-title span:nth-child(8) {
+  animation-delay: 1.6s;
+}
+.header-title span:nth-child(9) {
+  animation-delay: 1.8s;
+}
+
+@keyframes animate {
+  0% {
+    color: white;
+    transform: translateY(0);
+    margin: 0;
+  }
+  10% {
+    color: var(--color-text-button);
+  }
 }
 
 /* CHECKBOX FOR THEME SWITCHING */
@@ -365,4 +410,15 @@ body {
 
 .day-secondary-black {
   color: var(--color-second-black);
+}
+
+.header-menu:hover,
+.header-menu:focus,
+.header-title:hover,
+.header-title:focus,
+.menu-item-txt:hover,
+.menu-item-txt:focus,
+.current-page {
+  color: var(--color-text-button);
+  cursor: pointer;
 }

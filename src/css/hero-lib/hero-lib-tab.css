@@ -1,0 +1,35 @@
+/*@media screen and (min-width: 768px) {
+    .container{
+        min-width: 768px;
+    }
+  .hero-lib-background {
+    background: linear-gradient(
+        77.77deg,
+        #111111 33.58%,
+        rgba(17, 17, 17, 0) 71.57%
+      ),
+      url(rows-red-seats-theater.jpg);
+    background-image: url(../../images/hero-lib/tab1x.jpg);
+    min-width: 768px;
+    
+  }
+
+  .hero-lib-name {
+    color: #fff;
+    width: 332px;
+    font-size: 44px;
+    line-height: 1.18;
+    padding-top: 62px;
+    padding-left: 20px;
+    padding-bottom: 8px;
+  }
+
+  .hero-lib-txt {
+    color: #fff;
+    width: 357px;
+    font-size: 14px;
+    line-height: 1.14;
+    padding-bottom: 118px;
+    padding-left: 20px;
+  }
+}*/

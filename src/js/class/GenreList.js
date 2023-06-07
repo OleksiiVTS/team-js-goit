@@ -106,8 +106,10 @@ export default class GenreList {
       throw new Error("No value or wrong selector");
       return;
     }
-      
-    this.out.insertAdjacentHTML("beforeend", data);
+    
+    if (this.out) {
+      this.out.insertAdjacentHTML("beforeend", data);
+    }
   }
 
   // отримати список жанрів
@@ -122,22 +124,6 @@ export default class GenreList {
      this.onError(error); 
     }
   }
-
-  // преоразовати усі категорії які є у фільмі з id на назву
-  // async convertId_to_Name(aGenre, list = this.list) {
-  //   try {
-  //     enableSpinner();
-  //     const result = aGenre.map(item => {
-  //       const obj = list.find(el => el.id === item);
-  //       return obj ? obj.name : null;
-  //     })
-  //     disableSpinner();
-
-  //     return result;
-  //   } catch (error) {
-  //     this.onError(error)
-  //   }
-  // }
 
   // якщо помилка
   onError(error){
