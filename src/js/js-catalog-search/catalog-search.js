@@ -3,6 +3,8 @@ const API_KEY = 'ddf41d08627025b2d6783befee0c5c94';
 let query = '';
 // import axios from 'axios';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
+import Pagination from 'tui-pagination';
+
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
@@ -22,41 +24,19 @@ function onError(error) {
 
 // Запит через клас
 import Gallery from '../class/Gallery.js';
-//import MoviesTrendsWeek from '../catalog-net/catalog-net.js';
 
-// import Pagination from 'tui-pagination';
-// import 'tui-pagination/dist/tui-pagination.min.css';
+// тренди тиждня
+const moviesTrendsWeek = new Gallery({
+  name: 'moviesTrendsWeek',
+  selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
+  url: '/trending/movie/week',   // частина шляху для запиту
+  query: '""&language=en'          // сам запит, те що стоъть після знаку ?
+});
 
-// import filmsAPIService from '../catalog-net/api-service.js';
+moviesTrendsWeek.onMarkup();
+initPagination(moviesTrendsWeek);
 
-// const container = document.querySelector('.tui-pagination');
-// const paginationOptions = {
-//   totalItems: 500,
-//   itemsPerPage: 9,
-//   visiblePages: 5,
-//   page: 1,
-//   centerAlign: false,
-//   firstItemClassName: 'tui-first-child',
-//   lastItemClassName: 'tui-last-child',
-//   template: {
-//     page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-//     currentPage:
-//       '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
-//     moveButton:
-//       '<a href="#" class="tui-page-btn tui-{{type}}">' +
-//       '<span class="tui-ico-{{type}}">{{type}}</span>' +
-//       '</a>',
-//     disabledMoveButton:
-//       '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
-//       '<span class="tui-ico-{{type}}">{{type}}</span>' +
-//       '</span>',
-//     moreButton:
-//       '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
-//       '<span class="tui-ico-ellip">...</span>' +
-//       '</a>',
-//   },
-// };
-
+// для пошуку
 const gallery = new Gallery({
   name: 'searchTest',
   selector: '.catalog-gallery', // куди виводимо сформований HTML-код
@@ -69,63 +49,66 @@ function onSubmit(event) {
     event.preventDefault();
 
     const value = catalogSearchForm.value.trim();
-    if (value === '') return;
+    if (value === '') {
+      moviesTrendsWeek.onMarkup();
+      initPagination(moviesTrendsWeek);
+      return;
+    }
     else {
       gallery.params.query = value;
+     
       gallery.resetPage();
       // if (gallery.totalResults === 0) throw new Error('No data');
-      gallery.onMarkup(templateTest);
+      gallery.onMarkup();
+      initPagination(gallery);
 
-//      creatingTotalResultsPagination();
     }
   } catch (error) {
     onError(error);
   }
 }
 
-function templateTest(data) {
-  const {
-    poster_path,
-    original_title,
-    title,
-    vote_average,
-    release_date,
-    genres,
-    id,
-  } = data;
+export function initPagination(objGallery) {
+  const paginationOptions = {
+    totalItems: 500,
+    itemsPerPage: objGallery.perPage,
+    visiblePages: 5,
+    page: 1,
+    centerAlign: false,
+    firstItemClassName: 'tui-first-child',
+    lastItemClassName: 'tui-last-child',
+    template: {
+      page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+      currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+      moveButton:
+        '<a href="#" class="tui-page-btn tui-{{type}}">' +
+        '<span class="tui-ico-{{type}}">{{type}}</span>' +
+        '</a>',
+      disabledMoveButton:
+        '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+        '<span class="tui-ico-{{type}}">{{type}}</span>' +
+        '</span>',
+      moreButton:
+        '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+        '<span class="tui-ico-ellip">...</span>' +
+        '</a>'
+    }
+  };
 
-  return `<a href="" data-id-movie="${id}">
-  <div class="movie-card overlay-card">
-  <img class="gallery__image" src="${
-    'https://image.tmdb.org/t/p/w400' + poster_path
-  }" alt="${original_title}" loading="lazy"/>
-  <div class="gallery__up_image"></div>
-  <div class="catalog_info">
-    <h2 class="catalog_title">
-    ${title}
-    </h2>
-      <div class="ganres_rating">
-        <p class="catalog_genres">
-        ${gallery.convertId_to_Name(data.genre_ids)} | ${release_date}
-        </p>
-        <p class="catalog_rating">
-        Rating: ${(vote_average / 2).toFixed(1)}
-      </p>
-      </div>
-  </div>
-  </div>
-  </a>`;
+  const container = document.querySelector('.tui-pagination');
+  let pagination
+  if (container) {
+    pagination = new Pagination(container, paginationOptions);
+    pagination.reset();
+
+    //Pagination first start with response from API and create total_pages
+    //Go to Homepage-rendering.js
+    //
+    const paginationPage = pagination.getCurrentPage(objGallery.page);
+    pagination.on('afterMove', function (eventData) {
+      objGallery.page = eventData.page;
+      objGallery.onMarkup();
+    });
+
+  }
 }
-// function creatingTotalResultsPagination() {
-//   paginationSearch.reset();
-// }
-
-// if (container) {
-//   const paginationSearch = new Pagination(container, paginationOptions);
-
-//   const paginationPage = paginationSearch.getCurrentPage();
-//   paginationSearch.on('afterMove', function (eventData) {
-//     gallery.page = eventData.page;
-//     gallery.onMarkup(templateTest, paginationSearch._options.itemsPerPage);
-//   });
-// }
