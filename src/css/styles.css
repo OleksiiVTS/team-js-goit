@@ -33,3 +33,5 @@
 @import url('./styles/styles-catalog-search/catalog-search.css');
 /* Стилі Footer */
 @import url('./styles/styles-footer/footer.css');
+/* Рейтинг зірочки */
+@import url('../css/styles/stars-rating/stars-rating.css');
