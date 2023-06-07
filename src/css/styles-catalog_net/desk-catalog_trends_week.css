@@ -1,47 +1,30 @@
 @media screen and (min-width: 1280px) {
 .catlog_net {
-    min-width: 1280px;
-  }
-
+  min-width: 1280px;
+}
 .catalog-gallery {
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* justify-content: center; */
-  /* min-width: 1280px; */
   margin-top: 48px;
   column-gap: 16px;
   row-gap: 32px;
 }
-
-/* .overlay-card {
-  position: relative;
-} */
-
 .catalog_info {
   bottom: 20px;
   left: 20px;
 }
-
 .gallery__image {
-  /* background: linear-gradient(180deg, rgba(0, 0, 0, 0) 63.48%, rgba(0, 0, 0, 0.9) 92.16%);
-  border-radius: 5px; */
   width: 395px;
 }
-
 .catalog_title {
   min-width: 385px;
   font-size: 20px;
   line-height: 1.2;
 }
-
 .catalog_genres {
   font-size: 18px;
   line-height: 1.2;
 }
-
 .ganres_rating {
   display: flex;
-  /* flex-wrap: wrap; */
   align-items: center;
   justify-content: space-between;
   margin-right: 40px;
