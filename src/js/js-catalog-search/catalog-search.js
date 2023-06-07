@@ -1,6 +1,6 @@
 // Запит через клас
 import Gallery from '../class/Gallery.js';
-import moviesTrendsWeek from '../catalog-net/catalog-net.js';
+import { movies } from '../catalog-net/catalog-net.js';
 
 import Pagination from 'tui-pagination';
 // import filmsAPIService from '../catalog-net/api-service.js';
@@ -56,8 +56,10 @@ const paginationOptions = {
 };
 
 const container = document.querySelector('.tui-pagination');
+let paginationSearch;
+
 if (container) {
-  let paginationSearch = new Pagination(container, paginationOptions);
+  paginationSearch = new Pagination(container, paginationOptions);
 
   //Pagination first start with response from API and create total_pages
   //Go to Homepage-rendering.js
@@ -67,12 +69,9 @@ if (container) {
     gallery.page = eventData.page;
     gallery.onMarkup();
   });
-
-  // function creatingTotalResultsPagination(res) {
-  //   paginationSearch.reset(res.data.total_results);
-  // };
 }
 
+console.log('movies',movies);
 
 function onSubmit(event) {
   try {
@@ -84,7 +83,10 @@ function onSubmit(event) {
       gallery.params.query = value;
       
       gallery.resetPage();
-      paginationSearch.reset();
+
+      if (container) {
+        paginationSearch.reset();
+      }
 
       // if (gallery.totalResults === 0) throw new Error('No data');
       gallery.onMarkup();

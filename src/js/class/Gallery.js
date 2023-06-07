@@ -182,7 +182,7 @@ export default class Gallery {
     try {
       enableSpinner();
 
-
+      console.log(this);
       this.hide();
       
       const markup = await this.createNewCards(cbTemplate, count);

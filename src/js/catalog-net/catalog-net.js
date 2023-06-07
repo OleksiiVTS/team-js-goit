@@ -8,7 +8,7 @@ import Pagination from 'tui-pagination';
 // const URL = 'https://api.themoviedb.org/3/trending/all/week';
 
 // екземпляр класа до відображення трендових фільмів на неділю
-export const moviesTrendsWeek = new Gallery({
+const moviesTrendsWeek = new Gallery({
   name: 'moviesTrendsWeek',
   selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/week',   // частина шляху для запиту
@@ -76,7 +76,7 @@ if (container) {
 
 }
 
-
+export default { moviesTrendsWeek }
 
 // async function onFetchData() {
 //   try {
