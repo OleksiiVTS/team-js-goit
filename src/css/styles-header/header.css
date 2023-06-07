@@ -385,14 +385,11 @@ body {
 }
 
 /* COLORS FOR THE LIGHT THEME */
-.header-white-background {
-  background-color: var(--color-white);
-}
 .secondary-white-background {
   background-color: var(--color-text-description);
 }
 
-.body-white-background {
+.white-background {
   background-color: var(--color-white);
 }
 
@@ -408,8 +405,16 @@ body {
   color: var(--color-text-header-l);
 }
 
-.day-secondary-black {
+.secondary-black-text-color {
   color: var(--color-second-black);
+}
+
+.black-text-color {
+  color: var(--color-black);
+}
+
+.darkest-text-color {
+  color: var(--color-black-header);
 }
 
 .header-menu:hover,

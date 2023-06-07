@@ -47,25 +47,17 @@ function closeMobileMenu() {
 
 // THEME SWITCHING
 
-const dayThemeRefs = {
-  headerEl: document.querySelector('.header-wrap'),
-  mobileMenuModalEl: document.querySelector('.mobile-menu-wrap'),
-  headerMenuEL: document.querySelector('.header-menu'),
-  headerTitleEl: document.querySelector('.header-title'),
-  menuItemEls: [...document.getElementsByClassName('menu-item-txt')],
-};
-
-const {
-  headerEl,
-  mobileMenuModalEl,
-  headerMenuEL,
-  headerTitleEl,
-  menuItemEls,
-} = dayThemeRefs;
-
-const headerSpans = [...headerTitleEl.getElementsByTagName('span')];
 const themeSwitchEl = document.getElementById('checkbox');
 themeSwitchEl.addEventListener('change', onThemeSwitchToggle);
+
+// 11111
+
+const secBlackTxtEls = {
+  voteValueEl: document.querySelector('.vote-value'),
+  popularityValueEl: document.querySelector('.popularity-value'),
+  genreValueEl: document.querySelector('.genre-value'),
+  aboutValueEl: document.querySelector('.about-value'),
+};
 
 setCurrentTheme();
 
@@ -79,34 +71,88 @@ function onThemeSwitchToggle() {
 
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
-    if (addClass) {
+    if (element && addClass) {
       element.classList.add(className);
-    } else {
+    } else if (element) {
       element.classList.remove(className);
     }
   };
+  const toBlackTxtEls = [
+    document.querySelector('.upcoming_title'),
+    document.querySelector('.film-title'),
+    document.querySelector('.release'),
+    document.querySelector('.vote'),
+    document.querySelector('.popularity'),
+    document.querySelector('.genre'),
+    document.querySelector('.description-about'),
+  ];
 
-  toggleClass(bodyEl, 'body-white-background', !themeSwitchEl.checked);
-  toggleClass(headerEl, 'header-white-background', !themeSwitchEl.checked);
-  toggleClass(
-    mobileMenuModalEl,
-    'secondary-white-background',
-    !themeSwitchEl.checked
-  );
-  toggleClass(headerMenuEL, 'day-dark-text', !themeSwitchEl.checked);
-  toggleClass(headerTitleEl, 'day-secondary-black', !themeSwitchEl.checked);
+  const toSecBlackTxtEls = [
+    document.querySelector('.header-title'),
+    document.querySelector('.vote-value'),
+    document.querySelector('.genre-value'),
+    document.querySelector('.popularity-value'),
+    document.querySelector('.about-value'),
+  ];
 
-  menuItemEls.forEach(item => {
-    toggleClass(item, 'day-dark-text', !themeSwitchEl.checked);
-  });
+  const toDarkestTxtEl = [
+    ...document.querySelector('.header-title').getElementsByTagName('span'),
+  ];
+  console.log(toDarkestTxtEl);
 
-  if (!themeSwitchEl.checked) {
-    headerSpans.forEach(item => {
-      item.style.color = '#000000';
-    });
+  const toWhiteBackgr = [bodyEl, document.querySelector('.header-wrap')];
+  const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
+
+  const headerRefs = {
+    headerMenuEL: document.querySelector('.header-menu'),
+    menuItemEls: [...document.getElementsByClassName('menu-item-txt')],
+  };
+
+  // const {
+  //
+  //   mobileMenuModalEl,
+  //   headerMenuEL,
+  //   headerTitleEl,
+  //   menuItemEls,
+  // } = headerRefs;
+
+  // toggleClass(
+  //   mobileMenuModalEl,
+  //   'secondary-white-background',
+  // !themeSwitchEl.checked
+  // );
+  // toggleClass(headerMenuEL, 'day-dark-text', !themeSwitchEl.checked);
+
+  // menuItemEls.forEach(item => {
+  //   toggleClass(item, 'day-dark-text', !themeSwitchEl.checked);
+  // });
+
+  // if (!themeSwitchEl.checked) {
+  //   headerSpans.forEach(item => {
+  //     item.style.color = '#000000';
+  //   });
+  // }
+
+  for (element of toBlackTxtEls) {
+    toggleClass(element, 'black-text-color', !themeSwitchEl.checked);
+  }
+
+  for (element of toSecBlackTxtEls) {
+    toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
+  }
+
+  for (element of toWhiteBackgr) {
+    toggleClass(element, 'white-background', !themeSwitchEl.checked);
+  }
+
+  for (element of toSecWhiteBackgr) {
+    toggleClass(element, 'secondary-white-background', !themeSwitchEl.checked);
+  }
+
+  for (element of toDarkestTxtEl) {
+    element.style.color === '#000000' ? '#fff' : '#000000';
   }
 }
-
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
     localStorage.setItem('ui-theme', 'dark');
