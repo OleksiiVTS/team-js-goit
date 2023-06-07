@@ -10,10 +10,11 @@ const catalogSearchForm = document.querySelector('.catalog-search-input');
 
 window.addEventListener('click', function (event) {
 
-  console.log('event', event);
-  console.log(event.view.location.pathname);
+  // console.log('event', event);
+  // console.log(event.view.location.pathname);
   
-  if (event.view.location.pathname == '/catalog.html') {
+  if ( event.view.location.pathname === '/catalog.html' ||
+       event.view.location.pathname === '/team-js-goit/catalog.html') {
     return document
       .getElementById('btn-search')
       .addEventListener('click', onSubmit);
@@ -54,9 +55,6 @@ const gallery = new Gallery({
 function onSubmit(event) {
   try {
     event.preventDefault();
-
-    console.log("movie", moviesTrendsWeek);
-    console.log("gallery", gallery);
 
     const value = catalogSearchForm.value.trim();
     if (value === '') {
