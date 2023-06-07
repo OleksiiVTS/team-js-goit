@@ -1,5 +1,6 @@
 import Gallery from './Gallery.js';
 import GenreList from './GenreList.js';
+import Movie from './Movie.js'
 
 // elements in html
 const refs = {
@@ -7,28 +8,41 @@ const refs = {
 }
 
 
-// екземпляр класа до відображення трендових фільмів на день
+// екземпляр класа для відображення трендових фільмів на день
 const moviesTrendsDay = new Gallery({
   name: 'MoviesTrendsDay',      // назва гілки у LS
   selector: ".gallery",         // куди виводимо сформований HTML-код 
   url: '/trending/movie/day',   // частина шляху для запиту
-  query: 'language=en'          // сам запит, те що стоъть після знаку ?
+  query: '""&language=en'       // сам запит, те що стоїть після знаку ?
 });
 
 moviesTrendsDay.onMarkup();
 
 
-
+// екземпляр класа для отримання списку жанрів
 //=========================
 //
 const genre = new GenreList({
   selector: ".select",      // куди виводимо сформований HTML-код 
   url: "/genre/movie/list", // частина шляху для запиту
-  query: 'language=en'      // сам запит, те що стоъть після знаку ?
+  query: '""&language=en'   // сам запит, те що стоїть після знаку ?
 });
 
 genre.outMarkupGenreList();
 
+
+
+// Детальна інформація по фільму з працюючим трейлером
+// ===============================
+const movie = new Movie({
+  id: 603692,                       // id-фільму
+  selector: ".catalog-gallery",     // куди виводимо сформований HTML-код 
+  url: '/movie',                    // частина шляху для запиту
+  query: '""&language=en'           // сам запит, те що стоїть після знаку ?
+});
+
+movie.onMarkup();
+console.log(movie);
 
 
 /// ================================

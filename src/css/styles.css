@@ -28,7 +28,7 @@
 @import url('./styles-catalog_net/mob-catalog_trends_week.css');
 @import url('./styles-catalog_net/tab-catalog_trends_week.css');
 @import url('./styles-catalog_net/desk-catalog_trends_week.css');
-@import url('./styles-catalog_net/pagination-desk.css');
+@import url('./pagination/pagination-desk.css');
 
 /* Стилі пошуку каталогу */
 @import url('./styles/styles-catalog-search/catalog-search.css');
