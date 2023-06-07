@@ -55,6 +55,16 @@
         flex-grow: 1;
       }
       
+      .weekly-movie-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
+        z-index: 2;
+      }
       .weekly-movie-image {
         border-radius: 5px;
         width: 100%;
@@ -66,7 +76,9 @@
         bottom: 0;
         left: 0;
         width: 100%;
+        z-index: 3;
       }
+
     
       .weekly-movie-genre-stars {
         display: flex;
@@ -92,8 +104,10 @@
         margin-bottom: 12px;
       }
     
-      .weekly-movie-rating {
-        color: orange;
+     
+
+      .weekly-rating-positions{
+        padding-bottom: 16px;
       }
 
 }
@@ -172,6 +186,17 @@
         /* max-width: calc(33.33% - 16px); */
       }
 
+      .weekly-movie-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
+        z-index: 2;
+      }
+
       .weekly-movie-card:hover {
         transform: scale(1.02);
         box-shadow: 0 0 5px rgba(150, 150, 150, 0.7);
@@ -190,6 +215,7 @@
         bottom: 0;
         left: 0;
         width: 100%;
+        z-index: 3;
       }
     
       .weekly-movie-genre-stars {
@@ -221,6 +247,9 @@
         color: orange;
         
         
+      }
+      .weekly-rating-positions{
+        padding-bottom: 16px;
       }
 }
 /* ================================</STYLE FOR TABLET>============================ */
@@ -293,7 +322,7 @@
     overflow: hidden;
   }
 
-  /* .weekly-movie-card::after {
+  .weekly-movie-card::after {
     content: "";
     position: absolute;
     top: 0;
@@ -301,7 +330,8 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
-  } */
+    z-index: 2;
+  }
 
   .weekly-movie-card:hover {
     transform: scale(1.02);
@@ -349,10 +379,12 @@
     margin-bottom: 20px;
   }
 
-  .weekly-movie-rating {
-    color: orange;
-    padding-bottom: 20px;
+  .weekly-rating-positions{
+    padding-bottom: 25px;
   }
+
+
+
 }
 
 
