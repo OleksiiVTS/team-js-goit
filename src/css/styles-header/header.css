@@ -405,6 +405,9 @@ body {
   background-color: #000000;
 }
 
+.light-theme-box-shadow {
+  box-shadow: 1px 1px 14px 4px rgba(0, 0, 0, 0.22);
+}
 .lightdark-text-color {
   color: var(--color-text-header-l);
 }

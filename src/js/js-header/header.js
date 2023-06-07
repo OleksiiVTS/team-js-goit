@@ -49,14 +49,6 @@ function closeMobileMenu() {
 const themeSwitchEl = document.getElementById('checkbox');
 themeSwitchEl.addEventListener('change', onThemeSwitchToggle);
 setCurrentTheme();
-// 11111
-
-const secBlackTxtEls = {
-  voteValueEl: document.querySelector('.vote-value'),
-  popularityValueEl: document.querySelector('.popularity-value'),
-  genreValueEl: document.querySelector('.genre-value'),
-  aboutValueEl: document.querySelector('.about-value'),
-};
 
 function onThemeSwitchToggle() {
   localStorage.setItem(
@@ -65,6 +57,8 @@ function onThemeSwitchToggle() {
   );
   switchThemeColors();
 }
+
+console.log(document.querySelector('.more-details-modal'));
 
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
@@ -76,7 +70,7 @@ function switchThemeColors() {
   };
   const toBlackTxtEls = [
     document.querySelector('.upcoming_title'),
-    document.querySelector('.film-title'),
+    ...document.getElementsByClassName('film-title'),
     document.querySelector('.release'),
     document.querySelector('.vote'),
     document.querySelector('.popularity'),
@@ -84,6 +78,8 @@ function switchThemeColors() {
     document.querySelector('.description-about'),
     document.querySelector('.m-w-t-text'),
     document.querySelector('.weekly-section-name'),
+    document.querySelector('.description-about'),
+    ...document.getElementsByTagName('table'),
   ];
 
   const toSecBlackTxtEls = [
@@ -92,9 +88,18 @@ function switchThemeColors() {
     document.querySelector('.genre-value'),
     document.querySelector('.popularity-value'),
     document.querySelector('.about-value'),
+    document.querySelector('.more-details-about'),
   ];
 
-  const toSecBlackSvg = [document.querySelector('.m-w-t-button-close')];
+  const toSecBlackSvg = [
+    document.querySelector('.m-w-t-button-close'),
+    document.querySelector('.more-details-close-button'),
+  ];
+
+  const toLightBoxShadow = [
+    document.querySelector('.m-w-t-window'),
+    document.querySelector('.more-details-modal'),
+  ];
 
   const toDarkestTxtEl = [
     ...document.querySelector('.header-title').getElementsByTagName('span'),
@@ -112,6 +117,7 @@ function switchThemeColors() {
     document.querySelector('.m-w-t-window'),
     document.querySelector('.more-details-modal'),
   ];
+
   const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
 
   for (element of toBlackTxtEls) {
@@ -122,11 +128,16 @@ function switchThemeColors() {
     toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
   }
 
+  for (element of toLightBoxShadow) {
+    toggleClass(element, 'light-theme-box-shadow', !themeSwitchEl.checked);
+  }
+
   for (element of toLightdarkTxt) {
     toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
   }
 
   for (element of toWhiteBackgr) {
+    console.log(element);
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
 
