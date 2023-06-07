@@ -58,8 +58,6 @@ function onThemeSwitchToggle() {
   switchThemeColors();
 }
 
-console.log(document.querySelector('.more-details-modal'));
-
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
     if (element && addClass) {
@@ -95,6 +93,8 @@ function switchThemeColors() {
     document.querySelector('.m-w-t-button-close'),
     document.querySelector('.more-details-close-button'),
   ];
+
+  const toBlackSvg = [document.querySelector('.button-round-search')];
 
   const toLightBoxShadow = [
     document.querySelector('.m-w-t-window'),
@@ -133,11 +133,14 @@ function switchThemeColors() {
   }
 
   for (element of toLightdarkTxt) {
-    toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
+    if (!themeSwitchEl.checked) {
+      element.style.color = '#595959';
+    } else {
+      element.style.color = '#b7b7b7';
+    }
   }
 
   for (element of toWhiteBackgr) {
-    console.log(element);
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
 
@@ -146,6 +149,10 @@ function switchThemeColors() {
   }
   for (element of toSecBlackSvg) {
     toggleClass(element, 'svg-sec-black-fill', !themeSwitchEl.checked);
+  }
+
+  for (element of toBlackSvg) {
+    toggleClass(element, 'svg-black-fill', !themeSwitchEl.checked);
   }
 
   toggleClass(
