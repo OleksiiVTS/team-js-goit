@@ -1,11 +1,47 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
-import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
+import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js'
+
+// Пагінація
+import Pagination from 'tui-pagination';
+//import 'tui-pagination/dist/tui-pagination.min.css';
+import filmsAPIService from '../catalog-net/api-service.js';
+
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
-const API_KEY = '347a4b587b74ee2a22d09434547acda6'
+const API_KEY = '347a4b587b74ee2a22d09434547acda6';
 const URL = 'https://api.themoviedb.org/3';
+const paginationOptions = {
+      totalItems: 500,
+      itemsPerPage: 20,
+      visiblePages: 5,
+      page: 1,
+      centerAlign: false,
+      firstItemClassName: 'tui-first-child',
+      lastItemClassName: 'tui-last-child',
+      template: {
+          page: '<a href="#" class="tui-page-btn">{{page}}</a>',
+          currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+          moveButton:
+              '<a href="#" class="tui-page-btn tui-{{type}}">' +
+                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
+              '</a>',
+          disabledMoveButton:
+              '<span class="tui-page-btn tui-is-disabled tui-{{type}}">' +
+                  '<span class="tui-ico-{{type}}">{{type}}</span>' +
+              '</span>',
+          moreButton:
+              '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
+                  '<span class="tui-ico-ellip">...</span>' +
+              '</a>'
+     }
+    };
+  
+const paginationContainer = document.querySelector('.tui-pagination');
+const pagination = new Pagination(paginationContainer, paginationOptions);
+let paginationPage = pagination.getCurrentPage();
+  
 
 const genres = new GenreList({
   selector: ".select",
@@ -28,6 +64,7 @@ export default class Gallery {
   static classes = {
     hidden: "hidden",
   }
+  
 
   constructor({ name, url, query, selector }) {
     this.name = name;                     // назва ключа у ЛС
@@ -46,6 +83,9 @@ export default class Gallery {
     this.perPage = 20;
     this.totalPages = 0;
     this.totalResults = 0;
+
+    this.paginationPage = pagination.getCurrentPage();
+    
   }
 
   // куди виводимо дані
@@ -53,12 +93,17 @@ export default class Gallery {
     return document.querySelector(selector);
   }
 
+  // отримати загальну кількість сторінок
+  async getTotalPages() {
+    return this.totalPages;
+  }
+
+
   // отримати список фільмів по запиту
   // @string - query - строка те що буде після ? у гет-запиті за виключенням page та ключа
   // @string - pathUrl - частина url після URL 
   // https://api.themoviedb.org/3/trending/movie/day?api_key=999999&page=1&
   //
-
   // отримання даних з серверу
   async getMoviesList() {
     try {
@@ -72,6 +117,9 @@ export default class Gallery {
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
+
+      this.initPagination(this);
+
       disableSpinner();
 
       return data.results; 
@@ -173,9 +221,12 @@ export default class Gallery {
     try {
       enableSpinner();
 
+
       this.hide();
-      this.setPerPage(count);
+      //this.setPerPage(count);
+      
       const markup = await this.createNewCards(cbTemplate, count);
+      // console.log(markup);
       this.updateGallery(markup);
       this.show();
 
@@ -254,6 +305,17 @@ export default class Gallery {
       selector.insertAdjacentHTML("beforeend", data);
     }
   }
+
+  initPagination(objGallery) { 
+    // console.log(objGallery);
+    paginationPage = objGallery.paginationPage
+    pagination.on('afterMove', function (eventData) {
+        objGallery.page = eventData.page;
+        objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
+    });   
+  }
+
+  
 
   // якщо помилка
   onError(error){
