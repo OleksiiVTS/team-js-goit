@@ -6,7 +6,10 @@ import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 const catalogSearchSubmitBtn = document.querySelector('.button-round-search');
-catalogSearchSubmitBtn.addEventListener('click', onSubmit);
+if (catalogSearchSubmitBtn) {
+  catalogSearchSubmitBtn.addEventListener('click', onSubmit);
+}
+
 
 function onError(error) {
   console.log(error);
