@@ -1,0 +1,18 @@
+.library-filter {
+  background-color: inherit;
+  cursor: pointer;
+  width: 144px;
+  color: var(--color-text-button);
+  border-color: #0000 #0000 #fff;
+  margin-top: 200px;
+  margin-left: 100px;
+  margin-right: 15px;
+  font-size: 14px;
+}
+
+
+
+
+.library-filter > option {
+  background-color: var(--color-text-header-l);
+}

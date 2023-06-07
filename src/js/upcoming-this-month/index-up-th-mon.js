@@ -50,12 +50,43 @@ const cardHTML = `
               film.release_date
             }</span>
           </div>
-          <div class="info-item">
-            <span class="vote">Vote / Votes:</span>
-            <span class="vote-value">
-              <span class="vote-average">${film.vote_average}</span> /
-              <span class="vote-count">${film.vote_count}</span>
-            </span>
+
+          <div class="container-features">
+            <div class="column-struct">
+              <div class="date-vote">
+                <div class="info-item">
+                  <span class="release">Release Date:</span>
+                  <span class="release-value release-date">${
+                    film.release_date
+                  }</span>
+                </div>
+                <div class="info-item">
+                  <span class="vote">Vote / Votes:</span>
+                  <span >
+                    <span class="vote-average">${film.vote_average}</span> /
+                    <span class="vote-count">${film.vote_count}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="column-struct">
+              <div class="popularity-genre">
+                <div class="info-item">
+                  <span class="popularity">Popularity:</span>
+                  <span class="popularity-value">${film.popularity}</span>
+                </div>
+                <div class="info-item genre-item">
+                  <span class="genre">Genre:</span>
+                  <span class="genre-value">${film.genres
+                    .map((genre) => genre.name)
+                    .join(", ")}</span>
+                </div>
+              </div>
+            </div>
+            <div class="description-item">
+              <span class="description-about">About:</span>
+              <span class="about-value">${film.overview}</span>
+            </div>
           </div>
         </div>
       </div>

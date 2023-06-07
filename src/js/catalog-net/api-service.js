@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export default class filmsAPIService {
   constructor() {
     this.currentPage = 1; // можна використовувати для пагінації
