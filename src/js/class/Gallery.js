@@ -45,7 +45,7 @@ export default class Gallery {
     };
 
     this.page = 1;
-    this.perPage = 20;
+    this.perPage = 15;
     this.totalPages = 0;
     this.totalResults = 0;
 
@@ -125,7 +125,7 @@ export default class Gallery {
   //очистити блок сторінок
   resetPage() { 
     this.page = 1;
-    this.perPage = 20;
+    this.perPage = 15;
     this.totalPages = 0;
     this.totalResults = 0;
     localStorage.removeItem(this.name);
