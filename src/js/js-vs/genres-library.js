@@ -1,93 +1,96 @@
+const boxLibraryCinema = document.querySelector('.library');
+const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
 
-// const libraryFilter = document.querySelector('.library-filter');
-// const boxLibraryCinema = document.querySelector('.library');
-// const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+// слухач події клік на селекторі 
+window.addEventListener('click', (event) => {
+  if ( event.view.location.pathname === '/library.html' ||
+       event.view.location.pathname === '/team-js-goit/library.html') {
+    return document
+      .querySelector('.library-filter')
+      .addEventListener('input', onLibreryFilter);
+  }
+  return;
+});
 
+// отримуемо потрібний масив даних для розмітки і виводу на сторінку
+function onLibreryFilter(event) {
+  const genre = Number(event.currentTarget.value);
+  if (!genre){
+    onMarkup(libraryCinema)
+    return
+  }
 
-// libraryFilter.addEventListener('input', () => {
-//   for (const {genres} of libraryCinema) {
+  const filter = libraryCinema.filter(element => {
+    return element.genres.some(item => item.id === genre);
+  });
+    
+  console.log(filter);
+  
+  onMarkup(filter);
+}
 
-//     for (const {id} of genres) {
-//       console.log(id)
-//     }
-//   }
-// })
+// створення розмітки
+function onMarkup(data){
+  const cards = createCard(data)
+  update(cards)
+}
 
-// let filtrFilmCinema = [];
-// const filterCinemaniaParse = JSON.parse(localStorage.getItem('filterCinemania'));
+// вивід даних на сторінку
+function update(data) {
+  if (boxLibraryCinema) {
+    boxLibraryCinema.innerHTML = '';
+    boxLibraryCinema.insertAdjacentHTML("beforeend", data);
+  }
+}
 
-// libraryFilter.addEventListener('input', () => {
-//   for (const film of libraryCinema) {
-//     for (const { id } of film.genres) {
-//       if (id === Number(libraryFilter.value)) {
-        
-//         filtrFilmCinema.push(film)
-//         localStorage.setItem('filterCinemania', JSON.stringify(filtrFilmCinema));
-//       }
-//     }
-//   }
-// });
+// обгортання елементу масиву хтмл-кодом
+function createCard(data){
+  return data.reduce(
+    (acc, item) => {
+     return acc + TemplateMovieCard(item)
+   }, "");
+}
 
+// шаблон
+function TemplateMovieCard( data ) {
+  const { 
+    poster_path, 
+    original_title, 
+    title, 
+    vote_average, 
+    release_date, 
+    id
+  } = data;
 
-// function loadLibrary1(filterCinemaniaParse) {
-//   const libr = filterCinemaniaParse
-//     .map(
-//       ({
-//         title,
-//         backgroundImage,
-//         overview,
-//         vote_average,
-//         vote_count,
-//         release_date,
-//         popularity,
-//         genres,
-//       }) => {
-//         return `<a href="" data-id-movie="">
-//   <div class="movie-card overlay-card">
-//   <img class="gallery__image" src="${
-//     'https://image.tmdb.org/t/p/w400' + backgroundImage
-//   }" alt="${title}" loading="lazy"/>
-//   <div class="gallery__up_image"></div>
-//   <div class="catalog_info">
-//     <h2 class="catalog_title">
-//     ${title}
-//     </h2>
-//       <div class="ganres_rating">
-//         <p class="catalog_genres">
+  const aGenres = data.genres.slice(0, 2);
 
-//         </p>
-//         <p class="catalog_rating">
-//         Rating: ${(vote_count / 2).toFixed(1)}
-//       </p>
-//       </div>
-//   </div>
-//   </div>
-//   </a>`;
-//       }
-//     )
-//     .join('');
-
-//   return libr;
-// }
-
-
-// setTimeout(() => {
-//   boxLibraryCinema.innerHTML = '';
-//   boxLibraryCinema.insertAdjacentHTML('beforeend', loadLibrary1(filterCinemaniaParse));
-// }, 500);
-
-
-
-
-
-
-
-
-
-
-
-
-// function clearMarkup() {
-//   boxLibrary.innerHTML = ``;
-// }
+  return `<a href="${data}" data-id-movie="${id}">
+  <div class="movie-card overlay-card">
+  <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
+  <div class="gallery__up_image"></div>
+  <div class="catalog_info">
+    <h2 class="catalog_title">
+    ${title}
+    </h2>
+      <div class="ganres_rating">
+        <p class="catalog_genres">
+        $${aGenres.map(e => e.name).join(', ')} | ${release_date.slice(0, 4)}
+        </p>
+        <div class="rating">
+        <div class="rating__body">
+          <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+          <div class="rating__items">
+            <input type="radio" class="rating__item" name="rating" value="1">
+            <input type="radio" class="rating__item" name="rating" value="2">
+            <input type="radio" class="rating__item" name="rating" value="3">
+            <input type="radio" class="rating__item" name="rating" value="4">
+            <input type="radio" class="rating__item" name="rating" value="5">
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+  </div>
+  </a>`
+}
 
