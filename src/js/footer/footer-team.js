@@ -36,11 +36,10 @@
     }
   }
 
-  const greet = () => {
+  setTimeout(() => {
     if (refs.body.clientHeight < window.innerHeight) {
       refs.footer.classList.add('footer-fixed');
     }
     console.log(refs.body.clientHeight, window.innerHeight);
-  };
-  const timerId = setTimeout(greet, 300);
+  }, 200);
 })();
