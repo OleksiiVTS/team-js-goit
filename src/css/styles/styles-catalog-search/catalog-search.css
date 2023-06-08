@@ -15,12 +15,15 @@
   border: 1px solid #595959;
   border-radius: 8px;
   background-color: inherit;
+  color: white;
 }
 
+.dark {
+  color: black;
+}
 .button-round-search {
   width: 40px;
   height: 40px;
-  fill: black;
 }
 
 .btn-light {
