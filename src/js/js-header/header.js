@@ -58,8 +58,6 @@ function onThemeSwitchToggle() {
   switchThemeColors();
 }
 
-console.log(document.querySelector('.more-details-modal'));
-
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
     if (element && addClass) {
@@ -82,6 +80,23 @@ function switchThemeColors() {
     ...document.getElementsByTagName('table'),
   ];
 
+  const filterEl = document.getElementById('libraryFilterCinemania');
+  let filterOptions = [];
+  if (filterEl) {
+    filterOptions = [...filterEl.getElementsByTagName('option')];
+    for (element of filterOptions) {
+      if (element.value === 'genre') {
+        element.style.display = 'none';
+      } else if (!themeSwitchEl.checked) {
+        element.style.color = '#282828';
+        element.style.backgroundColor = '#F8F8F8';
+      } else {
+        element.style.color = '#F8F8F8';
+        element.style.backgroundColor = '#1C1C1C';
+      }
+    }
+  }
+
   const toSecBlackTxtEls = [
     document.querySelector('.header-title'),
     document.querySelector('.vote-value'),
@@ -95,6 +110,8 @@ function switchThemeColors() {
     document.querySelector('.m-w-t-button-close'),
     document.querySelector('.more-details-close-button'),
   ];
+
+  const toBlackSvg = [document.querySelector('.button-round-search')];
 
   const toLightBoxShadow = [
     document.querySelector('.m-w-t-window'),
@@ -133,11 +150,20 @@ function switchThemeColors() {
   }
 
   for (element of toLightdarkTxt) {
-    toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
+    if (!themeSwitchEl.checked) {
+      element.style.color = '#595959';
+    } else {
+      element.style.color = '#b7b7b7';
+    }
+  }
+
+  if (!themeSwitchEl.checked && filterEl) {
+    filterEl.style.color = '#595959';
+  } else if (filterEl && themeSwitchEl.checked) {
+    filterEl.style.color = '#b7b7b7';
   }
 
   for (element of toWhiteBackgr) {
-    console.log(element);
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
 
@@ -146,6 +172,10 @@ function switchThemeColors() {
   }
   for (element of toSecBlackSvg) {
     toggleClass(element, 'svg-sec-black-fill', !themeSwitchEl.checked);
+  }
+
+  for (element of toBlackSvg) {
+    toggleClass(element, 'svg-black-fill', !themeSwitchEl.checked);
   }
 
   toggleClass(
@@ -168,6 +198,6 @@ function setCurrentTheme() {
     themeSwitchEl.checked = true;
   } else if (localStorage.getItem('ui-theme') === 'light') {
     themeSwitchEl.checked = false;
-    switchThemeColors();
+    setTimeout(switchThemeColors, 500);
   }
 }
