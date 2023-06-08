@@ -330,7 +330,10 @@ export default class Gallery {
     movieCards.forEach((card) => {
       const movieId = Number(card.dataset.idMovie);
 
-      const list = this.importFromLS();
+      let list = this.listMovies;
+      if (list.length === 0) {
+        list = this.importFromLS();
+      }
       const data = list.filter(item => item.id === movieId)
       
       card.addEventListener('click', (event) => {
