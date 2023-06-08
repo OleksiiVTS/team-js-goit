@@ -217,10 +217,17 @@ export default class Gallery {
     } = data;
 
     const aGenres = data.genre_ids.slice(0, 2);
+    let pictureCard = "";
+    let properties = "";
+
+    if (poster_path===null) {
+      pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
+      properties = "style=height:420px ";
+    } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
 
     return `<a href="" data-id-movie="${id}">
-    <div class="movie-card overlay-card" data-id-movie="${id}">
-    <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
+    <div ${properties} class="movie-card overlay-card" data-id-movie="${id}">
+    <img class="gallery__image" src="${pictureCard}" alt="${original_title}" loading="lazy"/>
     <div class="gallery__up_image"></div>
     <div class="catalog_info">
       <h2 class="catalog_title">
