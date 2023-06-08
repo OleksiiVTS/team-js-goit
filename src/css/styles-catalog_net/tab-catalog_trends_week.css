@@ -1,14 +1,22 @@
 @media screen and (min-width: 768px) {
   .catlog_net {
     min-width: 768px;
-    }
+  }
   .catalog-gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
     margin-top: 36px;
     column-gap: 16px;
-    row-gap: 28px; 
+    row-gap: 28px;
+  }
+  .library-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    margin-top: 36px;
+    column-gap: 16px;
+    row-gap: 28px;
   }
   .gallery__image {
     width: 224px;
@@ -27,5 +35,5 @@
     margin-top: 5px;
     font-size: 12px;
     line-height: 1.58;
-  }   
+  }
 }
