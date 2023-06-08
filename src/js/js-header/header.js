@@ -193,7 +193,7 @@ function switchThemeColors() {
     !themeSwitchEl.checked
   );
 
-  stylePaganation();
+  stylePagination();
 }
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
@@ -220,7 +220,7 @@ function styleCurrentPageLink() {
 
 setTimeout(styleCurrentPageLink, 0);
 
-export function stylePaganation() {
+export function stylePagination() {
   const themeSwitchEl = document.getElementById('checkbox');
   let paginationBtns = [...document.getElementsByClassName('tui-page-btn')];
 
