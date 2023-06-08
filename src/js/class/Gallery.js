@@ -217,8 +217,8 @@ export default class Gallery {
     } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
 
     return `<a href="" data-id-movie="${id}">
-    <div ${properties} class="movie-card overlay-card" data-id-movie="${id}">
-    <img class="gallery__image" src="${pictureCard}" alt="${original_title}" loading="lazy"/>
+    <div ${properties} class="movie-card overlay-card weekly-movie-phone" data-id-movie="${id}">
+    <img class="gallery__image weekly-movie-card " src="${pictureCard}" alt="${original_title}" loading="lazy"/>
     <div class="gallery__up_image"></div>
     <div class="catalog_info">
       <h2 class="catalog_title">
