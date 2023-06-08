@@ -41,6 +41,7 @@
             padding: 12px 11px;
             font-size: 14px;
             line-height: 14px;
+            justify-content: center;
             text-decoration: none;
             display: flex;
             position: relative;
