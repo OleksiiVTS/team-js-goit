@@ -1,6 +1,52 @@
 .hero-section {
   background-color: var(--color-black);
 }
+/* Зірковий рейтинг */
+.hero-rating {
+  display: flex;
+  align-items: flex-end;
+  font-size: 16px;
+  line-height: 0.75;
+  margin-bottom: 16px;
+}
+.hero-rating__body {
+  position: relative;
+}
+.hero-rating__body::before {
+  content: "★★★★★";
+  display: block;
+  color: #b7b7b7;
+}
+.hero-rating__active {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.hero-rating__active::before {
+  content: "★★★★★";
+  position: absolute;
+  height: 100px;
+  top: 0;
+  left: 0;
+  color: #f87719;
+}
+.hero-rating__items {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.hero-rating__item {
+  flex: 0 0 20%;
+  height: 100%;
+  opacity: 0;
+}
+/* ===================== */
 
 .hero-hide {
   display: none;
