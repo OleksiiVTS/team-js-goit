@@ -1,8 +1,26 @@
-
 .library-filter > option {
   background-color: #1c1c1c;
 }
 
+.empty-library {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 0;
+}
+
+.empty-library-text {
+  margin-top: 44px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+
+  color: var(--color-white);
+}
 
 @media screen and (max-width: 767px) {
   .library-filter {
@@ -13,33 +31,38 @@
     height: 40px;
     padding-left: 20px;
     color: var(--color-white);
-    border-color: b7b7b7; 
+    border-color: b7b7b7;
     margin-top: 40px;
     margin-left: 20px;
     margin-bottom: 16px;
     margin-right: 15px;
     font-size: 14px;
   }
+
+  .empty-library-text {
+    margin-top: 80px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    line-height: 32px;
+  }
 }
 
-
-
 @media screen and (min-width: 768px) {
-.library-filter {
-  border-radius: 8px;
+  .library-filter {
+    border-radius: 8px;
     background-color: inherit;
     cursor: pointer;
     width: 144px;
     height: 44px;
     padding-left: 20px;
     color: var(--color-white);
-    border-color: b7b7b7; 
+    border-color: b7b7b7;
     margin-top: 68px;
     margin-bottom: 36px;
     margin-left: 32px;
     margin-right: 15px;
     font-size: 14px;
-}
+  }
 }
 
 @media screen and (min-width: 1280px) {
@@ -49,5 +72,16 @@
     width: 260px;
     height: 48px;
     font-size: 16px;
+  }
+
+  .empty-library-text {
+    margin-top: 112px;
+    margin-bottom: 28px;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 36px;
+    text-align: center;
+
+    color: var(--color-white);
   }
 }
