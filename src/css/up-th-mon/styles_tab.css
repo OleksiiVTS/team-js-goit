@@ -1,4 +1,9 @@
 @media screen and (min-width: 768px) {
+.upcoming_film{
+  margin: 0 auto;
+  max-width: 768px;
+}
+
 .upcoming_title {
 margin-left: 34px;
 font-weight: 500;
