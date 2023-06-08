@@ -23,43 +23,55 @@ function convertId_to_Name(aGenre) {
 }
 
 const boxLibraryCinema = document.querySelector('.library');
-const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+let libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
 
+const select = document.querySelector('.library-filter');
+if (select) {
+  select.addEventListener('input', onLibreryFilter);
+}
 // слухач події клік на селекторі 
-window.addEventListener('click', (event) => {
-  if ( event.view.location.pathname === '/library.html' ||
-       event.view.location.pathname === '/team-js-goit/library.html') {
-    return document
-      .querySelector('.library-filter')
-      .addEventListener('input', onLibreryFilter);
-  }
-  return;
-});
-onMarkup(libraryCinema)
+// window.addEventListener('click', (event) => {
+//   if ( event.view.location.pathname === '/library.html' ||
+//        event.view.location.pathname === '/team-js-goit/library.html') {
+         
+//     return document
+//     .querySelector('.library-filter')
+//     .addEventListener('input', onLibreryFilter);
+//   }
+//   return;
+// });
+
+onMarkup(libraryCinema);
 
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
-  const genre = Number(event.currentTarget.value);
-  
-  if (isNaN(genre)){
-    onMarkup(libraryCinema)
-    return
-  }
+  const genre = Number(select.value);
 
-  // const filter = libraryCinema.filter(element => {
-  //   return element.genres.some(item => item.id === genre);
-
-  const filter = libraryCinema.filter(element => {
-    if (element.genres) {
-      return element.genres.some(item => item.id === genre);
-    } else {
-      return element.genre_ids.some(item => item === genre);
-    }
-  });
+  try {
     
-  // console.log(filter);
+    libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+    if(libraryCinema.length === 0) {
+      throw new Error("масив пустий")
+    }
+
+
+    if (isNaN(genre)){
+      onMarkup(libraryCinema)
+      return
+    }
+
+    const filter = libraryCinema.filter(element => {
+      if (element.genres) {
+        return element.genres.some(item => item.id === genre);
+      } else {
+        return element.genre_ids.some(item => item === genre);
+      }
+    });
   
-  onMarkup(filter);
+    onMarkup(filter);
+  } catch (error) {
+    onError(error);
+  }
 }
 
 // створення розмітки
@@ -67,6 +79,7 @@ function onMarkup(data){
   const cards = createCard(data)
   update(cards)
   managerModal();
+  showEmptyLibrary();
 }
 
 // вивід даних на сторінку
@@ -101,7 +114,7 @@ function TemplateMovieCard( data ) {
   if (data.genres) { 
     aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
   } else {
-    aGenres = convertId_to_Name(data.genre_ids)
+    aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
   }
 
   return `<a href="" data-id-movie="${id ? id: 0}">
@@ -152,13 +165,19 @@ function emptyLibraryMarkup() {
   }
 }
 
-if (boxLibraryCinema) {
-  const result = emptyLibraryMarkup();
-  if (result) {
-    boxLibraryCinema.insertAdjacentHTML('beforeend', emptyLibraryMarkup());
+function showEmptyLibrary() {
+  if (boxLibraryCinema) {
+    const result = emptyLibraryMarkup();
+    if (result) {
+      boxLibraryCinema.innerHTML = '';
+      boxLibraryCinema.insertAdjacentHTML('beforeend', result);
+    }
   }
 }
 
+function onError(error) {
+  console.log(error);
+}
 
 //=======
 function createModal(data) {
@@ -186,7 +205,7 @@ function createModal(data) {
     if (data.genres) { 
       aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
     } else {
-      aGenres = convertId_to_Name(data.genre_ids)
+      aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
     }
 
     const modal = document.getElementById('moreDetails');
@@ -227,12 +246,14 @@ function createModal(data) {
       </div>
     `;
 
+    // close modal window
     const closeBtn = modal.querySelector('#closeDetails');
     closeBtn.addEventListener('click', () => {
       document.body.style.overflow = 'visible';
       modal.classList.add('more-details-is-hidden');
 
-      // onMarkup(libraryCinema)
+      onLibreryFilter();
+      showEmptyLibrary();
     });
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');

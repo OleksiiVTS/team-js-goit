@@ -2,6 +2,18 @@
 @media screen and (max-width: 767px) {
   /* приховую в мобільній версії фото з планшету та компютера */
 
+  .weekly-movie-phone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .weekly-movie-card{
+    width: 100%;
+  }
+
+
   .weekly-trends {
     padding-left: 20px;
     padding-right: 20px;

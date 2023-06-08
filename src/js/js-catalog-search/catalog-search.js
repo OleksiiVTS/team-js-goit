@@ -16,7 +16,6 @@ const refs = {
 //   refs.footer.classList.remove('footer-fixed');
 // }
 
-export { footerFix };
 window.addEventListener('click', function (event) {
   // console.log('event', event);
   // console.log(event.view.location.pathname);
