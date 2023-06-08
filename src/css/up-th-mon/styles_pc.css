@@ -1,5 +1,9 @@
 @media screen and (min-width: 1280px){
-   .upcoming_centre{
+    .upcoming_film{
+        /* margin: 0 auto; */
+        max-width: 1280px;
+      }
+    .upcoming_centre{
     /* justify-content: center;
     display: flex;
     flex-wrap: wrap;
@@ -64,3 +68,5 @@ line-height: 1.18;
 
 
 }
+
+

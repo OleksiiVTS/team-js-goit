@@ -385,14 +385,15 @@ body {
 }
 
 /* COLORS FOR THE LIGHT THEME */
-.header-white-background {
-  background-color: var(--color-white);
+.svg-sec-black-fill {
+  fill: var(--color-second-black);
 }
+
 .secondary-white-background {
   background-color: var(--color-text-description);
 }
 
-.body-white-background {
+.white-background {
   background-color: var(--color-white);
 }
 
@@ -404,12 +405,31 @@ body {
   background-color: #000000;
 }
 
-.day-dark-text {
+.light-theme-box-shadow {
+  box-shadow: 1px 1px 14px 4px rgba(0, 0, 0, 0.22);
+}
+.lightdark-text-color {
   color: var(--color-text-header-l);
 }
 
-.day-secondary-black {
+.lightdark-placeholder::placeholder {
+  color: var(--color-text-header-l);
+}
+
+.secondary-black-text-color {
   color: var(--color-second-black);
+}
+
+.black-text-color {
+  color: var(--color-black);
+}
+
+.darkest-text-color {
+  color: var(--color-black-header);
+}
+
+.light-backdrop-background {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .header-menu:hover,
