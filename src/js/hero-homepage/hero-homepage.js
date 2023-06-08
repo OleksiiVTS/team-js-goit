@@ -74,7 +74,7 @@ function createFilmBox({ title, vote_average, backgroundImage, overview }) {
   if (words.length > 30) {
     truncatedOverview += '...';
   }
-
+console.log(vote_average.toFixed(1) * 10)
   return `
     <section class="hero-section">
     <div class="container hero-container" style="background-image: linear-gradient(
@@ -87,14 +87,14 @@ function createFilmBox({ title, vote_average, backgroundImage, overview }) {
     background-size: cover;">
         <h1 class="hero-title">${title}</h1>
         <div class="hero-rating">
-          <div class="rating__body">
-            <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
-            <div class="rating__items">
-              <input type="radio" class="rating__item" name="rating" value="1">
-              <input type="radio" class="rating__item" name="rating" value="2">
-              <input type="radio" class="rating__item" name="rating" value="3">
-              <input type="radio" class="rating__item" name="rating" value="4">
-              <input type="radio" class="rating__item" name="rating" value="5">
+          <div class="hero-rating__body">
+            <div class="hero-rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+            <div class="hero-rating__items">
+              <input type="radio" class="hero-rating__item" name="rating" value="1">
+              <input type="radio" class="hero-rating__item" name="rating" value="2">
+              <input type="radio" class="hero-rating__item" name="rating" value="3">
+              <input type="radio" class="hero-rating__item" name="rating" value="4">
+              <input type="radio" class="hero-rating__item" name="rating" value="5">
             </div>
           </div>
         </div>
