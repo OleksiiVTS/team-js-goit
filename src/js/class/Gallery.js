@@ -1,5 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
+import Movie from './Movie.js';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js'
 
 //import Notiflix from 'notiflix';
@@ -76,7 +77,7 @@ export default class Gallery {
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
-      this.listMovies = this.importFromLS();
+      this.listMovies = await data.results //this.importFromLS();
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
@@ -86,6 +87,7 @@ export default class Gallery {
       return data.results; 
 
     } catch (error) {
+      this.listMovies = await this.importFromLS();
       this.onError(error)
     }
   }
