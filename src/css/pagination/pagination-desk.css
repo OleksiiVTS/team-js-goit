@@ -39,13 +39,14 @@
         border-radius: 50%;
         margin-left: 0;
         /* padding: 12px 10px; */
-        padding-top: 11px;
-        padding-bottom: 11px;
+        padding-top: 12px;
+        padding-bottom: 10px;
         padding-left: 10px;
         padding-right: 10px;
         font-size: 14px;
         line-height: 14px;
         text-decoration: none;
+        justify-content: center;
         display: inline-block;
         position: relative;
 }
