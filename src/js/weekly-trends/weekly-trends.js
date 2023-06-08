@@ -15,15 +15,35 @@ const moviesTrendsWeek = new Gallery({
 function TemplateTrendsWeek(data) {
   const { poster_path, original_title, title, vote_average, release_date, genre_ids, id } = data;
 
+  const aGenres = data.genre_ids.slice(0, 2);
+
+
   return `<a href="" data-id-movie="${id}">
-    <!-- Карточкa фільмів 1 -->
     <div class="weekly-movie-card">
       <img src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" class="weekly-movie-image" loading="lazy"/>
       <div class="weekly-movie-details">
         <h2 class="weekly-movie-title">${title}</h2>
+        
         <div class="weekly-movie-genre-stars">
-          <p class="weekly-movie-genre">${moviesTrendsWeek.convertId_to_Name(genre_ids)} | ${release_date}</p>
-          <p class="weekly-movie-rating">Rating: ${(vote_average / 2).toFixed(1)}</p>
+          <p class="weekly-movie-genre">
+          ${moviesTrendsWeek.convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
+          </p>
+
+          
+          <!-- Зірочки рейтингу -->
+          <div class="rating weekly-rating-positions">
+            <div class="rating__body">
+              <div class="rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+              <div class="rating__items">
+                <input type="radio" class="rating__item" name="rating" value="1">
+                <input type="radio" class="rating__item" name="rating" value="2">
+                <input type="radio" class="rating__item" name="rating" value="3">
+                <input type="radio" class="rating__item" name="rating" value="4">
+                <input type="radio" class="rating__item" name="rating" value="5">
+              </div>
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
