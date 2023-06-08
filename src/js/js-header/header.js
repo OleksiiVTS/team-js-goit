@@ -259,3 +259,40 @@ export function styleModal() {
     }
   }
 }
+
+export function styleUpcomingThisMonth() {
+  if (localStorage.getItem('ui-theme') === 'light') {
+    const toggleClass = (element, className) => {
+      if (element) {
+        element.classList.add(className);
+      }
+    };
+
+    const sectionEl = document.querySelector('.upcoming_film');
+
+    const toBlackTxt = [
+      sectionEl.querySelector('.film-title'),
+      sectionEl.querySelector('.release'),
+      sectionEl.querySelector('.vote'),
+      sectionEl.querySelector('.popularity'),
+      sectionEl.querySelector('.genre'),
+      sectionEl.querySelector('.description-about'),
+    ];
+
+    const toSecBlackTxt = [
+      sectionEl.querySelector('.popularity-value'),
+      sectionEl.querySelector('.genre-value'),
+      sectionEl.querySelector('.about-value'),
+    ];
+
+    for (element of toBlackTxt) {
+      toggleClass(element, 'black-text-color');
+    }
+
+    for (element of toSecBlackTxt) {
+      toggleClass(element, 'secondary-black-text-color');
+    }
+
+    toggleClass(sectionEl, 'light-theme-box-shadow');
+  }
+}
