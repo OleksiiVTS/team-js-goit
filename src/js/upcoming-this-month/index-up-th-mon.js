@@ -126,34 +126,49 @@ return `${day}.${month}.${year}`;
 
 }
 
-// Функция для обработки нажатия на кнопку добавления/удаления фильма из My Library
-function toggleLibraryFilm(film) {
+function isFilmInLibrary(film) {
+  let libraryFilms = JSON.parse(localStorage.getItem("libraryFilms")) || [];
+
+  const index = libraryFilms.findIndex((storedFilm) => storedFilm.id === film.id);
+  
+  return index !== -1; 
+}
+
+
+function updateButtonStatus(film) {
   const addButton = document.querySelector(".button-rem-me");
   
-  // Retrieve libraryFilms from Local Storage
+  if (isFilmInLibrary(film)) {
+    addButton.textContent = "Remove from My Library";
+  } else {
+    addButton.textContent = "Add to My Library";
+  }
+}
+
+function toggleLibraryFilm(film) {
+  const addButton = document.querySelector(".button-rem-me");
+
   let libraryFilms = JSON.parse(localStorage.getItem("libraryFilms")) || [];
   
   if (addButton.textContent === "Add to My Library") {
     addButton.textContent = "Remove from My Library";
-    // Add film to libraryFilms array
+
     libraryFilms.push(film);
   } else {
     addButton.textContent = "Add to My Library";
-    // Remove film from libraryFilms array
     const index = libraryFilms.findIndex((storedFilm) => storedFilm.id === film.id);
     if (index !== -1) {
       libraryFilms.splice(index, 1);
     }
   }
   
-  // Save updated libraryFilms array to Local Storage
+
   localStorage.setItem("libraryFilms", JSON.stringify(libraryFilms));
 }
 
-// Call the function to retrieve film data and create a film card
 fetchFilmData().then((filmData) => {
   createFilmCard(filmData);
+  
+  updateButtonStatus(filmData);
 });
-
-
 
