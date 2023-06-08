@@ -80,6 +80,9 @@ function switchThemeColors() {
     ...document.getElementsByTagName('table'),
   ];
 
+  const filterEl = document.getElementById('libraryFilterCinemania');
+  let filterOptions = filterEl.getElementsByTagName('option');
+
   const toSecBlackTxtEls = [
     document.querySelector('.header-title'),
     document.querySelector('.vote-value'),
@@ -140,6 +143,24 @@ function switchThemeColors() {
     }
   }
 
+  if (!themeSwitchEl.checked && filterEl) {
+    filterEl.style.color = '#595959';
+  } else if (filterEl && themeSwitchEl.checked) {
+    filterEl.style.color = '#b7b7b7';
+  }
+
+  for (element of filterOptions) {
+    if (element.value === 'genre') {
+      element.style.display = 'none';
+    } else if (!themeSwitchEl.checked) {
+      element.style.color = '#282828';
+      element.style.backgroundColor = '#F8F8F8';
+    } else {
+      element.style.color = '#F8F8F8';
+      element.style.backgroundColor = '#1C1C1C';
+    }
+  }
+
   for (element of toWhiteBackgr) {
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
@@ -175,6 +196,6 @@ function setCurrentTheme() {
     themeSwitchEl.checked = true;
   } else if (localStorage.getItem('ui-theme') === 'light') {
     themeSwitchEl.checked = false;
-    switchThemeColors();
+    setTimeout(switchThemeColors, 500);
   }
 }
