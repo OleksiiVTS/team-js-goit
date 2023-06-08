@@ -66,6 +66,7 @@ function onLibreryFilter(event) {
 function onMarkup(data){
   const cards = createCard(data)
   update(cards)
+  managerModal();
 }
 
 // вивід даних на сторінку
@@ -103,8 +104,6 @@ function TemplateMovieCard( data ) {
     aGenres = convertId_to_Name(data.genre_ids)
   }
 
-  // const aGenres = data.genres.slice(0, 2);
-
   return `<a href="" data-id-movie="${id}">
   <div class="movie-card overlay-card" data-id-movie="${id}">
       <img class="gallery__image" src="${
@@ -139,7 +138,7 @@ function TemplateMovieCard( data ) {
       </a>`;
 }
 
-
+// если пустой список
 function emptyLibraryMarkup() {
   if (libraryCinema.length === 0) {
     document.querySelector('.library-filter').style.display = 'none';
@@ -266,7 +265,7 @@ function createModal(data) {
     }
   }
 
-  function managerModal(libraryCinema) {
+  function managerModal() {
     // якщо області виводу не має, значить не та сторінка
     if (!this.out) {
       return;
@@ -277,12 +276,13 @@ function createModal(data) {
     movieCards.forEach(card => {
       const movieId = Number(card.dataset.idMovie);
 
-      let list = libraryCinema
+      let list = libraryCinema;
       if (list.length === 0) { 
         throw Error("Список бібліотеки пустий")
         return
       }
       const data = list.filter(item => item.id === movieId);
+      console.log(data);
 
       card.addEventListener('click', event => {
         event.preventDefault();
