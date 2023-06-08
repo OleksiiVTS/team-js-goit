@@ -40,7 +40,7 @@ onMarkup(libraryCinema)
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
   const genre = Number(event.currentTarget.value);
-  console.log(genre, isNaN(genre));
+  
   if (isNaN(genre)){
     onMarkup(libraryCinema)
     return
@@ -104,8 +104,8 @@ function TemplateMovieCard( data ) {
     aGenres = convertId_to_Name(data.genre_ids)
   }
 
-  return `<a href="" data-id-movie="${id}">
-  <div class="movie-card overlay-card" data-id-movie="${id}">
+  return `<a href="" data-id-movie="${id ? id: 0}">
+  <div class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
       <img class="gallery__image" src="${
         'https://image.tmdb.org/t/p/w400' + poster_path
       }" alt="${title ? title : original_title}" loading="lazy"/>
@@ -242,7 +242,7 @@ function createModal(data) {
       const libraryFilms =
         JSON.parse(localStorage.getItem('libraryFilms')) || [];
 
-      const filmTitle = film.title;
+      const filmTitle = (film.title || film.original_title);
 
       if (addButton.textContent === 'Add to My Library') {
         addButton.textContent = 'Remove from My Library';
@@ -253,7 +253,7 @@ function createModal(data) {
         addButton.textContent = 'Add to My Library';
 
         const index = libraryFilms.findIndex(
-          filmItem => filmItem.title === filmTitle
+          filmItem => filmItem.title === filmTitle || filmItem.original_title === filmTitle
         );
         if (index !== -1) {
           libraryFilms.splice(index, 1);
@@ -267,11 +267,11 @@ function createModal(data) {
 
   function managerModal() {
     // якщо області виводу не має, значить не та сторінка
-    if (!this.out) {
+    if (!boxLibraryCinema) {
       return;
     }
 
-    const movieCards = this.out.querySelectorAll('.movie-card');
+    const movieCards = boxLibraryCinema.querySelectorAll('.movie-card');
 
     movieCards.forEach(card => {
       const movieId = Number(card.dataset.idMovie);
@@ -282,8 +282,12 @@ function createModal(data) {
         return
       }
       const data = list.filter(item => item.id === movieId);
-      console.log(data);
 
+      console.log(data);
+      if (data.length === 0) {
+        throw Error('у об`єктів повинні бути id')
+        return
+      }
       card.addEventListener('click', event => {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
