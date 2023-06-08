@@ -10,6 +10,8 @@
 .overlay-card:focus {
   box-shadow: 1px 1px 24px 2px rgba(1, 1, 1, 0.45);
 }
+
+
 .gallery__up_image {
   display: block;
   position: absolute;
@@ -23,6 +25,7 @@
     rgba(0, 0, 0, 0.9) 92.16%
   );
 }
+
 .catalog_info {
   position: absolute;
   bottom: 12px;
