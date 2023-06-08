@@ -283,7 +283,7 @@ function createModal(data) {
       }
       const data = list.filter(item => item.id === movieId);
 
-      console.log(data);
+      // console.log(data);
       if (data.length === 0) {
         throw Error('у об`єктів повинні бути id')
         return
