@@ -1,5 +1,6 @@
 const axios = require("axios/dist/axios.min.js"); // node
 import GenreList from './GenreList.js';
+import Movie from './Movie.js';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js'
 
 //import Notiflix from 'notiflix';
@@ -76,7 +77,7 @@ export default class Gallery {
       const { data } = await axios.get(this.url, { params });
       
       this.exportToLS(data.results);
-      this.listMovies = this.importFromLS();
+      this.listMovies = await data.results //this.importFromLS();
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
@@ -86,6 +87,7 @@ export default class Gallery {
       return data.results; 
 
     } catch (error) {
+      this.listMovies = await this.importFromLS();
       this.onError(error)
     }
   }
@@ -183,12 +185,13 @@ export default class Gallery {
       enableSpinner();
 
 
-      this.hide();
+      // this.hide();
       
       const markup = await this.createNewCards(cbTemplate, count);
       // console.log(markup);
       this.updateGallery(markup);
-      this.show();
+      this.managerModal()
+      // this.show();
 
       disableSpinner();
       return markup;
@@ -216,7 +219,7 @@ export default class Gallery {
     const aGenres = data.genre_ids.slice(0, 2);
 
     return `<a href="" data-id-movie="${id}">
-    <div class="movie-card overlay-card">
+    <div class="movie-card overlay-card" data-id-movie="${id}">
     <img class="gallery__image" src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" loading="lazy"/>
     <div class="gallery__up_image"></div>
     <div class="catalog_info">
@@ -265,6 +268,80 @@ export default class Gallery {
       selector.insertAdjacentHTML("beforeend", data);
     }
   }
+
+  createModal(data) {
+    const { title, poster_path, vote_average, vote_count, popularity, overview } = data;
+
+    const aGenres = data.genre_ids.slice(0, 2);
+
+    const modal = document.getElementById('moreDetails');
+    modal.classList.remove('more-details-is-hidden');
+
+    modal.innerHTML = `
+    <div class="more-details-modal">
+      <div class="close-button-box">
+        <button class="more-details-close-button" id="closeDetails" type="button">X</button>
+      </div>
+      <div class="details-wrapper">
+        <div class="more-details-img-box">
+          <img width="380px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
+        </div>
+        <div class="more-details-info">
+          <h2 class="film-title">${title}</h2>
+          <table>
+            <tr>
+              <td class="table-row table-column-name">Vote / Votes:</td>
+              <td><span class="vote-average">${vote_average}</span> / <span class="vote-count">${vote_count}</span></td>
+            </tr>
+            <tr>
+              <td class="table-row table-column-name">Popularity:</td>
+              <td>${popularity}</td>
+            </tr>
+            <tr>
+              <td class="table-row table-column-name">Genre:</td>
+              <td>${convertId_to_Name(aGenres)}</td>
+            </tr>
+          </table>
+          <span class="description-about">About:</span>
+          <span class="more-details-about">${overview}</span>
+          <div class="more-details-adml-box">
+            <button id="addToLibraryButton" class="button-rem-me">Add to Library</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+
+    const closeBtn = modal.querySelector('#closeDetails');
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('more-details-is-hidden');
+    });
+  }
+
+  managerModal() {
+    
+    // якщо області виводу не має, значить не та сторінка
+    if (!this.out) { 
+      return
+    }
+
+    const movieCards = this.out.querySelectorAll('.movie-card');
+
+    movieCards.forEach((card) => {
+      const movieId = Number(card.dataset.idMovie);
+
+      const list = this.importFromLS();
+      const data = list.filter(item => item.id === movieId)
+      
+      card.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.createModal(data[0]);
+      });
+    });
+    
+
+  }
+
 
   // якщо помилка
   onError(error){

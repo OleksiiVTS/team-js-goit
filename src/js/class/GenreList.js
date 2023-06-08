@@ -33,14 +33,16 @@ export default class GenreList {
       const {data} = await axios.get(this.url, { params });
 
       this.exportToLS(data.genres);
+      this.list = await data.genres;
 
-      if (!this.list) {
-        this.list = this.importFromLS()
-      }
       disableSpinner();
 
       return data.genres; 
     } catch (error) {
+      if (!this.list) {
+        this.list = this.importFromLS()
+      }
+
       this.onError(error);
     }
   }
