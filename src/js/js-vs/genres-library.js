@@ -23,7 +23,7 @@ function convertId_to_Name(aGenre) {
 }
 
 const boxLibraryCinema = document.querySelector('.library');
-const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+let libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
 
 const select = document.querySelector('.library-filter');
 if (select) {
@@ -41,7 +41,7 @@ if (select) {
 //   return;
 // });
 
-onMarkup(libraryCinema)
+onMarkup(libraryCinema);
 
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
@@ -49,7 +49,11 @@ function onLibreryFilter(event) {
 
   try {
     
-    const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+    libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+    if(libraryCinema.length === 0) {
+      throw new Error("масив пустий")
+    }
+
 
     if (isNaN(genre)){
       onMarkup(libraryCinema)
@@ -66,7 +70,7 @@ function onLibreryFilter(event) {
   
     onMarkup(filter);
   } catch (error) {
-    
+    onError(error);
   }
 }
 
@@ -75,6 +79,7 @@ function onMarkup(data){
   const cards = createCard(data)
   update(cards)
   managerModal();
+  showEmptyLibrary();
 }
 
 // вивід даних на сторінку
@@ -160,13 +165,19 @@ function emptyLibraryMarkup() {
   }
 }
 
-if (boxLibraryCinema) {
-  const result = emptyLibraryMarkup();
-  if (result) {
-    boxLibraryCinema.insertAdjacentHTML('beforeend', result);
+function showEmptyLibrary() {
+  if (boxLibraryCinema) {
+    const result = emptyLibraryMarkup();
+    if (result) {
+      boxLibraryCinema.innerHTML = '';
+      boxLibraryCinema.insertAdjacentHTML('beforeend', result);
+    }
   }
 }
 
+function onError(error) {
+  console.log(error);
+}
 
 //=======
 function createModal(data) {
@@ -242,9 +253,7 @@ function createModal(data) {
       modal.classList.add('more-details-is-hidden');
 
       onLibreryFilter();
-      // if (select) {
-      //   select.dispatchEvent(new Event('click', { bubbles: true }));
-      // }
+      showEmptyLibrary();
     });
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
