@@ -193,13 +193,13 @@ function createDetailsBox({
       <div class="details-wrapper">
 
       <div class="more-details-img-box">
-        <img width="380px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
+        <img width="248px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
       </div>
 
 
       
       <div class="more-details-info">
-        <h2 class="film-title">${title}</h2>
+        <h2 class="film-title-modal film-title">${title}</h2>
 
 
 
