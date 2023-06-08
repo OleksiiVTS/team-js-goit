@@ -8,19 +8,19 @@ import { stylePagination } from '../js-header/header.js';
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
-window.addEventListener('click', function (event) {
-
-  // console.log('event', event);
-  // console.log(event.view.location.pathname);
-  
-  if ( event.view.location.pathname === '/catalog.html' ||
-       event.view.location.pathname === '/team-js-goit/catalog.html') {
-    return document
-      .getElementById('btn-search')
-      .addEventListener('click', onSubmit);
-  }
-  return;
-});
+const btnSearch = document.getElementById('btn-search');
+if( btnSearch) {
+  btnSearch.addEventListener('click', onSubmit);
+}
+// window.addEventListener('click', function (event) {
+//   if ( event.view.location.pathname === '/catalog.html' ||
+//        event.view.location.pathname === '/team-js-goit/catalog.html') {
+//     return document
+//       .getElementById('btn-search')
+//       .addEventListener('click', onSubmit);
+//   }
+//   return;
+// });
 
 function onError(error) {
   console.log(error);

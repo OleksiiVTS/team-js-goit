@@ -25,21 +25,28 @@ function convertId_to_Name(aGenre) {
 const boxLibraryCinema = document.querySelector('.library');
 const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
 
+const select = document.querySelector('.library-filter');
+if (select) {
+  select.addEventListener('input', onLibreryFilter);
+}
 // слухач події клік на селекторі 
-window.addEventListener('click', (event) => {
-  if ( event.view.location.pathname === '/library.html' ||
-       event.view.location.pathname === '/team-js-goit/library.html') {
-    return document
-      .querySelector('.library-filter')
-      .addEventListener('input', onLibreryFilter);
-  }
-  return;
-});
+// window.addEventListener('click', (event) => {
+//   if ( event.view.location.pathname === '/library.html' ||
+//        event.view.location.pathname === '/team-js-goit/library.html') {
+         
+//     return document
+//     .querySelector('.library-filter')
+//     .addEventListener('input', onLibreryFilter);
+//   }
+//   return;
+// });
+
 onMarkup(libraryCinema)
 
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
-  const genre = Number(event.currentTarget.value);
+  const genre = Number(select.value);
+
   try {
     
     const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
@@ -156,7 +163,7 @@ function emptyLibraryMarkup() {
 if (boxLibraryCinema) {
   const result = emptyLibraryMarkup();
   if (result) {
-    boxLibraryCinema.insertAdjacentHTML('beforeend', emptyLibraryMarkup());
+    boxLibraryCinema.insertAdjacentHTML('beforeend', result);
   }
 }
 
@@ -228,13 +235,16 @@ function createModal(data) {
       </div>
     `;
 
+    // close modal window
     const closeBtn = modal.querySelector('#closeDetails');
     closeBtn.addEventListener('click', () => {
       document.body.style.overflow = 'visible';
       modal.classList.add('more-details-is-hidden');
-      
+
       onLibreryFilter();
-      // onMarkup(libraryCinema)
+      // if (select) {
+      //   select.dispatchEvent(new Event('click', { bubbles: true }));
+      // }
     });
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
