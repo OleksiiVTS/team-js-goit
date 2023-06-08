@@ -45,11 +45,16 @@ function onLibreryFilter(event) {
     onMarkup(libraryCinema)
     return
   }
+
   // const filter = libraryCinema.filter(element => {
   //   return element.genres.some(item => item.id === genre);
 
   const filter = libraryCinema.filter(element => {
-    return element.genre_ids.some(item => item === genre);
+    if (element.genres) {
+      return element.genres.some(item => item.id === genre);
+    } else {
+      return element.genre_ids.some(item => item === genre);
+    }
   });
     
   // console.log(filter);
@@ -90,12 +95,13 @@ function TemplateMovieCard( data ) {
     id
   } = data;
 
-        let aGenres = null;
-        if (data.genres) { 
-          aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
-        } else {
-          aGenres = convertId_to_Name(data.genres_ids)
-        }
+  
+  let aGenres = null;
+  if (data.genres) { 
+    aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
+  } else {
+    aGenres = convertId_to_Name(data.genre_ids)
+  }
 
   // const aGenres = data.genres.slice(0, 2);
 
@@ -150,3 +156,138 @@ function emptyLibraryMarkup() {
 if (boxLibraryCinema) {
   boxLibraryCinema.insertAdjacentHTML('beforeend', emptyLibraryMarkup());
 }
+
+
+//=======
+function createModal(data) {
+    const {
+      title,
+      original_title,
+      poster_path,
+      vote_average,
+      vote_count,
+      popularity,
+      overview,
+      genre_ids,
+    } = data;
+
+    let btn = 'Add to My Library';
+    const libraryFilms = JSON.parse(localStorage.getItem('libraryFilms')) || [];
+
+    for (const film of libraryFilms) {
+      if (film.title === title || film.original_title === title) {
+        btn = 'Remove from My Library';
+      }
+    }
+
+    let aGenres = null;
+    if (data.genres) { 
+      aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
+    } else {
+      aGenres = convertId_to_Name(data.genre_ids)
+    }
+
+    const modal = document.getElementById('moreDetails');
+    modal.classList.remove('more-details-is-hidden');
+
+    modal.innerHTML = `
+      <div class="more-details-modal">
+        <div class="close-button-box">
+          <button class="more-details-close-button" id="closeDetails" type="button">X</button>
+        </div>
+        <div class="details-wrapper">
+          <div class="more-details-img-box">
+            <img width="380px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
+          </div>
+          <div class="more-details-info">
+            <h2 class="film-title">${title ? title : original_title}</h2>
+            <table>
+              <tr>
+                <td class="table-row table-column-name">Vote / Votes:</td>
+                <td><span class="vote-average">${vote_average}</span> / <span class="vote-count">${vote_count}</span></td>
+              </tr>
+              <tr>
+                <td class="table-row table-column-name">Popularity:</td>
+                <td>${popularity}</td>
+              </tr>
+              <tr>
+                <td class="table-row table-column-name">Genre:</td>
+                <td>${aGenres}</td>
+              </tr>
+            </table>
+            <span class="description-about">About:</span>
+            <span class="more-details-about">${overview}</span>
+            <div class="more-details-adml-box">
+              <button id="addToLibraryButton" class="button-rem-me">${btn}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const closeBtn = modal.querySelector('#closeDetails');
+    closeBtn.addEventListener('click', () => {
+      document.body.style.overflow = 'visible';
+      modal.classList.add('more-details-is-hidden');
+    });
+
+    const addToLibraryButton = modal.querySelector('#addToLibraryButton');
+    addToLibraryButton.addEventListener('click', () => {
+      this.addToLibrary(data);
+    });
+  }
+
+  function addToLibrary(film) {
+    try {
+      const addButton = document.getElementById('addToLibraryButton');
+      const libraryFilms =
+        JSON.parse(localStorage.getItem('libraryFilms')) || [];
+
+      const filmTitle = film.title;
+
+      if (addButton.textContent === 'Add to My Library') {
+        addButton.textContent = 'Remove from My Library';
+
+        libraryFilms.push(film);
+        localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+      } else {
+        addButton.textContent = 'Add to My Library';
+
+        const index = libraryFilms.findIndex(
+          filmItem => filmItem.title === filmTitle
+        );
+        if (index !== -1) {
+          libraryFilms.splice(index, 1);
+          localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function managerModal(libraryCinema) {
+    // якщо області виводу не має, значить не та сторінка
+    if (!this.out) {
+      return;
+    }
+
+    const movieCards = this.out.querySelectorAll('.movie-card');
+
+    movieCards.forEach(card => {
+      const movieId = Number(card.dataset.idMovie);
+
+      let list = libraryCinema
+      if (list.length === 0) { 
+        throw Error("Список бібліотеки пустий")
+        return
+      }
+      const data = list.filter(item => item.id === movieId);
+
+      card.addEventListener('click', event => {
+        event.preventDefault();
+        document.body.style.overflow = 'hidden';
+        createModal(data[0]);
+      });
+    });
+  }
