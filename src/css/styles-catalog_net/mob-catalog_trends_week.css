@@ -67,8 +67,10 @@
     margin-top: 16px;
     row-gap: 16px;
   }
+
   .library-gallery {
     display: flex;
+
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
@@ -82,6 +84,7 @@
   .catalog_title {
     max-width: 275px;
   }
+
   .ganres_rating {
     margin-right: 20px;
   }
