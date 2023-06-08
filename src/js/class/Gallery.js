@@ -155,9 +155,11 @@ export default class Gallery {
 
       const cards = await this.getMoviesList();
 
+
       if (!count || count > cards.lenght) {
         count = cards.lenght;
       }
+      cards.slice(0, count);
 
       disableSpinner();
       return cards.reduce((acc, item, index) => {
@@ -204,10 +206,16 @@ export default class Gallery {
       title,
       vote_average,
       release_date,
+      genre_ids,
       id,
     } = data;
 
-    const aGenres = data.genre_ids.slice(0, 2);
+    
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
+    if(strGenres.length > 20){
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    }
+
     let pictureCard = "";
     let properties = "";
 
@@ -226,7 +234,7 @@ export default class Gallery {
       </h2>
       <div class="ganres_rating">
           <p class="catalog_genres">
-          ${convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
+          ${strGenres} | ${release_date.slice(0, 4)}
           </p>
         <div class="rating">
           <div class="rating__body">
@@ -288,7 +296,10 @@ export default class Gallery {
       }
     }
 
-    const aGenres = genre_ids.slice(0, 2);
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
+    if(strGenres.lenght > 20){
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    }
 
     const modal = document.getElementById('moreDetails');
     modal.classList.remove('more-details-is-hidden');
@@ -315,7 +326,7 @@ export default class Gallery {
               </tr>
               <tr>
                 <td class="table-row table-column-name">Genre:</td>
-                <td>${convertId_to_Name(aGenres)}</td>
+                <td>${strGenres}</td>
               </tr>
             </table>
             <span class="description-about">About:</span>
