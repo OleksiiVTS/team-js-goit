@@ -36,14 +36,12 @@
     width: 40px;
     height: 40px;
     padding: 12px 10px;
-    /* padding: 8px 0 6px; */
-    /* margin-left: 0; */
     color: #B7B7B7;
     font-size: 14px;
-    line-height: 14px;    /* font-weight: normal; */
-    /* line-height: 1; */
+    line-height: 14px;
+    line-height: 1;
     text-decoration: none;
-    vertical-align: middle;
+    /* vertical-align: middle; */
     border: 1px solid #B7B7B7;
     /* border-width: 1px 0; */
 }
@@ -57,6 +55,7 @@
     /* border-color: #e4e9ee; */
     cursor: default;
     border: none;
+    padding: 12px 10px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
