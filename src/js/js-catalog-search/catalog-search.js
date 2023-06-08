@@ -4,7 +4,7 @@ let query = '';
 // import axios from 'axios';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 import Pagination from 'tui-pagination';
-
+import { stylePagination } from '../js-header/header.js';
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
@@ -131,6 +131,7 @@ export function initPagination(objGallery) {
     pagination.on('afterMove', function (eventData) {
       objGallery.page = eventData.page;
       objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
+      stylePagination();
     });
 
   }
