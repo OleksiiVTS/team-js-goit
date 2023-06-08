@@ -213,7 +213,7 @@ export default class Gallery {
 
     if (poster_path===null) {
       pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
-      properties = "style=height:420px ";
+      properties = "style=height:100% ";
     } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
 
     return `<a href="" data-id-movie="${id}">
