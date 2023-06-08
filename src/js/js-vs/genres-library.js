@@ -101,7 +101,7 @@ function TemplateMovieCard( data ) {
   if (data.genres) { 
     aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
   } else {
-    aGenres = convertId_to_Name(data.genre_ids)
+    aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
   }
 
   return `<a href="" data-id-movie="${id ? id: 0}">
@@ -186,7 +186,7 @@ function createModal(data) {
     if (data.genres) { 
       aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
     } else {
-      aGenres = convertId_to_Name(data.genre_ids)
+      aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
     }
 
     const modal = document.getElementById('moreDetails');
