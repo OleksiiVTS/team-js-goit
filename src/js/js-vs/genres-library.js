@@ -153,7 +153,10 @@ function emptyLibraryMarkup() {
 }
 
 if (boxLibraryCinema) {
-  boxLibraryCinema.insertAdjacentHTML('beforeend', emptyLibraryMarkup());
+  const result = emptyLibraryMarkup();
+  if (result) {
+    boxLibraryCinema.insertAdjacentHTML('beforeend', emptyLibraryMarkup());
+  }
 }
 
 
