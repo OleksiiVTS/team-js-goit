@@ -40,26 +40,27 @@ onMarkup(libraryCinema)
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
   const genre = Number(event.currentTarget.value);
-  
-  if (isNaN(genre)){
-    onMarkup(libraryCinema)
-    return
-  }
-
-  // const filter = libraryCinema.filter(element => {
-  //   return element.genres.some(item => item.id === genre);
-
-  const filter = libraryCinema.filter(element => {
-    if (element.genres) {
-      return element.genres.some(item => item.id === genre);
-    } else {
-      return element.genre_ids.some(item => item === genre);
-    }
-  });
+  try {
     
-  // console.log(filter);
+    const libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
+
+    if (isNaN(genre)){
+      onMarkup(libraryCinema)
+      return
+    }
+
+    const filter = libraryCinema.filter(element => {
+      if (element.genres) {
+        return element.genres.some(item => item.id === genre);
+      } else {
+        return element.genre_ids.some(item => item === genre);
+      }
+    });
   
-  onMarkup(filter);
+    onMarkup(filter);
+  } catch (error) {
+    
+  }
 }
 
 // створення розмітки
@@ -231,7 +232,8 @@ function createModal(data) {
     closeBtn.addEventListener('click', () => {
       document.body.style.overflow = 'visible';
       modal.classList.add('more-details-is-hidden');
-
+      
+      onLibreryFilter();
       // onMarkup(libraryCinema)
     });
 
