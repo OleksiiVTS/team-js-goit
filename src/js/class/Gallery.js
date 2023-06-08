@@ -314,6 +314,7 @@ export default class Gallery {
 
     const closeBtn = modal.querySelector('#closeDetails');
     closeBtn.addEventListener('click', () => {
+      document.body.style.overflow = 'visible';
       modal.classList.add('more-details-is-hidden');
     });
   }
@@ -338,6 +339,7 @@ export default class Gallery {
       
       card.addEventListener('click', (event) => {
         event.preventDefault();
+        document.body.style.overflow = 'hidden';
         this.createModal(data[0]);
       });
     });
