@@ -12,14 +12,17 @@ const weeklyTrends = new Gallery({
 });
 
 
-weeklyTrends.onMarkup (
-  weeklyTrends.TemplateMovieCard, 3);
-
+function handleResize() {
   if (window.innerWidth < 768) {
     weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 1);
-      }
+  } else {
+    weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 3);
+  }
+}
 
-      
+handleResize(); // Виклик функції при завантаженні сторінки
+
+window.addEventListener('resize', handleResize);  
 
 
 //ПОПЕРЕДНІЙ КОД
