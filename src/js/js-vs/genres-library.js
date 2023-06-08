@@ -228,11 +228,13 @@ function createModal(data) {
     closeBtn.addEventListener('click', () => {
       document.body.style.overflow = 'visible';
       modal.classList.add('more-details-is-hidden');
+
+      // onMarkup(libraryCinema)
     });
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
-      this.addToLibrary(data);
+      addToLibrary(data);
     });
   }
 
@@ -258,6 +260,10 @@ function createModal(data) {
         if (index !== -1) {
           libraryFilms.splice(index, 1);
           localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+
+          // libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'))
+          // console.log(libraryCinema);
+          // onMarkup(libraryCinema)
         }
       }
     } catch (error) {
