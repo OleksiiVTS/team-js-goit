@@ -33,62 +33,37 @@ async function getFilmDetails(filmIndex) {
 
   try {
     const response = await fetch(apiUrl);
-
-    const {
-      title,
-      trailer_key: filmTrailer,
-      backdrop_path: filmBackgroundPath,
-      overview,
-      vote_average,
-      vote_count,
-      release_date,
-      popularity,
-      genres,
-      poster_path,
-    } = await response.json();
-
-    const filmTrailerUrl = `https://www.youtube.com/watch?v=${filmTrailer}`;
-    const filmBackgroundImage = `https://image.tmdb.org/t/p/original${filmBackgroundPath}`;
-
-    return {
-      title,
-      trailer: filmTrailerUrl,
-      backgroundImage: filmBackgroundImage,
-      overview,
-      vote_average,
-      vote_count,
-      release_date,
-      popularity,
-      genres,
-      poster_path,
-    };
+    const filmDetails = await response.json();
+    return filmDetails;
   } catch (error) {
     console.log('Error occurred while making API request:', error);
   }
 }
 
-function createFilmBox({ title, vote_average, backgroundImage, overview }) {
+function createFilmBox({ title, vote_average, backdrop_path, overview }) {
   const words = overview.split(' ');
   let truncatedOverview = words.slice(0, 30).join(' ');
 
   if (words.length > 30) {
     truncatedOverview += '...';
   }
-console.log(vote_average.toFixed(1) * 10)
+
   return `
     <section class="hero-section">
     <div class="container hero-container" style="background-image: linear-gradient(
       86.77deg,
       #111111 30.38%,
       rgba(17, 17, 17, 0) 65.61%
-    ), url(${backgroundImage});
+    ), url(https://image.tmdb.org/t/p/original/${backdrop_path});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;">
         <h1 class="hero-title">${title}</h1>
         <div class="hero-rating">
           <div class="hero-rating__body">
-            <div class="hero-rating__active" style="width: ${vote_average.toFixed(1) * 10}%;"></div>
+            <div class="hero-rating__active" style="width: ${
+              vote_average.toFixed(1) * 10
+            }%;"></div>
             <div class="hero-rating__items">
               <input type="radio" class="hero-rating__item" name="rating" value="1">
               <input type="radio" class="hero-rating__item" name="rating" value="2">
@@ -195,17 +170,10 @@ function createDetailsBox({
       <div class="more-details-img-box">
         <img width="248px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
       </div>
-
-
       
       <div class="more-details-info">
         <h2 class="film-title-modal film-title">${title}</h2>
 
-
-
-   
-   
-      
         <table>
         <tr>
           <td class="table-row table-column-name">Vote / Votes:</td>
@@ -223,19 +191,13 @@ function createDetailsBox({
       </tr>
       </table>
 
-
-
                <span class="description-about">About:</span>
         <span class="more-details-about">${overview}</span>
-
 
         <div class="more-details-adml-box">
         <button id="addToLibraryButton" class="button-rem-me">${btn}</button>
       </div>
-      </div>
-
-
-     
+      </div> 
 
       </div>
      </div>
