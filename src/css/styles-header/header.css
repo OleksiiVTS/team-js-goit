@@ -412,6 +412,10 @@ body {
   color: var(--color-text-header-l);
 }
 
+.lightdark-placeholder::placeholder {
+  color: var(--color-text-header-l);
+}
+
 .secondary-black-text-color {
   color: var(--color-second-black);
 }
