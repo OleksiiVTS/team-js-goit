@@ -81,7 +81,21 @@ function switchThemeColors() {
   ];
 
   const filterEl = document.getElementById('libraryFilterCinemania');
-  let filterOptions = filterEl.getElementsByTagName('option');
+  let filterOptions = [];
+  if (filterEl) {
+    filterOptions = [...filterEl.getElementsByTagName('option')];
+    for (element of filterOptions) {
+      if (element.value === 'genre') {
+        element.style.display = 'none';
+      } else if (!themeSwitchEl.checked) {
+        element.style.color = '#282828';
+        element.style.backgroundColor = '#F8F8F8';
+      } else {
+        element.style.color = '#F8F8F8';
+        element.style.backgroundColor = '#1C1C1C';
+      }
+    }
+  }
 
   const toSecBlackTxtEls = [
     document.querySelector('.header-title'),
@@ -147,18 +161,6 @@ function switchThemeColors() {
     filterEl.style.color = '#595959';
   } else if (filterEl && themeSwitchEl.checked) {
     filterEl.style.color = '#b7b7b7';
-  }
-
-  for (element of filterOptions) {
-    if (element.value === 'genre') {
-      element.style.display = 'none';
-    } else if (!themeSwitchEl.checked) {
-      element.style.color = '#282828';
-      element.style.backgroundColor = '#F8F8F8';
-    } else {
-      element.style.color = '#F8F8F8';
-      element.style.backgroundColor = '#1C1C1C';
-    }
   }
 
   for (element of toWhiteBackgr) {
