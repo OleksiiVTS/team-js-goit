@@ -149,8 +149,8 @@ function switchThemeColors() {
     toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
   }
 
-  for (let element of toDarkPlaceholder) {
-    toggleClass(element, 'lightdark-placeholder', !themeSwitchEl.checked);
+  for (element of toDarkPlaceholder) {
+    toggleClass(element, 'dark', !themeSwitchEl.checked);
   }
 
   for (let element of footerTxt) {

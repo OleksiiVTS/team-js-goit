@@ -8,19 +8,38 @@ import { stylePagination } from '../js-header/header.js';
 
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
-const btnSearch = document.getElementById('btn-search');
-if( btnSearch) {
-  btnSearch.addEventListener('click', onSubmit);
-}
-// window.addEventListener('click', function (event) {
-//   if ( event.view.location.pathname === '/catalog.html' ||
-//        event.view.location.pathname === '/team-js-goit/catalog.html') {
-//     return document
-//       .getElementById('btn-search')
-//       .addEventListener('click', onSubmit);
-//   }
-//   return;
-// });
+const refs = {
+  footer: document.querySelector('.footer-container'),
+  body: document.querySelector('body'),
+};
+// if (refs.footer.classList.includes('footer-fixed')) {
+//   refs.footer.classList.remove('footer-fixed');
+// }
+
+window.addEventListener('click', function (event) {
+  // console.log('event', event);
+  // console.log(event.view.location.pathname);
+
+  // function footerFix() {
+  //   if (refs.body.clientHeight < window.innerHeight) {
+  //     refs.footer.classList.add('footer-fixed');
+  //   } else {
+  //     refs.footer.classList.remove('footer-fixed');
+  //   }
+  //   console.log(refs.body.clientHeight, window.innerHeight);
+  // }
+  // footerFix();
+
+  if (
+    event.view.location.pathname === '/catalog.html' ||
+    event.view.location.pathname === '/team-js-goit/catalog.html'
+  ) {
+    return document
+      .getElementById('btn-search')
+      .addEventListener('click', onSubmit);
+  }
+  return;
+});
 
 function onError(error) {
   console.log(error);
@@ -33,9 +52,9 @@ import Gallery from '../class/Gallery.js';
 // тренди тиждня
 const moviesTrendsWeek = new Gallery({
   name: 'moviesTrendsWeek',
-  selector: ".catalog-gallery",         // куди виводимо сформований HTML-код 
-  url: '/trending/movie/week',   // частина шляху для запиту
-  query: '""&language=en'          // сам запит, те що стоъть після знаку ?
+  selector: '.catalog-gallery', // куди виводимо сформований HTML-код
+  url: '/trending/movie/week', // частина шляху для запиту
+  query: '""&language=en', // сам запит, те що стоъть після знаку ?
 });
 
 moviesTrendsWeek.onMarkup(
@@ -58,7 +77,6 @@ function onSubmit(event) {
 
     const value = catalogSearchForm.value.trim();
     if (value === '') {
-
       moviesTrendsWeek.onMarkup(
         moviesTrendsWeek.TemplateMovieCard,
         moviesTrendsWeek.perPage
@@ -66,20 +84,15 @@ function onSubmit(event) {
 
       initPagination(moviesTrendsWeek);
       return;
-    }
-    else {
+    } else {
       gallery.params.query = value;
-     
+
       gallery.resetPage();
       // if (gallery.totalResults === 0) throw new Error('No data');
-      
-      gallery.onMarkup(
-        gallery.TemplateMovieCard,
-        gallery.perPage
-      );
+
+      gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
 
       initPagination(gallery);
-
     }
   } catch (error) {
     onError(error);
@@ -88,9 +101,8 @@ function onSubmit(event) {
 
 /// Пагінація
 export function initPagination(objGallery) {
-  
   //console.log('Pagin-objGallery', objGallery);
-  
+
   const paginationOptions = {
     totalItems: objGallery.totalPages > 1 ? objGallery.totalPages : 500,
     itemsPerPage: objGallery.perPage,
@@ -101,7 +113,8 @@ export function initPagination(objGallery) {
     lastItemClassName: 'tui-last-child',
     template: {
       page: '<a href="#" class="tui-page-btn">{{page}}</a>',
-      currentPage: '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
+      currentPage:
+        '<strong class="tui-page-btn tui-is-selected">{{page}}</strong>',
       moveButton:
         '<a href="#" class="tui-page-btn tui-{{type}}">' +
         '<span class="tui-ico-{{type}}">{{type}}</span>' +
@@ -113,12 +126,12 @@ export function initPagination(objGallery) {
       moreButton:
         '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
         '<span class="tui-ico-ellip">...</span>' +
-        '</a>'
-    }
+        '</a>',
+    },
   };
 
   const container = document.querySelector('.tui-pagination');
-  let pagination
+  let pagination;
   if (container) {
     pagination = new Pagination(container, paginationOptions);
     pagination.reset();
@@ -126,13 +139,12 @@ export function initPagination(objGallery) {
     //Pagination first start with response from API and create total_pages
     //Go to Homepage-rendering.js
     //
-    pagination.movePageTo(objGallery.page)
+    pagination.movePageTo(objGallery.page);
     const paginationPage = pagination.getCurrentPage();
     pagination.on('afterMove', function (eventData) {
       objGallery.page = eventData.page;
       objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
       stylePagination();
     });
-
   }
 }
