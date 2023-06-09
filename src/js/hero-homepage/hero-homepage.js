@@ -59,7 +59,7 @@ async function getTrailerDetails(filmIndex) {
 }
 ////!!!!
 
-function createFilmBox({ title, vote_average, backdrop_path, overview }) {
+function createFilmBox({ title, vote_average, backdrop_path, overview, urlTrailer }) {
   const words = overview.split(' ');
   let truncatedOverview = words.slice(0, 30).join(' ');
 
@@ -77,7 +77,7 @@ function createFilmBox({ title, vote_average, backdrop_path, overview }) {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;">
-        <h1 class="hero-title">${title}</h1>
+        <a href="${urlTrailer}" class="trailer" target="_blank" rel="noopener noreferrer"><h1 class="hero-title">${title}</h1></a>
         <div class="hero-rating">
           <div class="hero-rating__body">
             <div class="hero-rating__active" style="width: ${
@@ -117,13 +117,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 ////!!!!
   const { filmDetails, trailerDetails } = await getRandomFilm();
-  const [ offTrailer ] = trailerDetails.filter(e => e.name === "Official Trailer");
-  console.log(offTrailer);
+  const [offTrailer] = trailerDetails.filter(e => e.name === "Official Trailer");
   const urlTrailer = `https://www.youtube.com/watch?v=${offTrailer.key}`;
-  // const filmDetails = await getRandomFilm();
-  // const trailerDetails = await getTrailerDetails();
-
-  console.log(filmDetails, trailerDetails);
+  filmDetails.urlTrailer = urlTrailer;
 ////!!!!
   
   
@@ -179,6 +175,7 @@ function createDetailsBox({
   popularity,
   genres,
   poster_path,
+  urlTrailer
 }) {
   let btn = 'Add to My Library';
   const library = JSON.parse(localStorage.getItem('libraryFilms'));
@@ -202,18 +199,18 @@ function createDetailsBox({
       </div>
       
       <div class="more-details-info">
-        <h2 class="film-title-modal film-title">${title}</h2>
+         <a href="${urlTrailer}" class="trailer" target="_blank" rel="noopener noreferrer"><h2 class="film-title-modal film-title">${title}</h2></a>
 
         <table>
         <tr>
           <td class="table-row table-column-name">Vote / Votes:</td>
-          <td ><span class="vote-average">${vote_average.toFixed(1)}</span> /
+          <td ><span class="vote-average">${vote_average}</span> /
           <span class="vote-count">${vote_count}</span>
        </td>
         </tr>
         <tr>
           <td class="table-row table-column-name">Popularity:</td>
-          <td>${popularity.toFixed(1)}</td>
+          <td>${popularity}</td>
         </tr>
         <tr>
         <td class="table-row table-column-name">Genre:</td>
