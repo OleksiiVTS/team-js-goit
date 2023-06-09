@@ -62,7 +62,7 @@
 
 @media screen and (max-width: 767px) {
   .overlay-card{
-    height: 420px;
+    min-height: 420px;
   }
   .catlog_net {
     max-width: 480px;

@@ -162,7 +162,7 @@ function hidePagination() {
   const paginationContainer = document.querySelector('.tui-pagination');
   if (paginationContainer) {
     paginationContainer.style.display = 'none';
-  }
+  } else showPagination()
 }
 // Функція для відображення пагінації
 function showPagination() {
