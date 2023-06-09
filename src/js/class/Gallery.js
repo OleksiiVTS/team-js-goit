@@ -380,8 +380,9 @@ export default class Gallery {
 
     // для закриття модалки
     const closeBtn = modal.querySelector('#closeDetails');
+    const moreDetails = document.getElementById("moreDetails");
     closeBtn.addEventListener('click', closeModal);
-
+    moreDetails.addEventListener('click', closeModal);
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
       this.addToLibrary(data);
