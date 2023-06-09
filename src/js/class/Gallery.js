@@ -2,7 +2,7 @@ const axios = require('axios/dist/axios.min.js'); // node
 import GenreList from './GenreList.js';
 import Movie from './Movie.js';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
-import { styleModal } from "../js-header/header.js";
+import { styleModal } from '../js-header/header.js';
 
 //import Notiflix from 'notiflix';
 
@@ -26,18 +26,17 @@ function convertId_to_Name(aGenre, list = genres.importFromLS()) {
   return result.join(', ');
 }
 
-function closeModal() { 
+function closeModal() {
   const modal = document.getElementById('moreDetails');
   document.body.style.overflow = 'visible';
   modal.classList.add('more-details-is-hidden');
-  document.removeEventListener("keydown", onEscape);
+  document.removeEventListener('keydown', onEscape);
 }
-  
+
 // закриття модалки по ESC
 function onEscape(event) {
-  if (event.key === "Escape") closeModal()
+  if (event.key === 'Escape') closeModal();
 }
-  
 
 export default class Gallery {
   static classes = {
@@ -88,8 +87,8 @@ export default class Gallery {
       const { data } = await axios.get(this.url, { params });
 
       this.exportToLS(data.results);
-      this.exportResultLS(data)
-      this.listMovies = await data.results; 
+      this.exportResultLS(data);
+      this.listMovies = await data.results;
       this.result = await data;
 
       this.totalPages = await data.total_pages;
@@ -127,20 +126,20 @@ export default class Gallery {
       return null;
     }
   }
-  
+
   exportResultLS(data) {
     const str = JSON.stringify(data);
-    localStorage.setItem("objResult", str);
+    localStorage.setItem('objResult', str);
   }
 
   importResultLS() {
     try {
-        const str = localStorage.getItem("objResult");
-        const arr = JSON.parse(str);
-        return arr;
+      const str = localStorage.getItem('objResult');
+      const arr = JSON.parse(str);
+      return arr;
     } catch (error) {
-        throw new Error('Wrong read data in objResult from LS');
-        return null;
+      throw new Error('Wrong read data in objResult from LS');
+      return null;
     }
   }
 
@@ -188,7 +187,6 @@ export default class Gallery {
       enableSpinner();
 
       const cards = await this.getMoviesList();
-
 
       if (!count || count > cards.lenght) {
         count = cards.lenght;
@@ -244,19 +242,26 @@ export default class Gallery {
       id,
     } = data;
 
-    
-    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
-    if(strGenres.length > 20){
-      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2));
+    if (strGenres.length > 20) {
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1));
     }
 
-    let pictureCard = "";
-    let properties = "";
+    let pictureCard = '';
+    let properties = '';
 
+<<<<<<< Updated upstream
     if (poster_path===null) {
       pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
       properties = "style=padding-top:130px";
     } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
+=======
+    if (poster_path === null) {
+      pictureCard =
+        'https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png';
+      properties = 'style=height:100% ';
+    } else pictureCard = 'https://image.tmdb.org/t/p/w400' + poster_path;
+>>>>>>> Stashed changes
 
     return `<a href="" data-id-movie="${id}">
     <div ${properties} class="movie-card overlay-card weekly-movie-phone" data-id-movie="${id}">
@@ -330,9 +335,9 @@ export default class Gallery {
       }
     }
 
-    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
-    if(strGenres.lenght > 20){
-      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2));
+    if (strGenres.lenght > 20) {
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1));
     }
 
     const modal = document.getElementById('moreDetails');
@@ -373,22 +378,15 @@ export default class Gallery {
       </div>
     `;
 
-    
-
     // для закриття модалки
     const closeBtn = modal.querySelector('#closeDetails');
-    closeBtn.addEventListener('click',  closeModal);
+    closeBtn.addEventListener('click', closeModal);
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
       this.addToLibrary(data);
     });
   }
-
-
-  
-
-
 
   addToLibrary(film) {
     try {
@@ -440,20 +438,16 @@ export default class Gallery {
       card.addEventListener('click', event => {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
-        document.addEventListener("keydown", onEscape);
+        document.addEventListener('keydown', onEscape);
         this.createModal(data[0]);
 
-        setTimeout(styleModal, 0);  // add light tems in cards
+        setTimeout(styleModal, 0); // add light tems in cards
       });
-
-      
     });
   }
-
 
   // якщо помилка
   onError(error) {
     console.log(error);
   }
-
 }
