@@ -222,10 +222,14 @@
 }
 .tui-pagination .tui-page-btn:hover {
     background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+    border: none;
     }
 .tui-pagination .tui-is-selected:hover {
-    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);}
+    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+border: none;
+}
 .tui-pagination .tui-is-disabled:hover {
     background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+    border: none;
 }
 
