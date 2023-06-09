@@ -349,11 +349,11 @@ export default class Gallery {
             <table>
               <tr>
                 <td class="table-row table-column-name">Vote / Votes:</td>
-                <td><span class="vote-average">${vote_average}</span> / <span class="vote-count">${vote_count}</span></td>
+                <td><span class="vote-average">${vote_average.toFixed(1)}</span> / <span class="vote-count">${vote_count}</span></td>
               </tr>
               <tr>
                 <td class="table-row table-column-name">Popularity:</td>
-                <td>${popularity}</td>
+                <td>${popularity.toFixed(1)}</td>
               </tr>
               <tr>
                 <td class="table-row table-column-name">Genre:</td>
