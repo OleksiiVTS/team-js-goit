@@ -1,10 +1,53 @@
 .hero-section {
   background-color: var(--color-black);
 }
+/* Зірковий рейтинг */
 .hero-rating {
+  display: flex;
+  align-items: flex-end;
   font-size: 16px;
+  line-height: 0.75;
   margin-bottom: 16px;
 }
+.hero-rating__body {
+  position: relative;
+}
+.hero-rating__body::before {
+  content: "★★★★★";
+  display: block;
+  color: #b7b7b7;
+}
+.hero-rating__active {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.hero-rating__active::before {
+  content: "★★★★★";
+  position: absolute;
+  height: 100px;
+  top: 0;
+  left: 0;
+  color: #f87719;
+}
+.hero-rating__items {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.hero-rating__item {
+  flex: 0 0 20%;
+  height: 100%;
+  opacity: 0;
+}
+/* ===================== */
+
 .hero-hide {
   display: none;
 }
@@ -116,11 +159,10 @@
       ),
       url(../../images/hero-homepage/hero-homepage-tab-1x.png);
   }
-
   .hero-rating {
-     font-size: 20px;
-     margin-bottom: 20px;
+    font-size: 20px;
   }
+
   @media (min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
@@ -175,10 +217,7 @@
     margin-bottom: 32px;
     width: 465px;
   }
-  .hero-rating {
-    margin-bottom: 28px;
-    font-size: 24px;
-  }
+
   .hero-container {
     padding-top: 170px;
     padding-bottom: 170px;
@@ -190,6 +229,9 @@
         rgba(17, 17, 17, 0) 65.61%
       ),
       url(../../images/hero-homepage/hero-homepage-desk-1x.png);
+  }
+  .hero-rating {
+    font-size: 24px;
   }
 
   @media (min-device-pixel-ratio: 2),
@@ -283,7 +325,7 @@
   border-radius: 16px;
 }
 
-.more-details-modal {
+/* .more-details-modal {
   width: auto;
   max-width: 850px;
   transform: scale(1);
@@ -365,4 +407,183 @@
   overflow-wrap: break-word;
   font-weight: 400;
   overflow: auto;
+} */
+
+
+
+
+/* моє */
+
+
+
+
+
+.more-details-modal {
+  width: auto;
+  max-width: 850px;
+  transform: scale(1);
+  transition-duration: 200ms;
+  transition-timing-function: linear;
+  position: fixed;
+  padding: 0 16 32 16;
+
+  background: var(--color-black);
+  box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 0.42);
+  border-radius: 16px;
+}
+
+.more-details-img-box {
+  width: 248px;
+  /* height: 480px;
+  margin-right: 20px; */
+  overflow: hidden;
+}
+
+.more-details-img-box img {
+  width: 248px;
+  /* height: 315px; */
+  object-fit: clip;
+  margin-bottom: 22px;
+}
+
+.close-button-box {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  margin-top: 24px;
+  margin-right: -5px;
+  margin-bottom: 12px;
+}
+
+.more-details-close-button {
+  transition-property: background-color, border-radius, fill;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--color-white);
+}
+
+.more-details-close-button:hover,
+.more-details-close-button:focus {
+  color:#f87719
+}
+
+.details-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 248px;
+}
+
+.more-details-info {
+  flex: 1;
+  min-width: 250px;
+  color: var(--color-white);
+}
+
+.table-row {
+  width: 140px;
+  height: 28px;
+}
+
+.table-column-name {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #b7b7b7;
+}
+
+.more-details-about {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.43;
+  color: #f8f8f8;
+
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  overflow-wrap: break-word;
+  font-weight: 400;
+  overflow: auto;
+}
+
+
+
+/* мої точки */
+
+/* @media screen and (min-width: 320px) {
+  .container {
+    min-width: 320px;
+  }
+} */
+
+@media screen and (max-width: 767px) {
+  .more-details-modal {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .details-wrapper {
+    display: flex;
+    flex-direction: unset;
+    width: 616px;
+  }
+
+  .more-details-modal {
+    padding: 0 44 24 44;
+    width: 704px;
+  }
+
+  .more-details-img-box {
+    margin-right: 16px;
+  }
+
+  .more-details-img-box img {
+    width: 294px;
+  }
+
+.film-title-modal {
+  margin-top: 0;
+}
+
+.more-details-about {
+  margin-bottom: 24px;
+}
+
+}
+
+@media screen and (min-width: 1280px) {
+  
+  .more-details-modal {
+    width: 846px;
+    /* height: 598px; */
+    padding: 0 60 60 60;
+  }
+
+  .more-details-about {
+    font-size: 16px;
+  }
+
+  .more-details-img-box {
+    margin-right: 20px;
+  }
+
+  .more-details-img-box img {
+    width: 375px;
+    height: 400px;
+    margin-bottom: 0px;
+  }
+  
+  .close-button-box {
+    margin-right: -16px;
+  }
+  .details-wrapper {
+    width: 726px;
+  }
+
 }

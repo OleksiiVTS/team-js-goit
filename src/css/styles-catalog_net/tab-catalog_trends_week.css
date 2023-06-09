@@ -1,16 +1,47 @@
 @media screen and (min-width: 768px) {
   .catlog_net {
     min-width: 768px;
-    }
+  }
   .catalog-gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: start;
+    /* min-width: 768px; */
+
     margin-top: 36px;
     column-gap: 16px;
-    row-gap: 28px; 
+    row-gap: 28px;
   }
+
+  .library-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    /* min-width: 768px; */
+    margin-top: 36px;
+    column-gap: 16px;
+    row-gap: 28px;
+  }
+
   .gallery__image {
+    width: 224px;
+  }
+
+  /* .overlay-card {
+       position: relative;
+     }
+  
+     .catalog_info {
+       position: absolute;
+       bottom: 20px;
+       left: 20px;
+       width: 100%;
+       color: var(--color-white);
+     } */
+
+  .gallery__image {
+    /* background: linear-gradient(180deg, rgba(0, 0, 0, 0) 63.48%, rgba(0, 0, 0, 0.9) 92.16%);
+       border-radius: 5px; */
     width: 224px;
   }
   .catalog_title {
@@ -27,5 +58,5 @@
     margin-top: 5px;
     font-size: 12px;
     line-height: 1.58;
-  }   
+  }
 }

@@ -26,26 +26,25 @@
     text-align: center;
     font-size: 0;
     border-radius: 50%;
+    padding: 12px 10px;
     justify-content: center;
 }
 
 .tui-pagination .tui-page-btn {
-    display: inline-block;
-    position: relative;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    padding: 12px 13px;
-    /* padding: 8px 0 6px; */
-    margin-left: 0;
-    color: #B7B7B7;
-    font-size: 14px;
-    line-height: 14px;    /* font-weight: normal; */
-    /* line-height: 1; */
-    text-decoration: none;
-    vertical-align: middle;
-    border: 1px solid #B7B7B7;
-    /* border-width: 1px 0; */
+        width: 40px;
+            height: 40px;
+            color: #b7b7b7;
+            vertical-align: middle;
+            border: 1px solid #b7b7b7;
+            border-radius: 50%;
+            margin-left: 0;
+            padding: 12px 11px;
+            font-size: 14px;
+            line-height: 14px;
+            justify-content: center;
+            text-decoration: none;
+            display: flex;
+            position: relative;
 }
 
 
@@ -57,6 +56,7 @@
     /* border-color: #e4e9ee; */
     cursor: default;
     border: none;
+    padding: 12px 10px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -200,9 +200,10 @@
     display: inline-block;
     width: 14px;
     height: 16px;
-    padding: 12px 13px;
+    padding: 12px 9px;
     font-size: 12px;
     text-align: center;
+    justify-content: center;
     color: #333;
     border: 0;
     outline: none;
@@ -221,10 +222,14 @@
 }
 .tui-pagination .tui-page-btn:hover {
     background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+    border: none;
     }
 .tui-pagination .tui-is-selected:hover {
-    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);}
+    background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+border: none;
+}
 .tui-pagination .tui-is-disabled:hover {
     background: linear-gradient(141.22deg, #FFC226 9.4%, #F84119 91.91%);
+    border: none;
 }
 

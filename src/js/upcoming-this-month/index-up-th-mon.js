@@ -1,37 +1,35 @@
-import startModalWiNoTreiler from "../modal-w-litle/modal-w-litle.js";
+import startModalWiNoTreiler from '../modal-w-litle/modal-w-litle.js';
+import { styleUpcomingThisMonth } from '../js-header/header.js';
 
 // Функция для выполнения запроса к API
 async function fetchFilmData() {
-const apiKey = "9073999c285844087924fd0e24160fae";
-const apiUrl = `https://api.themoviedb.org/3/movie/550?api_key=${apiKey}`;
+  const apiKey = '9073999c285844087924fd0e24160fae';
+  const apiUrl = `https://api.themoviedb.org/3/movie/550?api_key=${apiKey}`;
 
-
-
-
-try {
-const response = await fetch(apiUrl);
-const filmData = await response.json();
-return filmData;
-} catch (error) {
-console.log("Ошибка при выполнении запроса к API:", error);
-}
+  try {
+    const response = await fetch(apiUrl);
+    const filmData = await response.json();
+    return filmData;
+  } catch (error) {
+    console.log('Ошибка при выполнении запроса к API:', error);
+  }
 }
 
 // Функция для создания HTML разметки карточки фильма
 function createFilmCard(film) {
-const cardContainer = document.querySelector(".upcoming_film_card");
+  const cardContainer = document.querySelector('.upcoming_film_card');
 
-if (!cardContainer) {
-// Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
-return;
-}
+  if (!cardContainer) {
+    // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
+    return;
+  }
 
-if (film === null) {
-// Если фильмы не найдены, отображаем модальное окно
-startModalWiNoTreiler();
-} else {
-        // Если фильмы найдены, создаем карточку фильма
-        const cardHTML = `
+  if (film === null) {
+    // Если фильмы не найдены, отображаем модальное окно
+    startModalWiNoTreiler();
+  } else {
+    // Если фильмы найдены, создаем карточку фильма
+    const cardHTML = `
         <div class="film-card">
           <img src="https://image.tmdb.org/t/p/original/${
             film.backdrop_path
@@ -69,8 +67,8 @@ startModalWiNoTreiler();
                   <div class="info-item genre-item">
                     <span class="genre">Genre:</span>
                     <span class="genre-value">${film.genres
-                      .map((genre) => genre.name)
-                      .join(", ")}</span>
+                      .map(genre => genre.name)
+                      .join(', ')}</span>
                   </div>
                 </div>
               </div>
@@ -85,73 +83,95 @@ startModalWiNoTreiler();
           </div>
         </div>
       `;
-    
-      cardContainer.innerHTML = cardHTML;
 
-// Округляем значения до десятков
-const popularityValueElement = document.querySelector(".popularity-value");
-popularityValueElement.textContent = (Math.round(film.popularity / 10) * 10).toFixed(1);
+    cardContainer.innerHTML = cardHTML;
 
-const voteAverageElement = document.querySelector(".vote-average");
-voteAverageElement.textContent = (Math.round(film.vote_average / 10) * 10).toFixed(1);
+    setTimeout(styleUpcomingThisMonth, 0);
 
-// Проверяем наличие фильма в Local Storage и обновляем состояние кнопки
-const addButton = document.querySelector(".button-rem-me");
-const filmData = JSON.parse(localStorage.getItem("filmData")) || {};
+    // Округляем значения до десятков
+    const popularityValueElement = document.querySelector('.popularity-value');
+    popularityValueElement.textContent = (
+      Math.round(film.popularity / 10) * 10
+    ).toFixed(1);
 
-if (filmData.hasOwnProperty(film.original_title)) {
-addButton.textContent = "Remove from My Library";
-}
+    const voteAverageElement = document.querySelector('.vote-average');
+    voteAverageElement.textContent = (
+      Math.round(film.vote_average / 10) * 10
+    ).toFixed(1);
 
-// Добавляем обработчик события для кнопки после создания карточки фильма
-addButton.addEventListener("click", toggleLibraryFilm.bind(null, film));
+    // Проверяем наличие фильма в Local Storage и обновляем состояние кнопки
+    const addButton = document.querySelector('.button-rem-me');
+    const filmData = JSON.parse(localStorage.getItem('libraryFilms')) || {};
 
-// Изменяем формат даты. При изменении названия классов в разметке, изменить класс ниже
-const releaseDateElement = document.querySelector(".release-value.release-date");
-const releaseDate = film.release_date;
-const formattedDate = formatDate(releaseDate);
-releaseDateElement.textContent = formattedDate;
+    if (filmData.hasOwnProperty(film.original_title)) {
+      addButton.textContent = 'Remove from My Library';
+    }
 
-}
+    // Добавляем обработчик события для кнопки после создания карточки фильма
+    addButton.addEventListener('click', toggleLibraryFilm.bind(null, film));
+
+    // Изменяем формат даты. При изменении названия классов в разметке, изменить класс ниже
+    const releaseDateElement = document.querySelector(
+      '.release-value.release-date'
+    );
+    const releaseDate = film.release_date;
+    const formattedDate = formatDate(releaseDate);
+    releaseDateElement.textContent = formattedDate;
+  }
 }
 
 // Функция для преобразования формата даты
 function formatDate(dateString) {
-const date = new Date(dateString);
-const day = date.getDate().toString().padStart(2, "0");
-const month = (date.getMonth() + 1).toString().padStart(2, "0");
-const year = date.getFullYear();
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
 
-return `${day}.${month}.${year}`;
-
+  return `${day}.${month}.${year}`;
 }
 
-// Функция для обработки нажатия на кнопку добавления/удаления фильма из My Library
+function isFilmInLibrary(film) {
+  let libraryFilms = JSON.parse(localStorage.getItem('libraryFilms')) || [];
+
+  const index = libraryFilms.findIndex(storedFilm => storedFilm.id === film.id);
+
+  return index !== -1;
+}
+
+function updateButtonStatus(film) {
+  const addButton = document.querySelector('.button-rem-me');
+
+  if (isFilmInLibrary(film)) {
+    addButton.textContent = 'Remove from My Library';
+  } else {
+    addButton.textContent = 'Add to My Library';
+  }
+}
+
 function toggleLibraryFilm(film) {
-const addButton = document.querySelector(".button-rem-me");
-const filmData = JSON.parse(localStorage.getItem("filmData")) || {};
+  const addButton = document.querySelector('.button-rem-me');
 
-if (addButton.textContent === "Add to My Library") {
-addButton.textContent = "Remove from My Library";
-// Добавляем фильм в объект filmData в Local Storage
-filmData[film.original_title] = film;
-} else {
-  addButton.textContent = "Add to My Library";
+  let libraryFilms = JSON.parse(localStorage.getItem('libraryFilms')) || [];
 
-  // Удаляем фильм из объекта filmData в Local Storage
-delete filmData[film.original_title];
+  if (addButton.textContent === 'Add to My Library') {
+    addButton.textContent = 'Remove from My Library';
 
+    libraryFilms.push(film);
+  } else {
+    addButton.textContent = 'Add to My Library';
+    const index = libraryFilms.findIndex(
+      storedFilm => storedFilm.id === film.id
+    );
+    if (index !== -1) {
+      libraryFilms.splice(index, 1);
+    }
+  }
+
+  localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
 }
 
-// Сохраняем обновленные данные в Local Storage
-localStorage.setItem("filmData", JSON.stringify(filmData));
-}
+fetchFilmData().then(filmData => {
+  createFilmCard(filmData);
 
-// Вызываем функцию для получения данных о фильме и создания карточки
-fetchFilmData().then((filmData) => {
-console.log("Получены данные о фильме:", filmData);
-createFilmCard(filmData);
+  updateButtonStatus(filmData);
 });
-
-
-
