@@ -153,7 +153,7 @@ localStorage.setItem("filmData", JSON.stringify(filmData));
 
 // Вызываем функцию для получения данных о фильме и создания карточки
 fetchFilmData().then((filmData) => {
-console.log("Получены данные о фильме:", filmData);
+// console.log("Получены данные о фильме:", filmData);
 createFilmCard(filmData);
 });
 
