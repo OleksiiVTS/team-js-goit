@@ -24,6 +24,7 @@
     rgba(255, 255, 255, 0) 63.48%,
     rgba(0, 0, 0, 0.9) 92.16%
   );
+  border-radius: 5px;
 }
 
 .catalog_info {
