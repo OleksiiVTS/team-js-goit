@@ -195,6 +195,7 @@ function switchThemeColors() {
   );
 
   stylePagination();
+  styleEmptyLibrary();
 }
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
@@ -261,10 +262,12 @@ export function styleModal() {
 }
 
 export function styleEmptyLibrary() {
-  if (localStorage.getItem('ui-theme') === 'dark') {
+  {
     const textEl = document.querySelector('.empty-library-text');
-    if (textEl) {
-      textEl.style.color = '#111111';
+    if (localStorage.getItem('ui-theme') === 'light') {
+      if (textEl) {
+        textEl.style.color = '#111111';
+      }
     } else {
       textEl.style.color = '#FFFFFF';
     }
