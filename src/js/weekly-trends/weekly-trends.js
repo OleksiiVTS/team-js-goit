@@ -1,32 +1,29 @@
 // Імпортуємо клас Gallery
 import Gallery from '../class/Gallery.js';
 
-
-
 // Створюємо екземпляр класу Gallery
 const weeklyTrends = new Gallery({
   name: 'weeklyTrends',
-  selector: ".weekly-movie-card-wrapper",
+  selector: '.weekly-movie-card-wrapper',
   url: '/trending/movie/week',
-  query: 'language=en'
+  query: 'language=en',
 });
 
-
 function handleResize() {
-  if (window.innerWidth < 768) {
-    weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 1);
-  } else {
-    weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 3);
-  }
+  setTimeout(() => {
+    if (window.innerWidth < 768) {
+      weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 1);
+    } else {
+      weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 3);
+    }
+  }, 1000);
 }
 
 handleResize(); // Виклик функції при завантаженні сторінки
 
-window.addEventListener('resize', handleResize);  
-
+window.addEventListener('resize', handleResize);
 
 //ПОПЕРЕДНІЙ КОД
-
 
 //   // Імпортуємо клас Gallery
 // import Gallery from '../class/Gallery.js';
@@ -45,19 +42,17 @@ window.addEventListener('resize', handleResize);
 
 // //   const aGenres = data.genre_ids.slice(0, 2);
 
-
 // //   return `<a href="" data-id-movie="${id}">
 // //     <div class="weekly-movie-card">
 // //       <img src="${'https://image.tmdb.org/t/p/w400'+poster_path}" alt="${original_title}" class="weekly-movie-image" loading="lazy"/>
 // //       <div class="weekly-movie-details">
 // //         <h2 class="weekly-movie-title">${title}</h2>
-        
+
 // //         <div class="weekly-movie-genre-stars">
 // //           <p class="weekly-movie-genre">
 // //           ${moviesTrendsWeek.convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
 // //           </p>
 
-          
 // //           <!-- Зірочки рейтингу -->
 // //           <div class="rating weekly-rating-positions">
 // //             <div class="rating__body">
@@ -71,14 +66,12 @@ window.addEventListener('resize', handleResize);
 // //               </div>
 // //             </div>
 // //           </div>
-          
+
 // //         </div>
 // //       </div>
 // //     </div>
 // //   </a>`;
 // // }
-
-
 
 // // // Отримуємо дані з сервера
 // // moviesTrendsWeek.getMoviesList().then(data => {
@@ -93,7 +86,6 @@ window.addEventListener('resize', handleResize);
 // // }).catch(error => {
 // //   console.log(error);
 // // });
-
 
 // // Функція для перевірки і оновлення кількості видимих фотокарток на мобільних пристроях
 // function updateVisibleCards() {
