@@ -1,4 +1,5 @@
 import GenreList from '../class/GenreList.js';
+import { styleModal } from "../js-header/header.js";
 
 const cl_Genres = new GenreList({
   selector: '.select',
@@ -116,6 +117,10 @@ function TemplateMovieCard( data ) {
   } else {
     aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
   }
+  let strGenres = aGenres
+  if (aGenres.length > 20) {
+    strGenres = aGenres.split(',')[0];
+  }
 
   return `<a href="" data-id-movie="${id ? id: 0}">
   <div class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
@@ -129,7 +134,7 @@ function TemplateMovieCard( data ) {
         </h2>
           <div class="ganres_rating">
             <p class="catalog_genres">
-            ${aGenres} | ${release_date.slice(0, 4)}
+            ${strGenres} | ${release_date.slice(0, 4)}
             </p>
             <div class="rating">
             <div class="rating__body">
@@ -207,6 +212,10 @@ function createModal(data) {
     } else {
       aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
     }
+    let strGenres = aGenres
+    if (aGenres.length > 20) {
+      strGenres = aGenres.split(',')[0];
+    }
 
     const modal = document.getElementById('moreDetails');
     modal.classList.remove('more-details-is-hidden');
@@ -233,7 +242,7 @@ function createModal(data) {
               </tr>
               <tr>
                 <td class="table-row table-column-name">Genre:</td>
-                <td>${aGenres}</td>
+                <td>${strGenres}</td>
               </tr>
             </table>
             <span class="description-about">About:</span>
@@ -322,6 +331,7 @@ function createModal(data) {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
         createModal(data[0]);
+        setTimeout(styleModal, 0) 
       });
     });
   }
