@@ -122,11 +122,17 @@ function TemplateMovieCard( data ) {
     strGenres = aGenres.split(',')[0];
   }
 
+  let pictureCard = "";
+  let properties = "";
+
+  if (poster_path===null) {
+    pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
+    properties = "style=padding-top:150px";
+  } else pictureCard = 'https://image.tmdb.org/t/p/w400' + poster_path;
+
   return `<a href="" data-id-movie="${id ? id: 0}">
-  <div class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
-      <img class="gallery__image" src="${
-        'https://image.tmdb.org/t/p/w400' + poster_path
-      }" alt="${title ? title : original_title}" loading="lazy"/>
+  <div ${properties} class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
+      <img class="gallery__image" src="${pictureCard}" alt="${title ? title : original_title}" loading="lazy"/>
       <div class="gallery__up_image"></div>
       <div class="catalog_info">
         <h2 class="catalog_title">

@@ -27,11 +27,11 @@
     width: 224px;
   }
 
-  /* .overlay-card {
-       position: relative;
+  .overlay-card {
+       height: 100%;
      }
   
-     .catalog_info {
+     /* .catalog_info {
        position: absolute;
        bottom: 20px;
        left: 20px;
