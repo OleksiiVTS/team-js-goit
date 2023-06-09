@@ -402,7 +402,7 @@ export default class Gallery {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
         this.createModal(data[0]);
-        setTimeout(styleModal, 0);
+        setTimeout(styleModal, 0);  // add light tems in cards
       });
     });
   }
