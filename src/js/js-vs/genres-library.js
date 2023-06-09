@@ -171,7 +171,7 @@ function emptyLibraryMarkup() {
     return `<div class="empty-library"> 
       <p class="empty-library-text">OOPS...<br/> We are very sorry! <br/> You don’t have any movies in your library.</p>
       <button type="button" class="button-watch-trailer">
-        <a class="hero-href"  href="../src/partials/catalog/catalog-catalog.html">Search movie</a>
+        <a class="hero-href"  href="./catalog.html">Search movie</a>
       </button>
     </div>`;
   }
