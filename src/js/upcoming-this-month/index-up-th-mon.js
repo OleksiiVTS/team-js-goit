@@ -1,5 +1,6 @@
 import startModalWiNoTreiler from '../modal-w-litle/modal-w-litle.js';
 import { styleUpcomingThisMonth } from '../js-header/header.js';
+
 // Функция для выполнения запроса к API
 async function fetchFilmData() {
   const apiKey = '9073999c285844087924fd0e24160fae';
@@ -84,6 +85,7 @@ function createFilmCard(film) {
       `;
 
     cardContainer.innerHTML = cardHTML;
+
     setTimeout(styleUpcomingThisMonth, 0);
 
     // Округляем значения до десятков
