@@ -18,6 +18,7 @@ async function fetchFilmData() {
 }
 
 let filmDetails;
+let trailerDetails;   ////!!!! - це зміни
 
 async function getRandomFilm() {
   const filmIndexes = await fetchFilmData();
@@ -25,7 +26,10 @@ async function getRandomFilm() {
   randomFilmIndex = filmIndexes[randomIndex];
   const filmDetails = await getFilmDetails(randomFilmIndex);
 
-  return filmDetails;
+  ////!!!!
+  const trailerDetails = await getTrailerDetails(randomFilmIndex);
+
+  return { filmDetails, trailerDetails };
 }
 
 async function getFilmDetails(filmIndex) {
@@ -39,6 +43,21 @@ async function getFilmDetails(filmIndex) {
     console.log('Error occurred while making API request:', error);
   }
 }
+
+
+////!!!!
+async function getTrailerDetails(filmIndex) { 
+  const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}/videos?api_key=${apiKey}`;
+
+  try {
+    const response = await fetch(apiUrl);
+    const trailerDetails = await response.json();
+    return trailerDetails.results;
+  } catch (error) {
+    console.log('Error occurred while making API request:', error);
+  }
+}
+////!!!!
 
 function createFilmBox({ title, vote_average, backdrop_path, overview }) {
   const words = overview.split(' ');
@@ -96,7 +115,18 @@ window.addEventListener('DOMContentLoaded', async () => {
     localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
   }
 
-  const filmDetails = await getRandomFilm();
+////!!!!
+  const { filmDetails, trailerDetails } = await getRandomFilm();
+  const [ offTrailer ] = trailerDetails.filter(e => e.name === "Official Trailer");
+  console.log(offTrailer);
+  const urlTrailer = `https://www.youtube.com/watch?v=${offTrailer.key}`;
+  // const filmDetails = await getRandomFilm();
+  // const trailerDetails = await getTrailerDetails();
+
+  console.log(filmDetails, trailerDetails);
+////!!!!
+  
+  
   const filmBoxHTML = createFilmBox(filmDetails);
   createHTML(filmBoxHTML);
 
