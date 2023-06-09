@@ -250,18 +250,10 @@ export default class Gallery {
     let pictureCard = '';
     let properties = '';
 
-<<<<<<< Updated upstream
     if (poster_path===null) {
       pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
       properties = "style=padding-top:130px";
     } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
-=======
-    if (poster_path === null) {
-      pictureCard =
-        'https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png';
-      properties = 'style=height:100% ';
-    } else pictureCard = 'https://image.tmdb.org/t/p/w400' + poster_path;
->>>>>>> Stashed changes
 
     return `<a href="" data-id-movie="${id}">
     <div ${properties} class="movie-card overlay-card weekly-movie-phone" data-id-movie="${id}">
