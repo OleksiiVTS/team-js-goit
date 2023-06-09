@@ -21,12 +21,15 @@ console.log("Ошибка при выполнении запроса к API:", e
 
 // Функция для создания HTML разметки карточки фильма
 function createFilmCard(film) {
-const cardContainer = document.querySelector(".upcoming_film_card");
+  const cardContainer = document.querySelector('.upcoming_film_card');
+  const currentPagePath = window.location.pathname;
 
-if (!cardContainer) {
-// Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
-return;
-}
+  if (!cardContainer || currentPagePath !== "/index.html") {
+
+
+    // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
+    return;
+  }
 
 if (film === null) {
 // Если фильмы не найдены, отображаем модальное окно
