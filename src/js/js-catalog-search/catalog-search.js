@@ -89,6 +89,16 @@ function onSubmit(event) {
 
       gallery.resetPage();
       // if (gallery.totalResults === 0) throw new Error('No data');
+      
+      gallery.onMarkup(
+        gallery.TemplateMovieCard,
+        gallery.perPage
+      );
+      if (gallery.totalResults === 0) {
+        hidePagination();
+      } else {
+        initPagination(gallery);
+      }
 
       gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
 
@@ -146,5 +156,12 @@ export function initPagination(objGallery) {
       objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
       stylePagination();
     });
+  }
+}
+// Функція для приховування пагінації
+function hidePagination() {
+  const paginationContainer = document.querySelector('.tui-pagination');
+  if (paginationContainer) {
+    paginationContainer.style.display = 'none';
   }
 }
