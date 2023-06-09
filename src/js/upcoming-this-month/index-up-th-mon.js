@@ -1,4 +1,4 @@
-import {startModalWiNoTreiler} from "../modal-w-litle/modal-w-litle.js";
+import startModalWiNoTreiler from "../modal-w-litle/modal-w-litle.js";
 // import {styleUpcomingThisMonth} from '../js-header/header.js';
 
 
