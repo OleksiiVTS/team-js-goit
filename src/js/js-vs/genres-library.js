@@ -227,14 +227,23 @@ function createModal(data) {
     const modal = document.getElementById('moreDetails');
     modal.classList.remove('more-details-is-hidden');
 
+    let pictureCard = '';
+    let properties = '';
+
+    if (poster_path===null) {
+      pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
+      properties = "style=padding-top:130px";
+    } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
+
+
     modal.innerHTML = `
       <div class="more-details-modal">
         <div class="close-button-box">
           <button class="more-details-close-button" id="closeDetails" type="button">X</button>
         </div>
-        <div class="details-wrapper">
+        <div ${properties} class="details-wrapper">
           <div class="more-details-img-box">
-            <img width="380px" class="more-detail-img" src="https://image.tmdb.org/t/p/original/${poster_path}" alt="${title}" />
+            <img width="380px" class="more-detail-img" src="${pictureCard}" alt="${title}" />
           </div>
           <div class="more-details-info">
             <h2 class="film-title">${title ? title : original_title}</h2>
