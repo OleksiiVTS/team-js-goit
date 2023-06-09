@@ -110,8 +110,8 @@
   background-position: center;
   /* background-size: 50px 50px; */
   border: 2px solid var(--color-black);   
-  width: 55px;   
-  height: 55px; 
+  width: 40px;   
+  height: 40px; 
   bottom: 30px;
   right: 30px; 
   text-align: center;   
@@ -122,7 +122,7 @@
   align-items: center;
   font-family: 'Roboto';
   font-weight: 400;
-  font-size: 28px;
+  font-size: 20px;
   color: var(--color-text-description);
 }
 
@@ -230,6 +230,8 @@
   }
 
   .button-up {
+    width: 55px;   
+    height: 55px; 
     right: 50px;
     bottom: 50px;
   }
