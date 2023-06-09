@@ -159,6 +159,9 @@
       ),
       url(../../images/hero-homepage/hero-homepage-tab-1x.png);
   }
+  .hero-rating {
+    font-size: 20px;
+  }
 
   @media (min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
@@ -226,6 +229,9 @@
         rgba(17, 17, 17, 0) 65.61%
       ),
       url(../../images/hero-homepage/hero-homepage-desk-1x.png);
+  }
+  .hero-rating {
+    font-size: 24px;
   }
 
   @media (min-device-pixel-ratio: 2),
