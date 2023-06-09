@@ -171,7 +171,12 @@ function toggleLibraryFilm(film) {
 }
 
 fetchFilmData().then(filmData => {
-  createFilmCard(filmData);
+  try {
+    createFilmCard(filmData);
+    updateButtonStatus(filmData);
+  } catch (error) {
+    throw new Error("Помилка завантаження", error)
+  }
+}).catch(() => {
 
-  updateButtonStatus(filmData);
-});
+}).finally();
