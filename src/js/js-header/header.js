@@ -80,7 +80,8 @@ function switchThemeColors() {
     filterOptions = [...filterEl.getElementsByTagName('option')];
     for (let element of filterOptions) {
       if (element.value === 'genre') {
-        element.style.display = 'none';
+        element.style.color = '#282828';
+        element.style.backgroundColor = '#F8F8F8';
       } else if (!themeSwitchEl.checked) {
         element.style.color = '#282828';
         element.style.backgroundColor = '#F8F8F8';
