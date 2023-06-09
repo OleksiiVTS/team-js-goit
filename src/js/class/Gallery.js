@@ -2,7 +2,7 @@ const axios = require('axios/dist/axios.min.js'); // node
 import GenreList from './GenreList.js';
 import Movie from './Movie.js';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
-import { styleModal } from "../js-header/header.js";
+import { styleModal } from '../js-header/header.js';
 
 //import Notiflix from 'notiflix';
 
@@ -26,6 +26,18 @@ function convertId_to_Name(aGenre, list = genres.importFromLS()) {
   return result.join(', ');
 }
 
+function closeModal() {
+  const modal = document.getElementById('moreDetails');
+  document.body.style.overflow = 'visible';
+  modal.classList.add('more-details-is-hidden');
+  document.removeEventListener('keydown', onEscape);
+}
+
+// закриття модалки по ESC
+function onEscape(event) {
+  if (event.key === 'Escape') closeModal();
+}
+
 export default class Gallery {
   static classes = {
     hidden: 'hidden',
@@ -37,6 +49,7 @@ export default class Gallery {
     this.out = this.getSelect(selector); // куди виводимо дані
 
     this.listMovies = this.importFromLS(); // список фільмів
+    this.result = this.importResultLS();
 
     this.params = {
       api_key: API_KEY,
@@ -74,7 +87,9 @@ export default class Gallery {
       const { data } = await axios.get(this.url, { params });
 
       this.exportToLS(data.results);
-      this.listMovies = await data.results; //this.importFromLS();
+      this.exportResultLS(data);
+      this.listMovies = await data.results;
+      this.result = await data;
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
@@ -84,6 +99,7 @@ export default class Gallery {
       return data.results;
     } catch (error) {
       this.listMovies = await this.importFromLS();
+      this.result = await this.importResultLS();
       this.onError(error);
     }
   }
@@ -107,6 +123,22 @@ export default class Gallery {
       return arr;
     } catch (error) {
       throw new Error('Wrong read data from LS');
+      return null;
+    }
+  }
+
+  exportResultLS(data) {
+    const str = JSON.stringify(data);
+    localStorage.setItem('objResult', str);
+  }
+
+  importResultLS() {
+    try {
+      const str = localStorage.getItem('objResult');
+      const arr = JSON.parse(str);
+      return arr;
+    } catch (error) {
+      throw new Error('Wrong read data in objResult from LS');
       return null;
     }
   }
@@ -156,18 +188,17 @@ export default class Gallery {
 
       const cards = await this.getMoviesList();
 
-
       if (!count || count > cards.lenght) {
         count = cards.lenght;
       }
-      cards.slice(0, count);
+      
 
       disableSpinner();
-      return cards.reduce((acc, item, index) => {
-        if (index < count) {
+      return cards.slice(0, count).reduce((acc, item, index) => {
+//        if (index < count) {
           return acc + cbTemplate(item);
-        }
-        return acc;
+//        }
+//        return acc;
       }, '');
     } catch (error) {
       this.onError(error);
@@ -211,18 +242,17 @@ export default class Gallery {
       id,
     } = data;
 
-    
-    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
-    if(strGenres.length > 20){
-      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2));
+    if (strGenres.length > 20) {
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1));
     }
 
-    let pictureCard = "";
-    let properties = "";
+    let pictureCard = '';
+    let properties = '';
 
     if (poster_path===null) {
       pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
-      properties = "style=height:100% ";
+      properties = "style=padding-top:130px";
     } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
 
     return `<a href="" data-id-movie="${id}">
@@ -297,9 +327,9 @@ export default class Gallery {
       }
     }
 
-    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
-    if(strGenres.lenght > 20){
-      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2));
+    if (strGenres.lenght > 20) {
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1));
     }
 
     const modal = document.getElementById('moreDetails');
@@ -319,11 +349,11 @@ export default class Gallery {
             <table>
               <tr>
                 <td class="table-row table-column-name">Vote / Votes:</td>
-                <td><span class="vote-average">${vote_average}</span> / <span class="vote-count">${vote_count}</span></td>
+                <td><span class="vote-average">${vote_average.toFixed(1)}</span> / <span class="vote-count">${vote_count}</span></td>
               </tr>
               <tr>
                 <td class="table-row table-column-name">Popularity:</td>
-                <td>${popularity}</td>
+                <td>${popularity.toFixed(1)}</td>
               </tr>
               <tr>
                 <td class="table-row table-column-name">Genre:</td>
@@ -340,11 +370,9 @@ export default class Gallery {
       </div>
     `;
 
+    // для закриття модалки
     const closeBtn = modal.querySelector('#closeDetails');
-    closeBtn.addEventListener('click', () => {
-      document.body.style.overflow = 'visible';
-      modal.classList.add('more-details-is-hidden');
-    });
+    closeBtn.addEventListener('click', closeModal);
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
@@ -398,11 +426,14 @@ export default class Gallery {
       }
       const data = list.filter(item => item.id === movieId);
 
+      // create/open modal in cards
       card.addEventListener('click', event => {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
+        document.addEventListener('keydown', onEscape);
         this.createModal(data[0]);
-        setTimeout(styleModal, 0);  // add light tems in cards
+
+        setTimeout(styleModal, 0); // add light tems in cards
       });
     });
   }

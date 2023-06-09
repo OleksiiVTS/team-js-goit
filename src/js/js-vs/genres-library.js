@@ -10,7 +10,7 @@ cl_Genres.getGenreList();
 
 // convert genres
 function convertId_to_Name(aGenre) {
-  list = cl_Genres.importFromLS();
+  const list = cl_Genres.importFromLS();
   if (!aGenre) { 
     return
   }
@@ -56,7 +56,7 @@ function onLibreryFilter(event) {
     }
 
 
-    if (isNaN(genre)){
+    if (isNaN(genre)) {
       onMarkup(libraryCinema)
       return
     }
@@ -92,8 +92,9 @@ function update(data) {
 }
 
 // обгортання елементу масиву хтмл-кодом
-function createCard(data){
-  return data.reduce(
+function createCard(data, count = 9) {
+  
+  return data.slice(0, count).reduce(
     (acc, item) => {
      return acc + TemplateMovieCard(item)
    }, "");
@@ -122,11 +123,17 @@ function TemplateMovieCard( data ) {
     strGenres = aGenres.split(',')[0];
   }
 
+  let pictureCard = "";
+  let properties = "";
+
+  if (poster_path===null) {
+    pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
+    properties = "style=padding-top:150px";
+  } else pictureCard = 'https://image.tmdb.org/t/p/w400' + poster_path;
+
   return `<a href="" data-id-movie="${id ? id: 0}">
-  <div class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
-      <img class="gallery__image" src="${
-        'https://image.tmdb.org/t/p/w400' + poster_path
-      }" alt="${title ? title : original_title}" loading="lazy"/>
+  <div ${properties} class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
+      <img class="gallery__image" src="${pictureCard}" alt="${title ? title : original_title}" loading="lazy"/>
       <div class="gallery__up_image"></div>
       <div class="catalog_info">
         <h2 class="catalog_title">
@@ -257,19 +264,28 @@ function createModal(data) {
 
     // close modal window
     const closeBtn = modal.querySelector('#closeDetails');
-    closeBtn.addEventListener('click', () => {
-      document.body.style.overflow = 'visible';
-      modal.classList.add('more-details-is-hidden');
-
-      onLibreryFilter();
-      showEmptyLibrary();
-    });
+    closeBtn.addEventListener('click', closeModal);
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
       addToLibrary(data);
     });
   }
+
+function closeModal() { 
+  const modal = document.getElementById('moreDetails');
+  document.body.style.overflow = 'visible';
+  modal.classList.add('more-details-is-hidden');
+  document.removeEventListener("keydown", onEscape);
+  
+  onLibreryFilter();
+  showEmptyLibrary();
+}
+  
+// закриття модалки по ESC
+function onEscape(event) {
+  if (event.key === "Escape") closeModal()
+}
 
   function addToLibrary(film) {
     try {
@@ -330,8 +346,10 @@ function createModal(data) {
       card.addEventListener('click', event => {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
+        document.addEventListener("keydown", onEscape);
+        
         createModal(data[0]);
-        setTimeout(styleModal, 0) 
+        setTimeout(styleModal, 0) // toogle style dark/light
       });
     });
   }

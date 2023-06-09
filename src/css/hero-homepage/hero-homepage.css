@@ -508,8 +508,22 @@
   overflow-wrap: break-word;
   font-weight: 400;
   overflow: auto;
+  height: 140px;
+  overflow-y: auto;
 }
 
+
+::-webkit-scrollbar {
+  width: 4px; /* ширина для вертикального скролла */
+  height: 8px; /* высота для горизонтального скролла */
+  background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #843465;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f87719;
+}
 
 
 /* мої точки */
@@ -522,7 +536,7 @@
 
 @media screen and (max-width: 767px) {
   .more-details-modal {
-    height: 100%;
+    min-height: 847px;
     overflow-y: scroll;
   }
 }

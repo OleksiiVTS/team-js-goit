@@ -80,7 +80,8 @@ function switchThemeColors() {
     filterOptions = [...filterEl.getElementsByTagName('option')];
     for (let element of filterOptions) {
       if (element.value === 'genre') {
-        element.style.display = 'none';
+        element.style.color = '#282828';
+        element.style.backgroundColor = '#F8F8F8';
       } else if (!themeSwitchEl.checked) {
         element.style.color = '#282828';
         element.style.backgroundColor = '#F8F8F8';
@@ -195,6 +196,7 @@ function switchThemeColors() {
   );
 
   stylePagination();
+  styleEmptyLibrary();
 }
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
@@ -261,10 +263,12 @@ export function styleModal() {
 }
 
 export function styleEmptyLibrary() {
-  if (localStorage.getItem('ui-theme') === 'dark') {
+  {
     const textEl = document.querySelector('.empty-library-text');
-    if (textEl) {
-      textEl.style.color = '#111111';
+    if (localStorage.getItem('ui-theme') === 'light') {
+      if (textEl) {
+        textEl.style.color = '#111111';
+      }
     } else {
       textEl.style.color = '#FFFFFF';
     }

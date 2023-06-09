@@ -24,6 +24,7 @@
     rgba(255, 255, 255, 0) 63.48%,
     rgba(0, 0, 0, 0.9) 92.16%
   );
+  border-radius: 5px;
 }
 
 .catalog_info {
@@ -60,6 +61,9 @@
 }
 
 @media screen and (max-width: 767px) {
+  .overlay-card{
+    min-height: 420px;
+  }
   .catlog_net {
     max-width: 480px;
   }
