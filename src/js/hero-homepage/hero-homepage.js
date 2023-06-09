@@ -326,7 +326,7 @@ function closeDetails() {
   modalDetails.classList.toggle('more-details-is-hidden');
   document.removeEventListener('keydown', escapeHandlerDetails);
   window.removeEventListener('click', outsideClickHandlerDetails);
-  detailsOpened = false;
+  // detailsOpened = false;
   clearDetailsBox();
 }
 
