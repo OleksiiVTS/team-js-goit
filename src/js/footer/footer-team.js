@@ -6,7 +6,9 @@
     body: document.querySelector('body'),
     footer: document.querySelector('.footer-container'),
   };
-
+  if (refs.footer.classList.contains('footer-fixed')) {
+    refs.footer.classList.remove('footer-fixed');
+  }
   refs.openFooterTeamLink.addEventListener('click', openTeamModal);
 
   refs.closeFooterTeamBtn.addEventListener('click', closeTeamModal);
