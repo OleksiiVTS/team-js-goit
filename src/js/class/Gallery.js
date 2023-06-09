@@ -50,6 +50,7 @@ export default class Gallery {
     this.out = this.getSelect(selector); // куди виводимо дані
 
     this.listMovies = this.importFromLS(); // список фільмів
+    this.result = this.importResultLS();
 
     this.params = {
       api_key: API_KEY,
@@ -87,7 +88,9 @@ export default class Gallery {
       const { data } = await axios.get(this.url, { params });
 
       this.exportToLS(data.results);
-      this.listMovies = await data.results; //this.importFromLS();
+      this.exportResultLS(data)
+      this.listMovies = await data.results; 
+      this.result = await data;
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
@@ -97,6 +100,7 @@ export default class Gallery {
       return data.results;
     } catch (error) {
       this.listMovies = await this.importFromLS();
+      this.result = await this.importResultLS();
       this.onError(error);
     }
   }
@@ -121,6 +125,22 @@ export default class Gallery {
     } catch (error) {
       throw new Error('Wrong read data from LS');
       return null;
+    }
+  }
+  
+  exportResultLS(data) {
+    const str = JSON.stringify(data);
+    localStorage.setItem("objResult", str);
+  }
+
+  importResultLS() {
+    try {
+        const str = localStorage.getItem("objResult");
+        const arr = JSON.parse(str);
+        return arr;
+    } catch (error) {
+        throw new Error('Wrong read data in objResult from LS');
+        return null;
     }
   }
 
