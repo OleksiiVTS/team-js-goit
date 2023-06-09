@@ -121,7 +121,7 @@ function switchThemeColors() {
     document.querySelector('.header-menu'),
   ];
 
-  const toDarkPlaceholder = [document.querySelector('.catalog-search-input')];
+  let toDarkPlaceholder = [document.querySelector('.catalog-search-input')];
 
   const footerTxt = [document.querySelector('.footer-text')];
   const toWhiteBackgr = [
@@ -149,7 +149,7 @@ function switchThemeColors() {
     toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
   }
 
-  for (element of toDarkPlaceholder) {
+  for (let element of toDarkPlaceholder) {
     toggleClass(element, 'dark', !themeSwitchEl.checked);
   }
 
@@ -304,7 +304,5 @@ export function styleUpcomingThisMonth() {
     for (let element of toSecBlackTxt) {
       toggleClass(element, 'secondary-black-text-color');
     }
-
-    toggleClass(sectionEl, 'light-theme-box-shadow');
   }
 }
