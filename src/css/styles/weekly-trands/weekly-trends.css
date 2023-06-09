@@ -1,228 +1,249 @@
-
-
 /* ================================<STYLE FOR MOBILE PHONE>============================ */
-@media screen and (max-width: 767px){
-/* приховую в мобільній версії фото з планшету та компютера */
+@media screen and (max-width: 767px) {
+  /* приховую в мобільній версії фото з планшету та компютера */
 
-    .weekly-trends {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-    
-      .weekly-trends-section {
-        margin-top: 40px;
-      }
-    
-      .weekly-trends-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 24px;
-      }
-    
-      /* назва */
-      .weekly-section-name {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 1.18em;
-        color: var(--color-white);
-      }
-    
-      /* кнопка */
-      .weekly-see-all {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 1.18;    
-        color: var(--color-text-button);
-        cursor: pointer;
-      }
-    
-      .weekly-see-all:hover,
-      .weekly-see-all:focus {
-        color: var(--color-white);
-      }
-    
-      /* обгортка для карточок з фільмами */
-      .weekly-movie-card-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: stretch;
-        gap: 16px;
-        flex-direction: column;
-      }
-      
-      .weekly-movie-card {
-        position: relative;
-        flex-grow: 1;
-      }
-      
-      .weekly-movie-image {
-        border-radius: 5px;
-        width: 100%;
-        height: auto;
-      }
-      
-      .weekly-movie-details {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-      }
-    
-      .weekly-movie-genre-stars {
-        display: flex;
-        justify-content: space-between;
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-    
-      .weekly-movie-title {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 1.18;
-        text-transform: uppercase;
-        color: var(--color-white);
-        padding-left: 12px;
+  .weekly-movie-phone{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .weekly-movie-card{
+    width: 100%;
+  }
 
-      }
-    
-      .weekly-movie-genre {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 1.66;
-        color: var(--color-text-header-d);
-        margin-bottom: 12px;
-      }
-    
-      .weekly-movie-rating {
-        color: orange;
-      }
 
+  .weekly-trends {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .weekly-trends-section {
+    margin-top: 40px;
+  }
+
+  .weekly-trends-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  /* назва */
+  .weekly-section-name {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.18em;
+    color: var(--color-white);
+  }
+
+  /* кнопка */
+  .weekly-see-all {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.18;
+    color: var(--color-text-button);
+    cursor: pointer;
+  }
+
+  .weekly-see-all:hover,
+  .weekly-see-all:focus {
+    color: var(--color-white);
+  }
+
+  /* обгортка для карточок з фільмами */
+  .weekly-movie-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 16px;
+    flex-direction: column;
+  }
+
+  .weekly-movie-card {
+    position: relative;
+    flex-grow: 1;
+  }
+
+  .weekly-movie-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
+    z-index: 2;
+  }
+  .weekly-movie-image {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+  }
+
+  .weekly-movie-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+  }
+
+  .weekly-movie-genre-stars {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .weekly-movie-title {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.18;
+    text-transform: uppercase;
+    color: var(--color-white);
+    padding-left: 12px;
+  }
+
+  .weekly-movie-genre {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.66;
+    color: var(--color-text-header-d);
+    margin-bottom: 12px;
+  }
+
+  .weekly-rating-positions {
+    padding-bottom: 16px;
+  }
 }
 /* ================================</STYLE FOR MOBILE PHONE>============================ */
-                                        
-                                           
-
-
-
-
-
-
-
-
 
 /* ====================================<STYLE FOR TABLET>============================ */
 @media screen and (min-width: 768px) {
-    .weekly-trends {
-        padding-left: 32px;
-        padding-right: 32px;
-        max-width: 1279px;
-        margin-left: auto;
-        margin-right: auto;
-       
-      }
-    
-      .weekly-trends-section {
-        margin-top: 80px;
-        margin-bottom: 60px;
-      }
-    
-      .weekly-trends-header {
-        display: flex;
-        justify-content: space-between;
-      }
-    
-           /* назва */
-      .weekly-section-name {
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 1.16;
-        color: var(--color-white);
+  .weekly-trends {
+    padding-left: 32px;
+    padding-right: 32px;
+    max-width: 1279px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 768px;
+  }
 
-        margin-bottom: 24px;
-      }
-    
-         /* кнопка */
-      .weekly-see-all {
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 1.16;    
-        color: var(--color-text-button);
-        cursor: pointer;
-        margin-bottom: 24px;
-      }
-    
-      .weekly-see-all:hover,
-      .weekly-see-all:focus {
-        color: var(--color-white);
-      }
-    
-      /* обгортка для карток з фільмами */
-      .weekly-movie-card-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: stretch;
-        gap: 16px;
-      }
-      
-      .weekly-movie-card {
-        position: relative;
-        flex-grow: 1;
-        /* max-width: calc(33.33% - 16px); */
-      }
-      
-      .weekly-movie-image {
-        border-radius: 5px;
-        width: 100%;
-        height: auto;
-      }
-      
-    
-      .weekly-movie-details {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-      }
-    
-      .weekly-movie-genre-stars {
-        display: flex;
-        justify-content: space-between;
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-    
-      .weekly-movie-title {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 1.5;
-        color: var(--color-white);
-        padding-left: 12px;
-      }
-    
-      .weekly-movie-genre {
-        font-family: 'Roboto';
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 1.5;
-        color: var(--color-text-header-d);
-        margin-bottom: 12px;
-      }
-    
-      .weekly-movie-rating {
-        color: orange;
-        
-        
-      }
+  .weekly-trends-section {
+    margin-top: 80px;
+    margin-bottom: 60px;
+  }
+
+  .weekly-trends-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* назва */
+  .weekly-section-name {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.16;
+    color: var(--color-white);
+
+    margin-bottom: 24px;
+  }
+
+  /* кнопка */
+  .weekly-see-all {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.16;
+    color: var(--color-text-button);
+    cursor: pointer;
+    margin-bottom: 24px;
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .weekly-see-all:hover,
+  .weekly-see-all:focus {
+    color: var(--color-white);
+  }
+
+  /* обгортка для карток з фільмами */
+  .weekly-movie-card-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .weekly-movie-card {
+    position: relative;
+    flex-grow: 1;
+    transition: transform 0.3s ease;
+
+    /* max-width: calc(33.33% - 16px); */
+  }
+
+  .weekly-movie-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
+    z-index: 2;
+  }
+
+  .weekly-movie-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 5px rgba(150, 150, 150, 0.7);
+  }
+
+  .weekly-movie-image {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+  }
+
+  .weekly-movie-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+  }
+
+  .weekly-movie-genre-stars {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .weekly-movie-title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-white);
+    padding-left: 12px;
+  }
+
+  .weekly-movie-genre {
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-header-d);
+    margin-bottom: 12px;
+  }
+
+  .weekly-movie-rating {
+    color: orange;
+  }
+  .weekly-rating-positions {
+    padding-bottom: 16px;
+  }
 }
 /* ================================</STYLE FOR TABLET>============================ */
-                                
-
-
-
-
-
-
-
 
 /* ================================<STYLE FOR LAPTOP>============================ */
 
@@ -231,7 +252,6 @@
     padding-left: 32px;
     padding-right: 32px;
     max-width: 1280px;
-    
   }
 
   .weekly-trends-section {
@@ -253,7 +273,7 @@
     margin-bottom: 28px;
   }
 
-      /* кнопка */
+  /* кнопка */
   .weekly-see-all {
     font-weight: 500;
     font-size: 28px;
@@ -261,6 +281,7 @@
     color: var(--color-text-button);
     cursor: pointer;
     margin-bottom: 28px;
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .weekly-see-all:hover,
@@ -274,11 +295,28 @@
     justify-content: center;
     align-items: center;
     gap: 16px;
-
   }
 
   .weekly-movie-card {
     position: relative;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+  }
+
+  .weekly-movie-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#fff0 63.48%, #000000e6 92.16%);
+    z-index: 2;
+  }
+
+  .weekly-movie-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 5px rgba(150, 150, 150, 0.7);
   }
 
   .weekly-movie-image {
@@ -292,6 +330,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    z-index: 3;
   }
 
   .weekly-movie-genre-stars {
@@ -307,7 +346,7 @@
     line-height: 1.15;
     color: var(--color-white);
     padding-left: 20px;
-
+    margin-bottom: 14px;
   }
 
   .weekly-movie-genre {
@@ -318,11 +357,9 @@
     margin-bottom: 20px;
   }
 
-  .weekly-movie-rating {
-    color: orange;
-    padding-bottom: 20px;
+  .weekly-rating-positions {
+    padding-bottom: 25px;
   }
 }
 
-
-  /* ================================ </STYLE FOR LAPTOP>============================ */
+/* ================================ </STYLE FOR LAPTOP>============================ */

@@ -6,13 +6,6 @@ const currentURL = window.location.href;
 const navLinks = document.getElementsByClassName('menu-item-txt');
 menuBtnEl.addEventListener('click', onMenuBtnClick);
 
-for (let i = 0; i < navLinks.length; i += 1) {
-  let linkURL = navLinks[i].getAttribute('href');
-
-  if (currentURL.includes(linkURL)) {
-    navLinks[i].classList.add('current-page');
-  }
-}
 function onMenuBtnClick() {
   mobileMenuEl.classList.remove('hidden');
   mobileBackdropEl.classList.remove('hidden');
@@ -58,8 +51,6 @@ function onThemeSwitchToggle() {
   switchThemeColors();
 }
 
-console.log(document.querySelector('.more-details-modal'));
-
 function switchThemeColors() {
   const toggleClass = (element, className, addClass) => {
     if (element && addClass) {
@@ -80,7 +71,25 @@ function switchThemeColors() {
     document.querySelector('.weekly-section-name'),
     document.querySelector('.description-about'),
     ...document.getElementsByTagName('table'),
+    document.querySelector('.empty-library-text'),
   ];
+
+  const filterEl = document.getElementById('libraryFilterCinemania');
+  let filterOptions = [];
+  if (filterEl) {
+    filterOptions = [...filterEl.getElementsByTagName('option')];
+    for (let element of filterOptions) {
+      if (element.value === 'genre') {
+        element.style.display = 'none';
+      } else if (!themeSwitchEl.checked) {
+        element.style.color = '#282828';
+        element.style.backgroundColor = '#F8F8F8';
+      } else {
+        element.style.color = '#F8F8F8';
+        element.style.backgroundColor = '#1C1C1C';
+      }
+    }
+  }
 
   const toSecBlackTxtEls = [
     document.querySelector('.header-title'),
@@ -96,6 +105,8 @@ function switchThemeColors() {
     document.querySelector('.more-details-close-button'),
   ];
 
+  const toBlackSvg = [document.querySelector('.button-round-search')];
+
   const toLightBoxShadow = [
     document.querySelector('.m-w-t-window'),
     document.querySelector('.more-details-modal'),
@@ -108,9 +119,11 @@ function switchThemeColors() {
   const toLightdarkTxt = [
     ...document.getElementsByClassName('menu-item-txt'),
     document.querySelector('.header-menu'),
-    document.querySelector('.footer-text'),
   ];
 
+  const toDarkPlaceholder = [document.querySelector('.catalog-search-input')];
+
+  const footerTxt = [document.querySelector('.footer-text')];
   const toWhiteBackgr = [
     bodyEl,
     document.querySelector('.header-wrap'),
@@ -120,32 +133,59 @@ function switchThemeColors() {
 
   const toSecWhiteBackgr = [document.querySelector('.mobile-menu-wrap')];
 
-  for (element of toBlackTxtEls) {
+  for (let element of toBlackTxtEls) {
     toggleClass(element, 'black-text-color', !themeSwitchEl.checked);
   }
 
-  for (element of toSecBlackTxtEls) {
+  for (let element of toSecBlackTxtEls) {
     toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
   }
 
-  for (element of toLightBoxShadow) {
+  for (let element of toLightBoxShadow) {
     toggleClass(element, 'light-theme-box-shadow', !themeSwitchEl.checked);
   }
 
-  for (element of toLightdarkTxt) {
+  for (let element of toLightdarkTxt) {
     toggleClass(element, 'lightdark-text-color', !themeSwitchEl.checked);
   }
 
-  for (element of toWhiteBackgr) {
-    console.log(element);
+  for (element of toDarkPlaceholder) {
+    toggleClass(element, 'dark', !themeSwitchEl.checked);
+  }
+
+  for (let element of footerTxt) {
+    if (!themeSwitchEl.checked) {
+      element.style.color = '#595959';
+    } else {
+      element.style.color = '#b7b7b7';
+    }
+  }
+
+  if (!themeSwitchEl.checked && filterEl) {
+    filterEl.style.color = '#595959';
+  } else if (filterEl && themeSwitchEl.checked) {
+    filterEl.style.color = '#b7b7b7';
+  }
+
+  for (let element of toDarkestTxtEl) {
+    if (element.style.color === 'rgb(0, 0, 0)') {
+      element.style.color = 'rgb(255, 255, 255)';
+    } else element.style.color = 'rgb(0, 0, 0)';
+  }
+
+  for (let element of toWhiteBackgr) {
     toggleClass(element, 'white-background', !themeSwitchEl.checked);
   }
 
-  for (element of toSecWhiteBackgr) {
+  for (let element of toSecWhiteBackgr) {
     toggleClass(element, 'secondary-white-background', !themeSwitchEl.checked);
   }
-  for (element of toSecBlackSvg) {
+  for (let element of toSecBlackSvg) {
     toggleClass(element, 'svg-sec-black-fill', !themeSwitchEl.checked);
+  }
+
+  for (let element of toBlackSvg) {
+    toggleClass(element, 'svg-black-fill', !themeSwitchEl.checked);
   }
 
   toggleClass(
@@ -154,11 +194,7 @@ function switchThemeColors() {
     !themeSwitchEl.checked
   );
 
-  for (element of toDarkestTxtEl) {
-    if (element.style.color === 'rgb(0, 0, 0)') {
-      element.style.color = 'rgb(255, 255, 255)';
-    } else element.style.color = 'rgb(0, 0, 0)';
-  }
+  stylePagination();
 }
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
@@ -168,6 +204,107 @@ function setCurrentTheme() {
     themeSwitchEl.checked = true;
   } else if (localStorage.getItem('ui-theme') === 'light') {
     themeSwitchEl.checked = false;
-    switchThemeColors();
+    setTimeout(switchThemeColors, 0);
+    setTimeout(styleCurrentPageLink, 0);
+  }
+}
+
+function styleCurrentPageLink() {
+  for (let i = 0; i < navLinks.length; i += 1) {
+    let linkURL = navLinks[i].getAttribute('href');
+
+    if (currentURL.includes(linkURL)) {
+      navLinks[i].classList.add('current-page');
+    }
+  }
+}
+
+setTimeout(styleCurrentPageLink, 0);
+
+export function stylePagination() {
+  const themeSwitchEl = document.getElementById('checkbox');
+  let paginationBtns = [...document.getElementsByClassName('tui-page-btn')];
+
+  if (!themeSwitchEl.checked && paginationBtns.length > 0) {
+    for (let element of paginationBtns) {
+      element.style.color = '#595959';
+      if (element.classList.contains('tui-is-selected')) {
+        element.style.color = '#282828';
+      }
+    }
+  } else if (paginationBtns.length > 0 && themeSwitchEl.checked) {
+    for (let element of paginationBtns) {
+      element.style.color = '#b7b7b7';
+      if (element.classList.contains('tui-is-selected')) {
+        element.style.color = '#fff';
+      }
+    }
+  }
+}
+
+export function styleModal() {
+  if (localStorage.getItem('ui-theme') === 'dark') {
+  } else {
+    document.querySelector('.more-details-modal').style.backgroundColor =
+      '#FFFFFF';
+    document.querySelector('.more-details-modal').style.boxShadow =
+      '1px 1px 14px 4px rgba(0, 0, 0, 0.22)';
+    document.querySelector('.more-details-close-button').style.color =
+      '#282828';
+    document.querySelector('.film-title').style.color = '#111111';
+    document.querySelector('.more-details-about').style.color = '#282828';
+    document.querySelector('.description-about').style.color = '#111111';
+    const aboutTableEl = [...document.getElementsByTagName('td')];
+    for (let element of aboutTableEl) {
+      element.style.color = '#111111';
+    }
+  }
+}
+
+export function styleEmptyLibrary() {
+  if (localStorage.getItem('ui-theme') === 'dark') {
+    const textEl = document.querySelector('.empty-library-text');
+    if (textEl) {
+      textEl.style.color = '#111111';
+    } else {
+      textEl.style.color = '#FFFFFF';
+    }
+  }
+}
+
+export function styleUpcomingThisMonth() {
+  if (localStorage.getItem('ui-theme') === 'light') {
+    const toggleClass = (element, className) => {
+      if (element) {
+        element.classList.add(className);
+      }
+    };
+
+    const sectionEl = document.querySelector('.upcoming_film');
+
+    const toBlackTxt = [
+      sectionEl.querySelector('.film-title'),
+      sectionEl.querySelector('.release'),
+      sectionEl.querySelector('.vote'),
+      sectionEl.querySelector('.popularity'),
+      sectionEl.querySelector('.genre'),
+      sectionEl.querySelector('.description-about'),
+    ];
+
+    const toSecBlackTxt = [
+      sectionEl.querySelector('.popularity-value'),
+      sectionEl.querySelector('.genre-value'),
+      sectionEl.querySelector('.about-value'),
+    ];
+
+    for (let element of toBlackTxt) {
+      toggleClass(element, 'black-text-color');
+    }
+
+    for (let element of toSecBlackTxt) {
+      toggleClass(element, 'secondary-black-text-color');
+    }
+
+    toggleClass(sectionEl, 'light-theme-box-shadow');
   }
 }
