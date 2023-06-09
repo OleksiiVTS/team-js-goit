@@ -6,6 +6,7 @@ import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 import Pagination from 'tui-pagination';
 import { stylePagination } from '../js-header/header.js';
 
+const formEl = document.querySelector('.form-search')
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
 const refs = {
@@ -102,7 +103,7 @@ function onSubmit(event) {
       }
 
       gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
-
+      formEl.reset()
       initPagination(gallery);
     }
   } catch (error) {
