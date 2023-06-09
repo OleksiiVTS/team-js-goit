@@ -10,7 +10,7 @@ cl_Genres.getGenreList();
 
 // convert genres
 function convertId_to_Name(aGenre) {
-  list = cl_Genres.importFromLS();
+  const list = cl_Genres.importFromLS();
   if (!aGenre) { 
     return
   }
