@@ -18,8 +18,11 @@ async function fetchFilmData() {
 // Функция для создания HTML разметки карточки фильма
 function createFilmCard(film) {
   const cardContainer = document.querySelector('.upcoming_film_card');
-
+  // const currentPagePath = window.location.pathname;
+  // if (!cardContainer || currentPagePath !== "/index.html") {
   if (!cardContainer) {
+  
+ 
     // Если элемент .upcoming_film_card не существует на текущей странице, прекращаем выполнение функции
     return;
   }
