@@ -191,14 +191,14 @@ export default class Gallery {
       if (!count || count > cards.lenght) {
         count = cards.lenght;
       }
-      cards.slice(0, count);
+      
 
       disableSpinner();
-      return cards.reduce((acc, item, index) => {
-        if (index < count) {
+      return cards.slice(0, count).reduce((acc, item, index) => {
+//        if (index < count) {
           return acc + cbTemplate(item);
-        }
-        return acc;
+//        }
+//        return acc;
       }, '');
     } catch (error) {
       this.onError(error);
@@ -349,11 +349,11 @@ export default class Gallery {
             <table>
               <tr>
                 <td class="table-row table-column-name">Vote / Votes:</td>
-                <td><span class="vote-average">${vote_average}</span> / <span class="vote-count">${vote_count}</span></td>
+                <td><span class="vote-average">${vote_average.toFixed(1)}</span> / <span class="vote-count">${vote_count}</span></td>
               </tr>
               <tr>
                 <td class="table-row table-column-name">Popularity:</td>
-                <td>${popularity}</td>
+                <td>${popularity.toFixed(1)}</td>
               </tr>
               <tr>
                 <td class="table-row table-column-name">Genre:</td>

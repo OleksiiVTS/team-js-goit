@@ -56,7 +56,7 @@ function onLibreryFilter(event) {
     }
 
 
-    if (isNaN(genre)){
+    if (isNaN(genre)) {
       onMarkup(libraryCinema)
       return
     }
@@ -92,8 +92,9 @@ function update(data) {
 }
 
 // обгортання елементу масиву хтмл-кодом
-function createCard(data){
-  return data.reduce(
+function createCard(data, count = 9) {
+  
+  return data.slice(0, count).reduce(
     (acc, item) => {
      return acc + TemplateMovieCard(item)
    }, "");
