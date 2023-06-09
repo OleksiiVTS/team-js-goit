@@ -461,6 +461,11 @@
   color: var(--color-white);
 }
 
+.more-details-close-button:hover,
+.more-details-close-button:focus {
+  color:#f87719
+}
+
 .details-wrapper {
   display: flex;
   flex-direction: column;
@@ -508,6 +513,13 @@
     min-width: 320px;
   }
 } */
+
+@media screen and (max-width: 767px) {
+  .more-details-modal {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
 
 @media screen and (min-width: 768px) {
   .details-wrapper {

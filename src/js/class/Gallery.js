@@ -155,9 +155,11 @@ export default class Gallery {
 
       const cards = await this.getMoviesList();
 
+
       if (!count || count > cards.lenght) {
         count = cards.lenght;
       }
+      cards.slice(0, count);
 
       disableSpinner();
       return cards.reduce((acc, item, index) => {
@@ -204,16 +206,27 @@ export default class Gallery {
       title,
       vote_average,
       release_date,
+      genre_ids,
       id,
     } = data;
 
-    const aGenres = data.genre_ids.slice(0, 2);
+    
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
+    if(strGenres.length > 20){
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    }
+
+    let pictureCard = "";
+    let properties = "";
+
+    if (poster_path===null) {
+      pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
+      properties = "style=height:100% ";
+    } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
 
     return `<a href="" data-id-movie="${id}">
-    <div class="movie-card overlay-card" data-id-movie="${id}">
-    <img class="gallery__image" src="${
-      'https://image.tmdb.org/t/p/w400' + poster_path
-    }" alt="${original_title}" loading="lazy"/>
+    <div ${properties} class="movie-card overlay-card weekly-movie-phone" data-id-movie="${id}">
+    <img class="gallery__image weekly-movie-card " src="${pictureCard}" alt="${original_title}" loading="lazy"/>
     <div class="gallery__up_image"></div>
     <div class="catalog_info">
       <h2 class="catalog_title">
@@ -221,7 +234,7 @@ export default class Gallery {
       </h2>
       <div class="ganres_rating">
           <p class="catalog_genres">
-          ${convertId_to_Name(aGenres)} | ${release_date.slice(0, 4)}
+          ${strGenres} | ${release_date.slice(0, 4)}
           </p>
         <div class="rating">
           <div class="rating__body">
@@ -283,7 +296,10 @@ export default class Gallery {
       }
     }
 
-    const aGenres = genre_ids.slice(0, 2);
+    let strGenres = convertId_to_Name(genre_ids.slice(0, 2))
+    if(strGenres.lenght > 20){
+      strGenres = convertId_to_Name(genre_ids.slice(0, 1))
+    }
 
     const modal = document.getElementById('moreDetails');
     modal.classList.remove('more-details-is-hidden');
@@ -310,7 +326,7 @@ export default class Gallery {
               </tr>
               <tr>
                 <td class="table-row table-column-name">Genre:</td>
-                <td>${convertId_to_Name(aGenres)}</td>
+                <td>${strGenres}</td>
               </tr>
             </table>
             <span class="description-about">About:</span>
