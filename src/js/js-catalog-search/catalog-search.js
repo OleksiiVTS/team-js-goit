@@ -82,22 +82,12 @@ function onSubmit(event) {
         moviesTrendsWeek.TemplateMovieCard,
         moviesTrendsWeek.perPage
       );
-      showPagination(); // Відображення пагінації
-
       initPagination(moviesTrendsWeek);
       return;
     } else {
       gallery.params.query = value;
 
       gallery.resetPage();
-      // if (gallery.totalResults === 0) throw new Error('No data');
-
-      gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
-      if (gallery.totalResults === 0) {
-        hidePagination();
-      } else {
-        initPagination(gallery);
-      }
 
       gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
       formEl.reset();
