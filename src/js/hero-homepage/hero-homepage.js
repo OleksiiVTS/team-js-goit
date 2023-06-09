@@ -77,7 +77,7 @@ function createFilmBox({ title, vote_average, backdrop_path, overview, urlTraile
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;">
-        <a href="${urlTrailer}" class="trailer"><h1 class="hero-title">${title}</h1></a>
+        <a href="${urlTrailer}" class="trailer" target="_blank" rel="noopener noreferrer"><h1 class="hero-title">${title}</h1></a>
         <div class="hero-rating">
           <div class="hero-rating__body">
             <div class="hero-rating__active" style="width: ${
@@ -199,7 +199,7 @@ function createDetailsBox({
       </div>
       
       <div class="more-details-info">
-         <a href="${urlTrailer}" class="trailer"><h2 class="film-title-modal film-title">${title}</h2></a>
+         <a href="${urlTrailer}" class="trailer" target="_blank" rel="noopener noreferrer"><h2 class="film-title-modal film-title">${title}</h2></a>
 
         <table>
         <tr>
