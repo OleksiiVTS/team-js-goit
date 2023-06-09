@@ -193,14 +193,14 @@ export default class Gallery {
       if (!count || count > cards.lenght) {
         count = cards.lenght;
       }
-      cards.slice(0, count);
+      
 
       disableSpinner();
-      return cards.reduce((acc, item, index) => {
-        if (index < count) {
+      return cards.slice(0, count).reduce((acc, item, index) => {
+//        if (index < count) {
           return acc + cbTemplate(item);
-        }
-        return acc;
+//        }
+//        return acc;
       }, '');
     } catch (error) {
       this.onError(error);
