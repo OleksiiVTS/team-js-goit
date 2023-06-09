@@ -98,6 +98,7 @@ function onSubmit(event) {
       );
 
       gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
+      formEl.reset()
       initPagination(gallery);
     }
   } catch (error) {
