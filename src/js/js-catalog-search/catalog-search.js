@@ -82,7 +82,6 @@ function onSubmit(event) {
         moviesTrendsWeek.TemplateMovieCard,
         moviesTrendsWeek.perPage
       );
-      showPagination(); // Відображення пагінації
 
       initPagination(moviesTrendsWeek);
       return;
@@ -165,12 +164,5 @@ function hidePagination() {
   const paginationContainer = document.querySelector('.tui-pagination');
   if (paginationContainer) {
     paginationContainer.style.display = 'none';
-  }
-}
-// Функція для відображення пагінації
-function showPagination() {
-  const paginationContainer = document.querySelector('.tui-pagination');
-  if (paginationContainer) {
-    paginationContainer.style.display = 'flex';
   }
 }
