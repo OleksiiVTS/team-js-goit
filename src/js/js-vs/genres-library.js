@@ -257,19 +257,28 @@ function createModal(data) {
 
     // close modal window
     const closeBtn = modal.querySelector('#closeDetails');
-    closeBtn.addEventListener('click', () => {
-      document.body.style.overflow = 'visible';
-      modal.classList.add('more-details-is-hidden');
-
-      onLibreryFilter();
-      showEmptyLibrary();
-    });
+    closeBtn.addEventListener('click', closeModal);
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
       addToLibrary(data);
     });
   }
+
+function closeModal() { 
+  const modal = document.getElementById('moreDetails');
+  document.body.style.overflow = 'visible';
+  modal.classList.add('more-details-is-hidden');
+  document.removeEventListener("keydown", onEscape);
+  
+  onLibreryFilter();
+  showEmptyLibrary();
+}
+  
+// закриття модалки по ESC
+function onEscape(event) {
+  if (event.key === "Escape") closeModal()
+}
 
   function addToLibrary(film) {
     try {
@@ -330,8 +339,10 @@ function createModal(data) {
       card.addEventListener('click', event => {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
+        document.addEventListener("keydown", onEscape);
+        
         createModal(data[0]);
-        setTimeout(styleModal, 0) 
+        setTimeout(styleModal, 0) // toogle style dark/light
       });
     });
   }
