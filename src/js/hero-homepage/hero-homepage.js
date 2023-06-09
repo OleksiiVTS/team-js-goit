@@ -118,12 +118,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 ////!!!!
   const { filmDetails, trailerDetails } = await getRandomFilm();
   const [ offTrailer ] = trailerDetails.filter(e => e.name === "Official Trailer");
-  console.log(offTrailer);
   const urlTrailer = `https://www.youtube.com/watch?v=${offTrailer.key}`;
   // const filmDetails = await getRandomFilm();
   // const trailerDetails = await getTrailerDetails();
 
-  console.log(filmDetails, trailerDetails);
 ////!!!!
   
   
