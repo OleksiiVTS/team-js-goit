@@ -26,6 +26,19 @@ function convertId_to_Name(aGenre, list = genres.importFromLS()) {
   return result.join(', ');
 }
 
+function closeModal() { 
+  const modal = document.getElementById('moreDetails');
+  document.body.style.overflow = 'visible';
+  modal.classList.add('more-details-is-hidden');
+  document.removeEventListener("keydown", onEscape);
+}
+  
+// закриття модалки по ESC
+function onEscape(event) {
+  if (event.key === "Escape") closeModal()
+}
+  
+
 export default class Gallery {
   static classes = {
     hidden: 'hidden',
@@ -340,17 +353,22 @@ export default class Gallery {
       </div>
     `;
 
+    
+
+    // для закриття модалки
     const closeBtn = modal.querySelector('#closeDetails');
-    closeBtn.addEventListener('click', () => {
-      document.body.style.overflow = 'visible';
-      modal.classList.add('more-details-is-hidden');
-    });
+    closeBtn.addEventListener('click',  closeModal);
 
     const addToLibraryButton = modal.querySelector('#addToLibraryButton');
     addToLibraryButton.addEventListener('click', () => {
       this.addToLibrary(data);
     });
   }
+
+
+  
+
+
 
   addToLibrary(film) {
     try {
@@ -398,17 +416,24 @@ export default class Gallery {
       }
       const data = list.filter(item => item.id === movieId);
 
+      // create/open modal in cards
       card.addEventListener('click', event => {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
+        document.addEventListener("keydown", onEscape);
         this.createModal(data[0]);
+
         setTimeout(styleModal, 0);  // add light tems in cards
       });
+
+      
     });
   }
+
 
   // якщо помилка
   onError(error) {
     console.log(error);
   }
+
 }
