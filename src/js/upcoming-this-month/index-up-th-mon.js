@@ -1,4 +1,6 @@
-import startModalWiNoTreiler from "../modal-w-litle/modal-w-litle.js";
+import {startModalWiNoTreiler} from "../modal-w-litle/modal-w-litle.js";
+// import {styleUpcomingThisMonth} from '../js-header/header.js';
+
 
 // Функция для выполнения запроса к API
 async function fetchFilmData() {
@@ -87,6 +89,8 @@ startModalWiNoTreiler();
       `;
     
       cardContainer.innerHTML = cardHTML;
+
+// setTimeout(styleUpcomingThisMonth, 0);
 
 // Округляем значения до десятков
 const popularityValueElement = document.querySelector(".popularity-value");
