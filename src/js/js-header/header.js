@@ -243,8 +243,7 @@ export function stylePagination() {
 }
 
 export function styleModal() {
-  if (localStorage.getItem('ui-theme') === 'dark') {
-  } else {
+  if (localStorage.getItem('ui-theme') === 'light') {
     document.querySelector('.more-details-modal').style.backgroundColor =
       '#FFFFFF';
     document.querySelector('.more-details-modal').style.boxShadow =
