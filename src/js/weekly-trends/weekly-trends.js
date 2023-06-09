@@ -9,8 +9,11 @@ const weeklyTrends = new Gallery({
   query: 'language=en',
 });
 
+let resizeTimer;
 function handleResize() {
-  setTimeout(() => {
+  clearTimeout(resizeTimer);
+
+  resizeTimer = setTimeout(() => {
     if (window.innerWidth < 768) {
       weeklyTrends.onMarkup(weeklyTrends.TemplateMovieCard, 1);
     } else {
@@ -19,7 +22,7 @@ function handleResize() {
   }, 1000);
 }
 
-handleResize(); // Виклик функції при завантаженні сторінки
+handleResize();
 
 window.addEventListener('resize', handleResize);
 
