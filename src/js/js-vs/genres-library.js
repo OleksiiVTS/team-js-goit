@@ -1,6 +1,5 @@
 import GenreList from '../class/GenreList.js';
-import { styleModal } from '../js-header/header.js';
-import { styleEmptyLibrary } from '../js-header/header.js';
+import { styleModal } from "../js-header/header.js";
 
 const cl_Genres = new GenreList({
   selector: '.select',
@@ -12,8 +11,8 @@ cl_Genres.getGenreList();
 // convert genres
 function convertId_to_Name(aGenre) {
   list = cl_Genres.importFromLS();
-  if (!aGenre) {
-    return;
+  if (!aGenre) { 
+    return
   }
 
   const result = aGenre.map(item => {
@@ -31,11 +30,11 @@ const select = document.querySelector('.library-filter');
 if (select) {
   select.addEventListener('input', onLibreryFilter);
 }
-// слухач події клік на селекторі
+// слухач події клік на селекторі 
 // window.addEventListener('click', (event) => {
 //   if ( event.view.location.pathname === '/library.html' ||
 //        event.view.location.pathname === '/team-js-goit/library.html') {
-
+         
 //     return document
 //     .querySelector('.library-filter')
 //     .addEventListener('input', onLibreryFilter);
@@ -50,14 +49,16 @@ function onLibreryFilter(event) {
   const genre = Number(select.value);
 
   try {
+    
     libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
-    if (libraryCinema.length === 0) {
-      throw new Error('масив пустий');
+    if(libraryCinema.length === 0) {
+      throw new Error("масив пустий")
     }
 
-    if (isNaN(genre)) {
-      onMarkup(libraryCinema);
-      return;
+
+    if (isNaN(genre)){
+      onMarkup(libraryCinema)
+      return
     }
 
     const filter = libraryCinema.filter(element => {
@@ -67,7 +68,7 @@ function onLibreryFilter(event) {
         return element.genre_ids.some(item => item === genre);
       }
     });
-
+  
     onMarkup(filter);
   } catch (error) {
     onError(error);
@@ -75,9 +76,9 @@ function onLibreryFilter(event) {
 }
 
 // створення розмітки
-function onMarkup(data) {
-  const cards = createCard(data);
-  update(cards);
+function onMarkup(data){
+  const cards = createCard(data)
+  update(cards)
   managerModal();
   showEmptyLibrary();
 }
@@ -86,38 +87,43 @@ function onMarkup(data) {
 function update(data) {
   if (boxLibraryCinema) {
     boxLibraryCinema.innerHTML = '';
-    boxLibraryCinema.insertAdjacentHTML('beforeend', data);
+    boxLibraryCinema.insertAdjacentHTML("beforeend", data);
   }
 }
 
 // обгортання елементу масиву хтмл-кодом
-function createCard(data) {
-  return data.reduce((acc, item) => {
-    return acc + TemplateMovieCard(item);
-  }, '');
+function createCard(data){
+  return data.reduce(
+    (acc, item) => {
+     return acc + TemplateMovieCard(item)
+   }, "");
 }
 
 // шаблон
-function TemplateMovieCard(data) {
-  const { poster_path, original_title, title, vote_average, release_date, id } =
-    data;
+function TemplateMovieCard( data ) {
+  const { 
+    poster_path, 
+    original_title, 
+    title, 
+    vote_average, 
+    release_date, 
+    id
+  } = data;
 
+  
   let aGenres = null;
-  if (data.genres) {
-    aGenres = data.genres
-      .map(e => e.name)
-      .slice(0, 2)
-      .join(', ');
+  if (data.genres) { 
+    aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
   } else {
-    aGenres = convertId_to_Name(data.genre_ids.slice(0, 2));
+    aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
   }
-  let strGenres = aGenres;
+  let strGenres = aGenres
   if (aGenres.length > 20) {
     strGenres = aGenres.split(',')[0];
   }
 
-  return `<a href="" data-id-movie="${id ? id : 0}">
-  <div class="movie-card overlay-card" data-id-movie="${id ? id : 0}">
+  return `<a href="" data-id-movie="${id ? id: 0}">
+  <div class="movie-card overlay-card" data-id-movie="${id ? id: 0}">
       <img class="gallery__image" src="${
         'https://image.tmdb.org/t/p/w400' + poster_path
       }" alt="${title ? title : original_title}" loading="lazy"/>
@@ -170,7 +176,6 @@ function showEmptyLibrary() {
     if (result) {
       boxLibraryCinema.innerHTML = '';
       boxLibraryCinema.insertAdjacentHTML('beforeend', result);
-      styleEmptyLibrary();
     }
   }
 }
@@ -181,44 +186,41 @@ function onError(error) {
 
 //=======
 function createModal(data) {
-  const {
-    title,
-    original_title,
-    poster_path,
-    vote_average,
-    vote_count,
-    popularity,
-    overview,
-    genre_ids,
-  } = data;
+    const {
+      title,
+      original_title,
+      poster_path,
+      vote_average,
+      vote_count,
+      popularity,
+      overview,
+      genre_ids,
+    } = data;
 
-  let btn = 'Add to My Library';
-  const libraryFilms = JSON.parse(localStorage.getItem('libraryFilms')) || [];
+    let btn = 'Add to My Library';
+    const libraryFilms = JSON.parse(localStorage.getItem('libraryFilms')) || [];
 
-  for (const film of libraryFilms) {
-    if (film.title === title || film.original_title === title) {
-      btn = 'Remove from My Library';
+    for (const film of libraryFilms) {
+      if (film.title === title || film.original_title === title) {
+        btn = 'Remove from My Library';
+      }
     }
-  }
 
-  let aGenres = null;
-  if (data.genres) {
-    aGenres = data.genres
-      .map(e => e.name)
-      .slice(0, 2)
-      .join(', ');
-  } else {
-    aGenres = convertId_to_Name(data.genre_ids.slice(0, 2));
-  }
-  let strGenres = aGenres;
-  if (aGenres.length > 20) {
-    strGenres = aGenres.split(',')[0];
-  }
+    let aGenres = null;
+    if (data.genres) { 
+      aGenres = data.genres.map(e => e.name).slice(0, 2).join(', ')
+    } else {
+      aGenres = convertId_to_Name(data.genre_ids.slice(0, 2))
+    }
+    let strGenres = aGenres
+    if (aGenres.length > 20) {
+      strGenres = aGenres.split(',')[0];
+    }
 
-  const modal = document.getElementById('moreDetails');
-  modal.classList.remove('more-details-is-hidden');
+    const modal = document.getElementById('moreDetails');
+    modal.classList.remove('more-details-is-hidden');
 
-  modal.innerHTML = `
+    modal.innerHTML = `
       <div class="more-details-modal">
         <div class="close-button-box">
           <button class="more-details-close-button" id="closeDetails" type="button">X</button>
@@ -253,83 +255,94 @@ function createModal(data) {
       </div>
     `;
 
-  // close modal window
-  const closeBtn = modal.querySelector('#closeDetails');
-  closeBtn.addEventListener('click', () => {
-    document.body.style.overflow = 'visible';
-    modal.classList.add('more-details-is-hidden');
+    // close modal window
+    const closeBtn = modal.querySelector('#closeDetails');
+    closeBtn.addEventListener('click', closeModal);
 
-    onLibreryFilter();
-    showEmptyLibrary();
-  });
-
-  const addToLibraryButton = modal.querySelector('#addToLibraryButton');
-  addToLibraryButton.addEventListener('click', () => {
-    addToLibrary(data);
-  });
-}
-
-function addToLibrary(film) {
-  try {
-    const addButton = document.getElementById('addToLibraryButton');
-    const libraryFilms = JSON.parse(localStorage.getItem('libraryFilms')) || [];
-
-    const filmTitle = film.title || film.original_title;
-
-    if (addButton.textContent === 'Add to My Library') {
-      addButton.textContent = 'Remove from My Library';
-
-      libraryFilms.push(film);
-      localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
-    } else {
-      addButton.textContent = 'Add to My Library';
-
-      const index = libraryFilms.findIndex(
-        filmItem =>
-          filmItem.title === filmTitle || filmItem.original_title === filmTitle
-      );
-      if (index !== -1) {
-        libraryFilms.splice(index, 1);
-        localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
-
-        // libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'))
-        // console.log(libraryCinema);
-        // onMarkup(libraryCinema)
-      }
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-function managerModal() {
-  // якщо області виводу не має, значить не та сторінка
-  if (!boxLibraryCinema) {
-    return;
-  }
-
-  const movieCards = boxLibraryCinema.querySelectorAll('.movie-card');
-
-  movieCards.forEach(card => {
-    const movieId = Number(card.dataset.idMovie);
-
-    let list = libraryCinema;
-    if (list.length === 0) {
-      throw Error('Список бібліотеки пустий');
-      return;
-    }
-    const data = list.filter(item => item.id === movieId);
-
-    // console.log(data);
-    if (data.length === 0) {
-      throw Error('у об`єктів повинні бути id');
-      return;
-    }
-    card.addEventListener('click', event => {
-      event.preventDefault();
-      document.body.style.overflow = 'hidden';
-      createModal(data[0]);
-      setTimeout(styleModal, 0);
+    const addToLibraryButton = modal.querySelector('#addToLibraryButton');
+    addToLibraryButton.addEventListener('click', () => {
+      addToLibrary(data);
     });
-  });
+  }
+
+function closeModal() { 
+  const modal = document.getElementById('moreDetails');
+  document.body.style.overflow = 'visible';
+  modal.classList.add('more-details-is-hidden');
+  document.removeEventListener("keydown", onEscape);
+  
+  onLibreryFilter();
+  showEmptyLibrary();
 }
+  
+// закриття модалки по ESC
+function onEscape(event) {
+  if (event.key === "Escape") closeModal()
+}
+
+  function addToLibrary(film) {
+    try {
+      const addButton = document.getElementById('addToLibraryButton');
+      const libraryFilms =
+        JSON.parse(localStorage.getItem('libraryFilms')) || [];
+
+      const filmTitle = (film.title || film.original_title);
+
+      if (addButton.textContent === 'Add to My Library') {
+        addButton.textContent = 'Remove from My Library';
+
+        libraryFilms.push(film);
+        localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+      } else {
+        addButton.textContent = 'Add to My Library';
+
+        const index = libraryFilms.findIndex(
+          filmItem => filmItem.title === filmTitle || filmItem.original_title === filmTitle
+        );
+        if (index !== -1) {
+          libraryFilms.splice(index, 1);
+          localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
+
+          // libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'))
+          // console.log(libraryCinema);
+          // onMarkup(libraryCinema)
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function managerModal() {
+    // якщо області виводу не має, значить не та сторінка
+    if (!boxLibraryCinema) {
+      return;
+    }
+
+    const movieCards = boxLibraryCinema.querySelectorAll('.movie-card');
+
+    movieCards.forEach(card => {
+      const movieId = Number(card.dataset.idMovie);
+
+      let list = libraryCinema;
+      if (list.length === 0) { 
+        throw Error("Список бібліотеки пустий")
+        return
+      }
+      const data = list.filter(item => item.id === movieId);
+
+      // console.log(data);
+      if (data.length === 0) {
+        throw Error('у об`єктів повинні бути id')
+        return
+      }
+      card.addEventListener('click', event => {
+        event.preventDefault();
+        document.body.style.overflow = 'hidden';
+        document.addEventListener("keydown", onEscape);
+        
+        createModal(data[0]);
+        setTimeout(styleModal, 0) // toogle style dark/light
+      });
+    });
+  }
