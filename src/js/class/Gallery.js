@@ -2,6 +2,7 @@ const axios = require('axios/dist/axios.min.js'); // node
 import GenreList from './GenreList.js';
 import Movie from './Movie.js';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
+import { styleModal } from "../js-header/header.js";
 
 //import Notiflix from 'notiflix';
 
@@ -401,6 +402,7 @@ export default class Gallery {
         event.preventDefault();
         document.body.style.overflow = 'hidden';
         this.createModal(data[0]);
+        setTimeout(styleModal, 0);  // add light tems in cards
       });
     });
   }
