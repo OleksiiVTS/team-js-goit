@@ -6,7 +6,7 @@ import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 import Pagination from 'tui-pagination';
 import { stylePagination } from '../js-header/header.js';
 
-const formEl = document.querySelector('.form-search')
+const formEl = document.querySelector('.form-search');
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
 const refs = {
@@ -91,11 +91,8 @@ function onSubmit(event) {
 
       gallery.resetPage();
       // if (gallery.totalResults === 0) throw new Error('No data');
-      
-      gallery.onMarkup(
-        gallery.TemplateMovieCard,
-        gallery.perPage
-      );
+
+      gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
       if (gallery.totalResults === 0) {
         hidePagination();
       } else {
@@ -103,7 +100,7 @@ function onSubmit(event) {
       }
 
       gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
-      formEl.reset()
+      formEl.reset();
       initPagination(gallery);
     }
   } catch (error) {
