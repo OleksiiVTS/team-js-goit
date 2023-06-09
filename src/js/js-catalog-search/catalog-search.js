@@ -77,9 +77,11 @@ function onSubmit(event) {
         gallery.TemplateMovieCard,
         gallery.perPage
       );
-
-      initPagination(gallery);
-
+      if (gallery.totalResults === 0) {
+        hidePagination();
+      } else {
+        initPagination(gallery);
+      }
     }
   } catch (error) {
     onError(error);
@@ -134,5 +136,12 @@ export function initPagination(objGallery) {
       stylePagination();
     });
 
+  }
+}
+// Функція для приховування пагінації
+function hidePagination() {
+  const paginationContainer = document.querySelector('.tui-pagination');
+  if (paginationContainer) {
+    paginationContainer.style.display = 'none';
   }
 }
