@@ -6,7 +6,7 @@ import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 import Pagination from 'tui-pagination';
 import { stylePagination } from '../js-header/header.js';
 
-const formEl = document.querySelector('.form-search');
+const formEl = document.querySelector('.form-search')
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 
 const refs = {
@@ -82,15 +82,22 @@ function onSubmit(event) {
         moviesTrendsWeek.TemplateMovieCard,
         moviesTrendsWeek.perPage
       );
+      showPagination(); // Відображення пагінації
+
       initPagination(moviesTrendsWeek);
       return;
     } else {
       gallery.params.query = value;
 
       gallery.resetPage();
+      // if (gallery.totalResults === 0) throw new Error('No data');
+      
+      gallery.onMarkup(
+        gallery.TemplateMovieCard,
+        gallery.perPage
+      );
 
       gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
-      formEl.reset();
       initPagination(gallery);
     }
   } catch (error) {
@@ -101,6 +108,12 @@ function onSubmit(event) {
 /// Пагінація
 export function initPagination(objGallery) {
   //console.log('Pagin-objGallery', objGallery);
+  const container = document.querySelector('.tui-pagination');
+
+  if (objGallery.listMovies.length === 0) { 
+
+    return new Pagination(container)
+  }
 
   const paginationOptions = {
     totalItems: objGallery.totalPages > 1 ? objGallery.totalPages : 500,
@@ -126,16 +139,16 @@ export function initPagination(objGallery) {
         '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
         '<span class="tui-ico-ellip">...</span>' +
         '</a>',
-    }, 
+    },
   };
 
-  const container = document.querySelector('.tui-pagination');
+  
   let pagination;
   if (container) {
     pagination = new Pagination(container, paginationOptions);
     pagination.reset();
-    // console.log(pagination);
 
+    //console.log(pagination);
     //Pagination first start with response from API and create total_pages
     //Go to Homepage-rendering.js
     //
@@ -145,7 +158,6 @@ export function initPagination(objGallery) {
       objGallery.page = eventData.page;
       objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
       stylePagination();
-      
     });
   }
 }
@@ -154,7 +166,7 @@ function hidePagination() {
   const paginationContainer = document.querySelector('.tui-pagination');
   if (paginationContainer) {
     paginationContainer.style.display = 'none';
-  } else showPagination()
+  }
 }
 // Функція для відображення пагінації
 function showPagination() {
