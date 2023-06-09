@@ -138,7 +138,7 @@ export function initPagination(objGallery) {
         '<a href="#" class="tui-page-btn tui-{{type}}-is-ellip">' +
         '<span class="tui-ico-ellip">...</span>' +
         '</a>',
-    },
+    }, 
   };
 
   const container = document.querySelector('.tui-pagination');
@@ -146,6 +146,7 @@ export function initPagination(objGallery) {
   if (container) {
     pagination = new Pagination(container, paginationOptions);
     pagination.reset();
+    // console.log(pagination);
 
     //Pagination first start with response from API and create total_pages
     //Go to Homepage-rendering.js
@@ -156,6 +157,7 @@ export function initPagination(objGallery) {
       objGallery.page = eventData.page;
       objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
       stylePagination();
+      
     });
   }
 }
