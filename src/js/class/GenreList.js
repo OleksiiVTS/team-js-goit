@@ -1,5 +1,5 @@
 const axios = require("axios/dist/axios.min.js"); // node
-import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
+// import {disableSpinner, enableSpinner} from '../js-vs/spinner-js.js'
 //import Notiflix from 'notiflix';
 
 // Класс + ключ
@@ -27,7 +27,7 @@ export default class GenreList {
   // Отримати масив об'єктів cпискe жанрів
   async getGenreList() {
     try {
-      enableSpinner();
+      // enableSpinner();
       const params = new Object(this.params);
 
       const {data} = await axios.get(this.url, { params });
@@ -35,7 +35,7 @@ export default class GenreList {
       this.exportToLS(data.genres);
       this.list = await data.genres;
 
-      disableSpinner();
+      // disableSpinner();
 
       return data.genres; 
     } catch (error) {
@@ -67,12 +67,12 @@ export default class GenreList {
   // створити html-розмітку для всіх строк селекту
   async createGenreList() {
     try {
-      enableSpinner();
+      // enableSpinner();
 
       //--url 'https://api.themoviedb.org/3/genre/movie/list?language=en'
       const data = await this.getGenreList();
      
-      disableSpinner();
+      // disableSpinner();
       return data.reduce(
            (acc, data) => {
             return acc + this.createGenreSelectRow(data)
@@ -91,10 +91,10 @@ export default class GenreList {
   // сформувати селект
   async outMarkupGenreList() { 
     try {
-      enableSpinner();
+      // enableSpinner();
       const markup = await this.createGenreList();
       this.update(markup);
-      disableSpinner();
+      // disableSpinner();
 
       return markup;
     } catch (error) {
@@ -117,9 +117,9 @@ export default class GenreList {
   // отримати список жанрів
   async getList() {
     try {
-      enableSpinner();
+      // enableSpinner();
       const list = await this.getGenreList();
-      disableSpinner();
+      // disableSpinner();
 
       return list;      
     } catch (error) {

@@ -13,7 +13,7 @@ const URL = 'https://api.themoviedb.org/3';
 const genres = new GenreList({
   selector: '.select',
   url: '/genre/movie/list',
-  query: 'language=en',
+  query: `''&language=en`,
 });
 genres.getGenreList();
 
@@ -48,8 +48,8 @@ export default class Gallery {
     this.url = URL + url;
     this.out = this.getSelect(selector); // куди виводимо дані
 
-    this.listMovies = this.importFromLS(); // список фільмів
-    this.result = this.importResultLS();
+    this.listMovies = []; //this.importFromLS(); // список фільмів
+    this.result = [];     //this.importResultLS();
 
     this.params = {
       api_key: API_KEY,
@@ -79,28 +79,48 @@ export default class Gallery {
   // https://api.themoviedb.org/3/trending/movie/day?api_key=999999&page=1&
   //
   // отримання даних з серверу
-  async getMoviesList() {
+  async getResponce() {
     try {
-      enableSpinner();
+      
       this.params.page = this.page;
       const params = new Object(this.params);
-      const { data } = await axios.get(this.url, { params });
+      const { data } = await axios.get(this.url, { params }); 
+      
+      this.result = await data;
+      return data
+
+    } catch (error) {
+      this.onError(`
+        ${this.name}.getResponce() ->\r
+        URL: ${this.url}?api_key=${this.params.api_key}&page=${this.page}&query=${this.params.query}\r
+        ${error}
+      `)
+    }
+  }
+
+  // заповнення властивостей класу
+  async getMoviesList() {
+    try {
+      const data = await this.getResponce();     
 
       this.exportToLS(data.results);
       this.exportResultLS(data);
+
       this.listMovies = await data.results;
-      this.result = await data;
 
       this.totalPages = await data.total_pages;
       this.totalResults = await data.total_results;
 
-      disableSpinner();
-
       return data.results;
+
     } catch (error) {
-      this.listMovies = await this.importFromLS();
+      // this.listMovies = await this.importFromLS();
       this.result = await this.importResultLS();
-      this.onError(error);
+      this.onError(`
+        ${this.name}.getMoviesList() ->\r
+        URL: ${this.url}?api_key=${this.params.api_key}&page=${this.page}&query=${this.params.query}\r
+        ${error}
+      `)
     }
   }
 
@@ -159,6 +179,7 @@ export default class Gallery {
     this.totalPages = 0;
     this.totalResults = 0;
     localStorage.removeItem(this.name);
+    localStorage.removeItem('objResult');
   }
 
   hide() {
@@ -188,20 +209,23 @@ export default class Gallery {
 
       const cards = await this.getMoviesList();
 
-      if (!count || count > cards.lenght) {
-        count = cards.lenght;
+      if (!count || count > cards.length) {
+        count = cards.length;
       }
       
 
       disableSpinner();
       return cards.slice(0, count).reduce((acc, item, index) => {
-//        if (index < count) {
           return acc + cbTemplate(item);
 //        }
 //        return acc;
       }, '');
     } catch (error) {
-      this.onError(error);
+      this.onError(`
+        ${this.name}.createNewCards(cb_func, count) ->\r
+        URL: ${this.url}?api_key=${this.params.api_key}&page=${this.page}&query=${this.params.query}\r
+        ${error}
+      `)
     }
   }
 
@@ -220,9 +244,13 @@ export default class Gallery {
       // this.show();
 
       disableSpinner();
-      return markup;
+      return this;
     } catch (error) {
-      this.onError(error);
+      this.onError(`
+      ${this.name}.onMarkup(cb_func, count=this.perPage) ->\r
+      URL: ${this.url}?api_key=${this.params.api_key}&page=${this.page}&query=${this.params.query}\r
+      ${error}
+    `)
     }
   }
 
@@ -250,10 +278,11 @@ export default class Gallery {
     let pictureCard = '';
     let properties = '';
 
+    // "poster_sizes": ["w92","w154","w185","w342","w500","w780","original"]
     if (poster_path===null) {
       pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
       properties = "style=padding-top:130px";
-    } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
+    } else pictureCard = "https://image.tmdb.org/t/p/w342" + poster_path;
 
     return `<a href="" data-id-movie="${id}">
     <div ${properties} class="movie-card overlay-card weekly-movie-phone" data-id-movie="${id}">
@@ -328,7 +357,7 @@ export default class Gallery {
     }
 
     let strGenres = convertId_to_Name(genre_ids.slice(0, 2));
-    if (strGenres.lenght > 20) {
+    if (strGenres.length > 20) {
       strGenres = convertId_to_Name(genre_ids.slice(0, 1));
     }
 
@@ -338,10 +367,11 @@ export default class Gallery {
     let pictureCard = '';
     let properties = '';
 
+    // "poster_sizes": ["w92","w154","w185","w342","w500","w780","original"]
     if (poster_path===null) {
       pictureCard = "https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png";
       properties = "style=padding-top:130px";
-    } else pictureCard = "https://image.tmdb.org/t/p/w400" + poster_path;
+    } else pictureCard = "https://image.tmdb.org/t/p/w500" + poster_path;
 
     modal.innerHTML = `
       <div class="more-details-modal">
@@ -350,7 +380,7 @@ export default class Gallery {
         </div>
         <div class="details-wrapper">
           <div ${properties} class="more-details-img-box">
-            <img width="380px" class="more-detail-img" src="${pictureCard}" alt="${title}" />
+            <img width="380px" class="more-detail-img" src="${pictureCard}" alt="${title}" loading="lazy"/>
           </div>
           <div class="more-details-info">
             <h2 class="film-title">${title}</h2>

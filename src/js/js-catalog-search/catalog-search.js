@@ -1,46 +1,22 @@
-const url = 'https://api.themoviedb.org/3/search/movie';
-const API_KEY = 'ddf41d08627025b2d6783befee0c5c94';
-let query = '';
 // import axios from 'axios';
 import { disableSpinner, enableSpinner } from '../js-vs/spinner-js.js';
 import Pagination from 'tui-pagination';
 import { stylePagination } from '../js-header/header.js';
 
+// const url = 'https://api.themoviedb.org/3/search/movie';
+// const API_KEY = 'ddf41d08627025b2d6783befee0c5c94';
+
 const formEl = document.querySelector('.form-search')
 const catalogSearchForm = document.querySelector('.catalog-search-input');
+const btnSearch = document.getElementById('btn-search')
+btnSearch.addEventListener('click', onSubmit);
+
 
 const refs = {
   footer: document.querySelector('.footer-container'),
   body: document.querySelector('body'),
 };
-// if (refs.footer.classList.includes('footer-fixed')) {
-//   refs.footer.classList.remove('footer-fixed');
-// }
 
-window.addEventListener('click', function (event) {
-  // console.log('event', event);
-  // console.log(event.view.location.pathname);
-
-  // function footerFix() {
-  //   if (refs.body.clientHeight < window.innerHeight) {
-  //     refs.footer.classList.add('footer-fixed');
-  //   } else {
-  //     refs.footer.classList.remove('footer-fixed');
-  //   }
-  //   console.log(refs.body.clientHeight, window.innerHeight);
-  // }
-  // footerFix();
-
-  if (
-    event.view.location.pathname === '/catalog.html' ||
-    event.view.location.pathname === '/team-js-goit/catalog.html'
-  ) {
-    return document
-      .getElementById('btn-search')
-      .addEventListener('click', onSubmit);
-  }
-  return;
-});
 
 function onError(error) {
   console.log(error);
@@ -55,71 +31,82 @@ const moviesTrendsWeek = new Gallery({
   name: 'moviesTrendsWeek',
   selector: '.catalog-gallery', // куди виводимо сформований HTML-код
   url: '/trending/movie/week', // частина шляху для запиту
-  query: '""&language=en', // сам запит, те що стоъть після знаку ?
+  query: `''&language=en`, // сам запит, те що стоъть після знаку ?
 });
 
-moviesTrendsWeek.onMarkup(
-  moviesTrendsWeek.TemplateMovieCard,
-  moviesTrendsWeek.perPage
-);
-initPagination(moviesTrendsWeek);
 
+  moviesTrendsWeek.onMarkup(moviesTrendsWeek.TemplateMovieCard)
+    .then((resp) => {
+      initPagination(resp)  
+    }).catch(
+      // onError('StartWeek no Pagination')
+    );
+  
 // для пошуку
 const gallery = new Gallery({
   name: 'searchTest',
   selector: '.catalog-gallery', // куди виводимо сформований HTML-код
   url: '/search/movie', // частина шляху для запиту
-  query: '', // сам запит, те що стоъть після знаку ?
+  query: `''`, // сам запит, те що стоъть після знаку ?
 });
 
-function onSubmit(event) {
+async function onSubmit(event) {
   try {
     event.preventDefault();
 
-    const value = catalogSearchForm.value.trim();
+    const value = catalogSearchForm.value.trim()
     if (value === '') {
-      moviesTrendsWeek.onMarkup(
-        moviesTrendsWeek.TemplateMovieCard,
-        moviesTrendsWeek.perPage
-      );
-      showPagination(); // Відображення пагінації
 
-      initPagination(moviesTrendsWeek);
-      return;
-    } else {
-      gallery.params.query = value;
-
-      gallery.resetPage();
-      // if (gallery.totalResults === 0) throw new Error('No data');
+      moviesTrendsWeek.onMarkup(moviesTrendsWeek.TemplateMovieCard)
+        .then((resp) => {
+          initPagination(resp)  
+        }).catch(
+          // onError('Week no Pagination')
+        );
       
-      gallery.onMarkup(
-        gallery.TemplateMovieCard,
-        gallery.perPage
-      );
+    } else {
 
-      gallery.onMarkup(gallery.TemplateMovieCard, gallery.perPage);
-      formEl.reset()
-      initPagination(gallery);
+      gallery.params.query = value;
+      gallery.resetPage();
+
+      gallery.onMarkup(gallery.TemplateMovieCard) 
+        .then((resp) => {
+          initPagination(resp)  
+        }).catch(
+          // onError('Search no Pagination')
+        );
+
     }
+    
+    formEl.reset()
+
   } catch (error) {
     onError(error);
   }
 }
 
 /// Пагінація
-export function initPagination(objGallery) {
-  //console.log('Pagin-objGallery', objGallery);
+export async function initPagination(objGallery) {
+  const res = await objGallery
+  //console.log('initPagination -> ', objGallery.name, res);
+
   const container = document.querySelector('.tui-pagination');
+  container.innerHTML = ''
 
-  if (objGallery.listMovies.length === 0) { 
-
-    return new Pagination(container)
+  if (!res.totalResults) { 
+    if(container) {
+      const noFilm = document.querySelector('.m-w-t-value')
+      const catalog = document.querySelector('.catalog-gallery')
+      catalog.insertAdjacentHTML('beforeend', noFilm.innerHTML);
+    }
+    
+    return false //new Pagination(container)
   }
 
   const paginationOptions = {
-    totalItems: objGallery.totalPages > 1 ? objGallery.totalPages : 500,
+    totalItems: objGallery.totalPages * objGallery.perPage,
     itemsPerPage: objGallery.perPage,
-    visiblePages: 5,
+    visiblePages: objGallery.totalPages < 5 ? objGallery.totalPages : 5,
     page: 1,
     centerAlign: false,
     firstItemClassName: 'tui-first-child',
@@ -154,25 +141,12 @@ export function initPagination(objGallery) {
     //Go to Homepage-rendering.js
     //
     pagination.movePageTo(objGallery.page);
-    const paginationPage = pagination.getCurrentPage();
+    pagination.getCurrentPage();
     pagination.on('afterMove', function (eventData) {
       objGallery.page = eventData.page;
-      objGallery.onMarkup(objGallery.TemplateMovieCard, objGallery.perPage);
+      objGallery.onMarkup(objGallery.TemplateMovieCard);
       stylePagination();
     });
   }
-}
-// Функція для приховування пагінації
-function hidePagination() {
-  const paginationContainer = document.querySelector('.tui-pagination');
-  if (paginationContainer) {
-    paginationContainer.style.display = 'none';
-  }
-}
-// Функція для відображення пагінації
-function showPagination() {
-  const paginationContainer = document.querySelector('.tui-pagination');
-  if (paginationContainer) {
-    paginationContainer.style.display = 'flex';
-  }
+  return true
 }
