@@ -202,7 +202,17 @@
   }
 }
 
+.results-matching {
+  width: 280px;
+  height: 120px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.4;
+  text-align: center;
 
+  color: #FFFFFF;
+}
 
 
 @media screen and (max-width: 320px) {
@@ -210,6 +220,11 @@
 }
 
 @media screen and (min-width: 768px) {
+  .results-matching {
+    font-size: 24px;
+    line-height: 1.3;
+  }
+
   .button-general,
   .button-watch-trailer,
   .button-rem-me {
@@ -238,6 +253,10 @@
   
 }
 @media screen and (min-width: 1280px) {
+  .results-matching {
+    font-size: 32px;
+    line-height: 1.1;
+  }
   .button-general {
     font-size: 18px;
     line-height: 1.5;

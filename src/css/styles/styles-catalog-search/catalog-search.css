@@ -34,11 +34,11 @@
   .catalog-search {
     padding-top: 40px;
     padding-bottom: 16px;
-    width: 284px;
+    max-width: 284px;
     height: 40px;
   }
   .catalog-search-input {
-    width: 224px;
+    max-width: 224px;
     height: 40px;
   }
 }
@@ -47,11 +47,11 @@
   .catalog-search {
     padding-top: 40px;
     padding-bottom: 16px;
-    width: 284px;
+    max-width: 284px;
     height: 40px;
   }
   .catalog-search-input {
-    width: 224px;
+    max-width: 224px;
     height: 40px;
   }
 }
@@ -60,7 +60,7 @@
   .catalog-search {
     padding-top: 60px;
     padding-bottom: 36px;
-    width: 264px;
+    max-width: 264px;
     height: 44px;
   }
   .catalog-search-input {
@@ -72,7 +72,7 @@
   .catalog-search {
     padding-top: 80px;
     padding-bottom: 48px;
-    width: 398px;
+    max-width: 398px;
     height: 48px;
   }
   .catalog-search-input {
