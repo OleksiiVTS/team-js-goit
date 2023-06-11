@@ -75,6 +75,7 @@ async function onSubmit(event) {
         .then(resp => {
           if (resp.listMovies.length === 0) {
             notFoundContainer.classList.remove('visually-hidden');
+            styleEmptyCatalog();
             paginationEl.classList.add('visually-hidden');
           } else initPagination(resp);
         })
