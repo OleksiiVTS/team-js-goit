@@ -275,6 +275,19 @@ export function styleEmptyLibrary() {
   }
 }
 
+export function styleEmptyCatalog() {
+  {
+    const textEl = document.querySelector('.results-matching');
+    if (localStorage.getItem('ui-theme') === 'light') {
+      if (textEl) {
+        textEl.style.color = '#111111';
+      }
+    } else {
+      textEl.style.color = '#FFFFFF';
+    }
+  }
+}
+
 export function styleUpcomingThisMonth() {
   if (localStorage.getItem('ui-theme') === 'light') {
     const toggleClass = (element, className) => {
