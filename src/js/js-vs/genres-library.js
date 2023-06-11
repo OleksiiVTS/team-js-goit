@@ -181,7 +181,6 @@ function visibleButton() {
     const factor = Math.ceil(localStorageLength.length / 9);
     libraryLengthFactor = factor;
     onMarkup(libraryCinema);
-    console.log(libraryLengthFactor)
   }
 
 }
