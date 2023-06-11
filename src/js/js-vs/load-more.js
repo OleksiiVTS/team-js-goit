@@ -1,16 +1,21 @@
-const loadMoreBtn = document.querySelector('.load-more')
+// const loadMoreBtn = document.querySelector('.load-more')
+// const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
+// loadMoreBtn.addEventListener('click', onLoadMore)
+// // console.log(localStorageLength)
 
-// console.log(loadMoreBtn)
+// function visibleButton() {
+//   if (localStorageLength.length > 9) {
+//     loadMoreBtn.classList.remove('is-hidden')
+//   } else loadMoreBtn.classList.add('is-hidden')
+// }
 
-// loadMoreBtn.addEventListener('click' onLoadMore)
+// function onLoadMore() {
+//   console.log(localStorageLength.length)
+// }
 
-function enableBtnLoadMore() {
-  loadMoreBtn.classList.remove('is-hidden')
-}
+// // Необхідно перезапускати у классі по переписуванню сітки!
+// visibleButton()
 
-function disableBtnLoadMore() {
-  loadMoreBtn.classList.add('is-hidden')
-}
 
 // const filterGenres = localStorage.getItem('moviesTrendsWeek')
 // const parseFilterGenres = JSON.parse(filterGenres)

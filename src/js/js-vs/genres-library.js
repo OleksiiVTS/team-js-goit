@@ -1,6 +1,6 @@
 import GenreList from '../class/GenreList.js';
 import { styleModal } from "../js-header/header.js";
-
+let libraryLengthFactor = 1
 const cl_Genres = new GenreList({
   selector: '.select',
   url: '/genre/movie/list',
@@ -78,6 +78,7 @@ function onLibreryFilter(event) {
 // створення розмітки
 function onMarkup(data){
   const cards = createCard(data)
+  visibleButton();
   update(cards)
   managerModal();
   showEmptyLibrary();
@@ -92,7 +93,7 @@ function update(data) {
 }
 
 // обгортання елементу масиву хтмл-кодом
-function createCard(data, count = 9) {
+function createCard(data, count = 9 * libraryLengthFactor) {
   
   return data.slice(0, count).reduce(
     (acc, item) => {
@@ -162,6 +163,33 @@ function TemplateMovieCard( data ) {
       </div>
       </a>`;
 }
+
+// кнопка Load more //
+
+// console.log(localStorageLength)
+
+function visibleButton() {
+  const loadMoreBtn = document.querySelector('.load-more')
+  const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
+  loadMoreBtn.addEventListener('click', onLoadMore)
+
+  if (localStorageLength.length > 9) {
+    loadMoreBtn.classList.remove('is-hidden')
+  } else loadMoreBtn.classList.add('is-hidden')
+
+  function onLoadMore() {
+    const factor = Math.ceil(localStorageLength.length / 9);
+    libraryLengthFactor = factor;
+    onMarkup(libraryCinema);
+    console.log(libraryLengthFactor)
+  }
+
+}
+
+
+
+
+
 
 // если пустой список
 function emptyLibraryMarkup() {
@@ -362,3 +390,4 @@ function onEscape(event) {
       });
     });
   }
+
