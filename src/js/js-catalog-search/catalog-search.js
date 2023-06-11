@@ -6,17 +6,17 @@ import { stylePagination } from '../js-header/header.js';
 // const url = 'https://api.themoviedb.org/3/search/movie';
 // const API_KEY = 'ddf41d08627025b2d6783befee0c5c94';
 
-const formEl = document.querySelector('.form-search')
+const notFoundContainer = document.querySelector('.results-matching');
+const paginationEl = document.getElementById('pagination');
+const formEl = document.querySelector('.form-search');
 const catalogSearchForm = document.querySelector('.catalog-search-input');
-const btnSearch = document.getElementById('btn-search')
+const btnSearch = document.getElementById('btn-search');
 btnSearch.addEventListener('click', onSubmit);
-
 
 const refs = {
   footer: document.querySelector('.footer-container'),
   body: document.querySelector('body'),
 };
-
 
 function onError(error) {
   console.log(error);
@@ -34,14 +34,15 @@ const moviesTrendsWeek = new Gallery({
   query: `''&language=en`, // сам запит, те що стоъть після знаку ?
 });
 
+moviesTrendsWeek
+  .onMarkup(moviesTrendsWeek.TemplateMovieCard)
+  .then(resp => {
+    initPagination(resp);
+  })
+  .catch
+  // onError('StartWeek no Pagination')
+  ();
 
-  moviesTrendsWeek.onMarkup(moviesTrendsWeek.TemplateMovieCard)
-    .then((resp) => {
-      initPagination(resp)  
-    }).catch(
-      // onError('StartWeek no Pagination')
-    );
-  
 // для пошуку
 const gallery = new Gallery({
   name: 'searchTest',
@@ -54,32 +55,36 @@ async function onSubmit(event) {
   try {
     event.preventDefault();
 
-    const value = catalogSearchForm.value.trim()
+    const value = catalogSearchForm.value.trim();
     if (value === '') {
-
-      moviesTrendsWeek.onMarkup(moviesTrendsWeek.TemplateMovieCard)
-        .then((resp) => {
-          initPagination(resp)  
-        }).catch(
-          // onError('Week no Pagination')
-        );
-      
+      moviesTrendsWeek
+        .onMarkup(moviesTrendsWeek.TemplateMovieCard)
+        .then(resp => {
+          initPagination(resp);
+        })
+        .catch
+        // onError('Week no Pagination')
+        ();
     } else {
-
       gallery.params.query = value;
       gallery.resetPage();
-
-      gallery.onMarkup(gallery.TemplateMovieCard) 
-        .then((resp) => {
-          initPagination(resp)  
-        }).catch(
-          // onError('Search no Pagination')
-        );
-
+      notFoundContainer.classList.add('visually-hidden');
+      paginationEl.classList.remove('visually-hidden');
+      gallery
+        .onMarkup(gallery.TemplateMovieCard)
+        .then(resp => {
+          if (resp.listMovies.length === 0) {
+            notFoundContainer.classList.remove('visually-hidden');
+            styleEmptyCatalog();
+            paginationEl.classList.add('visually-hidden');
+          } else initPagination(resp);
+        })
+        .catch
+        // onError('Search no Pagination')
+        ();
     }
-    
-    formEl.reset()
 
+    formEl.reset();
   } catch (error) {
     onError(error);
   }
@@ -87,20 +92,20 @@ async function onSubmit(event) {
 
 /// Пагінація
 export async function initPagination(objGallery) {
-  const res = await objGallery
+  const res = await objGallery;
   //console.log('initPagination -> ', objGallery.name, res);
 
   const container = document.querySelector('.tui-pagination');
-  container.innerHTML = ''
+  container.innerHTML = '';
 
-  if (!res.totalResults) { 
-    if(container) {
-      const noFilm = document.querySelector('.m-w-t-value')
-      const catalog = document.querySelector('.catalog-gallery')
+  if (!res.totalResults) {
+    if (container) {
+      const noFilm = document.querySelector('.m-w-t-value');
+      const catalog = document.querySelector('.catalog-gallery');
       catalog.insertAdjacentHTML('beforeend', noFilm.innerHTML);
     }
-    
-    return false //new Pagination(container)
+
+    return false; //new Pagination(container)
   }
 
   const paginationOptions = {
@@ -130,7 +135,6 @@ export async function initPagination(objGallery) {
     },
   };
 
-  
   let pagination;
   if (container) {
     pagination = new Pagination(container, paginationOptions);
@@ -148,5 +152,5 @@ export async function initPagination(objGallery) {
       stylePagination();
     });
   }
-  return true
+  return true;
 }
