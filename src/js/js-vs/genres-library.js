@@ -171,15 +171,16 @@ function TemplateMovieCard( data ) {
 function visibleButton() {
   const loadMoreBtn = document.querySelector('.load-more')
   const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
-  loadMoreBtn.addEventListener('click', onLoadMore)
 
   if (localStorageLength.length > 9) {
     loadMoreBtn.classList.remove('is-hidden')
-  } else loadMoreBtn.classList.add('is-hidden')
+    loadMoreBtn.addEventListener('click', onLoadMore)
+  } else {
+    loadMoreBtn.classList.add('is-hidden')
+  } 
 
   function onLoadMore() {
-    const factor = Math.ceil(localStorageLength.length / 9);
-    libraryLengthFactor = factor;
+    libraryLengthFactor += 1;
     onMarkup(libraryCinema);
   }
 
