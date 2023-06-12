@@ -394,6 +394,10 @@ body {
   background-color: var(--color-text-description);
 }
 
+.secondary-white-text {
+  color: var(--color-text-description);
+}
+
 .white-background {
   background-color: var(--color-white);
 }
@@ -413,7 +417,7 @@ body {
   color: var(--color-text-header-l);
 }
 
-.lightdark-placeholder::placeholder {
+.lightdark-placeholder {
   color: var(--color-text-header-l);
 }
 
@@ -425,6 +429,9 @@ body {
   color: var(--color-black);
 }
 
+.black-c-background-color {
+  background-color: #1c1c1c;
+}
 .darkest-text-color {
   color: var(--color-black-header);
 }

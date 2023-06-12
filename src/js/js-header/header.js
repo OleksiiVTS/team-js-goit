@@ -99,6 +99,7 @@ function switchThemeColors() {
     document.querySelector('.popularity-value'),
     document.querySelector('.about-value'),
     document.querySelector('.more-details-about'),
+    document.getElementById('Year'),
   ];
 
   const toSecBlackSvg = [
@@ -117,12 +118,18 @@ function switchThemeColors() {
     ...document.querySelector('.header-title').getElementsByTagName('span'),
   ];
 
+  let toDarkPlaceholder = [
+    ...document.getElementsByClassName('.catalog-search-input'),
+  ];
+
   const toLightdarkTxt = [
     ...document.getElementsByClassName('menu-item-txt'),
     document.querySelector('.header-menu'),
   ];
 
-  let toDarkPlaceholder = [document.querySelector('.catalog-search-input')];
+  const toLightDarkPlaceholder = [
+    ...document.getElementsByClassName('catalog-search-input'),
+  ];
 
   const footerTxt = [document.querySelector('.footer-text')];
   const toWhiteBackgr = [
@@ -139,7 +146,7 @@ function switchThemeColors() {
   }
 
   for (let element of toSecBlackTxtEls) {
-    toggleClass(element, 'secondary-black-text-color', !themeSwitchEl.checked);
+    toggleClass(element, 'secondary-black-text-color', themeSwitchEl.checked);
   }
 
   for (let element of toLightBoxShadow) {
@@ -152,6 +159,10 @@ function switchThemeColors() {
 
   for (let element of toDarkPlaceholder) {
     toggleClass(element, 'dark', !themeSwitchEl.checked);
+  }
+
+  for (let element of toLightDarkPlaceholder) {
+    toggleClass(element, 'lightdark-placeholder', !themeSwitchEl.checked);
   }
 
   for (let element of footerTxt) {
@@ -197,7 +208,12 @@ function switchThemeColors() {
 
   stylePagination();
   styleEmptyLibrary();
+  styleEmptyCatalog();
+  styleSearchInputs();
 }
+
+styleSearchInputs();
+
 function setCurrentTheme() {
   if (!localStorage.getItem('ui-theme')) {
     localStorage.setItem('ui-theme', 'dark');
@@ -263,28 +279,20 @@ export function styleModal() {
 }
 
 export function styleEmptyLibrary() {
-  {
-    const textEl = document.querySelector('.empty-library-text');
+  const textEl = document.querySelector('.empty-library-text');
+  if (textEl) {
     if (localStorage.getItem('ui-theme') === 'light') {
-      if (textEl) {
-        textEl.style.color = '#111111';
-      }
-    } else {
-      textEl.style.color = '#FFFFFF';
-    }
+      textEl.style.color = '#111111';
+    } else textEl.style.color = '#FFFFFF';
   }
 }
 
 export function styleEmptyCatalog() {
-  {
-    const textEl = document.querySelector('.results-matching');
+  const textEl = document.querySelector('.results-matching');
+  if (textEl) {
     if (localStorage.getItem('ui-theme') === 'light') {
-      if (textEl) {
-        textEl.style.color = '#111111';
-      }
-    } else {
-      textEl.style.color = '#FFFFFF';
-    }
+      textEl.style.color = '#111111';
+    } else textEl.style.color = '#FFFFFF';
   }
 }
 
@@ -319,6 +327,41 @@ export function styleUpcomingThisMonth() {
 
     for (let element of toSecBlackTxt) {
       toggleClass(element, 'secondary-black-text-color');
+    }
+  }
+}
+
+function styleSearchInputs() {
+  const catalogInputEl = document.getElementById('Year');
+
+  if (!themeSwitchEl.checked) {
+    if (catalogInputEl) {
+      catalogInputEl.style.color = '#595959';
+      const toBlackCColor = [...catalogInputEl.getElementsByTagName('option')];
+      const toSecWhiteText = [...catalogInputEl.getElementsByTagName('option')];
+      for (let element of toBlackCColor) {
+        element.classList.add('secondary-white-background');
+        element.classList.remove('black-c-background-color');
+      }
+      for (let element of toSecWhiteText) {
+        element.classList.add('secondary-black-text-color');
+      }
+    }
+  }
+
+  if (themeSwitchEl.checked) {
+    if (catalogInputEl) {
+      const toBlackCColor = [...catalogInputEl.getElementsByTagName('option')];
+      const toSecWhiteText = [...catalogInputEl.getElementsByTagName('option')];
+      catalogInputEl.style.color = '#B7B7B7';
+      for (let element of toBlackCColor) {
+        element.classList.remove('secondary-white-background');
+        element.classList.add('black-c-background-color');
+      }
+      for (let element of toSecWhiteText) {
+        element.classList.remove('secondary-black-text-color');
+        element.classList.add('secondary-white-text');
+      }
     }
   }
 }
