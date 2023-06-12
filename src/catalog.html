@@ -24,22 +24,25 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <!--header-->
-    <include src="./partials/header.html"></include>
-    <!--main-->
-    <main>
-      <include src="./partials/index/index-hero.html"></include>
-      <include src="./partials/catalog/catalog-search.html"></include>
-      <include src="./partials/catalog/catalog-catalog.html"></include>
-      <include src="./partials/catalog/catalog-pagination.html"></include>
-      <include src="./partials/loader.html"></include>
-      <include src="./partials/modal-wind-tr.html"></include>
-      <include src="./partials/modal-wind-big.html"></include>
-      <include src="./partials/buttonup.html"></include>
-    </main>
-    <!--footer-->
-    <include src="./partials/footer.html"></include>
+    <div class="wrapperFT">
+      <!--header-->
+      <include src="./partials/header.html"></include>
+      <!--main-->
+      <main class="mainFT">
+        <include src="./partials/index/index-hero.html"></include>
+        <include src="./partials/catalog/catalog-search.html"></include>
+        <include src="./partials/catalog/catalog-catalog.html"></include>
+        <include src="./partials/catalog/catalog-pagination.html"></include>
+        <include src="./partials/loader.html"></include>
+        <include src="./partials/modal-wind-tr.html"></include>
+        <include src="./partials/modal-wind-big.html"></include>
+        <include src="./partials/buttonup.html"></include>
+      </main>
+      <!--footer-->
+      <include src="./partials/footer.html"></include>
+    </div>
     <!--modal-windows-->
+
     <script src="./js/index.js" type="module"></script>
   </body>
 </html>
