@@ -63,7 +63,6 @@ function onLibreryFilter(event) {
 
     if (isNaN(genre)) {
       onMarkup(libraryCinema)
-      showEmptyLibrary(libraryCinema);
       return
     }
 
@@ -76,7 +75,6 @@ function onLibreryFilter(event) {
     });
   
     onMarkup(filter);
-    showEmptyLibrary(filter);
   } catch (error) {
     onError(error);
   }
@@ -196,7 +194,6 @@ function visibleButton(data) {
    
     //console.log(data, libraryLengthFactor);
     onMarkup(data);
-    showEmptyLibrary(data);
   }
 
 }
