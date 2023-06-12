@@ -50,18 +50,20 @@ onMarkup(libraryCinema);
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
   const genre = Number(select.value);
-  libraryLengthFactor = 1;
+  libraryLengthFactor = 1;  // сброс сторінок
 
   try {
     
     libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
-    if(libraryCinema.length === 0) {
-      throw new Error("масив пустий")
-    }
+    // if (libraryCinema.length === 0) {
+    //   showEmptyLibrary();
+    //   throw new Error("масив пустий")
+    // }
 
 
     if (isNaN(genre)) {
       onMarkup(libraryCinema)
+      showEmptyLibrary(libraryCinema);
       return
     }
 
@@ -74,6 +76,7 @@ function onLibreryFilter(event) {
     });
   
     onMarkup(filter);
+    showEmptyLibrary(filter);
   } catch (error) {
     onError(error);
   }
@@ -84,8 +87,8 @@ function onMarkup(data){
   const cards = createCard(data)
   visibleButton(data);
   update(cards)
+  showEmptyLibrary(data);
   managerModal();
-  showEmptyLibrary();
 }
 
 // вивід даних на сторінку
@@ -98,7 +101,12 @@ function update(data) {
 
 // обгортання елементу масиву хтмл-кодом
 function createCard(data, count = PER_PAGE * libraryLengthFactor) {
-  
+
+  console.log(data, count);
+  if (count > data.length) { 
+    count = data.length;
+  }
+
   return data.slice(0, count).reduce(
     (acc, item) => {
      return acc + TemplateMovieCard(item)
@@ -184,17 +192,19 @@ function visibleButton(data) {
   } 
 
   function onLoadMore() {
-    libraryLengthFactor++;
-    onMarkup(libraryCinema, PER_PAGE * libraryLengthFactor);
+    libraryLengthFactor += 1;
+    console.log(data, libraryLengthFactor);
+    onMarkup(data);
+    showEmptyLibrary(data);
   }
 
 }
 
 
 // если пустой список
-function emptyLibraryMarkup() {
-  if (libraryCinema.length === 0) {
-    document.querySelector('.library-filter').style.display = 'none';
+function emptyLibraryMarkup(data) {
+  if (data.length === 0) {
+    //document.querySelector('.library-filter').style.display = 'none';
 
     return `<div class="empty-library"> 
       <p class="empty-library-text">OOPS...<br/> We are very sorry! <br/> You don’t have any movies in your library.</p>
@@ -205,9 +215,9 @@ function emptyLibraryMarkup() {
   }
 }
 
-function showEmptyLibrary() {
+function showEmptyLibrary(data = libraryCinema) {
   if (boxLibraryCinema) {
-    const result = emptyLibraryMarkup();
+    const result = emptyLibraryMarkup(data);
     if (result) {
       boxLibraryCinema.innerHTML = '';
       boxLibraryCinema.insertAdjacentHTML('beforeend', result);
