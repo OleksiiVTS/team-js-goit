@@ -37,11 +37,14 @@
       closeTeamModal();
     }
   }
+  // if (refs.body.clientHeight < window.innerHeight) {
+  //   refs.footer.classList.add('footer-fixed');
+  // }
 
   setTimeout(() => {
     if (refs.body.clientHeight < window.innerHeight) {
       refs.footer.classList.add('footer-fixed');
     }
     console.log(refs.body.clientHeight, window.innerHeight);
-  }, 200);
+  }, 300);
 })();
