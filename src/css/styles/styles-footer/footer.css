@@ -12,7 +12,7 @@
   position: fixed;
   left: 50%;
   transform: translate(-50%);
-  bottom: 28px;
+  bottom: 0;
 }
 .footer__icon {
   margin-left: 7px;
@@ -235,18 +235,13 @@
   .footer-team-frame:first-child {
     margin-left: 146px;
   }
-  .footer-fixed {
-    bottom: 40px;
-  }
 }
 @media screen and (min-width: 1280px) {
   .footer-container {
     margin-top: 100px;
     margin-bottom: 80px;
   }
-  .footer-fixed {
-    bottom: 80px;
-  }
+
   .footer-team {
     display: flex;
     flex-wrap: wrap;
