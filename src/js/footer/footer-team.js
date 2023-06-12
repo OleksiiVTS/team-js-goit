@@ -69,7 +69,9 @@ setTimeout(() => {
     document.documentElement.scrollWidth,
     window.innerHeight - 175
   );
-
+}, 100);
+setTimeout(() => {
+  console.log(refs.openFooterTeamLink);
   refs.openFooterTeamLink.addEventListener('click', openTeamModal);
 
   refs.closeFooterTeamBtn.addEventListener('click', closeTeamModal);
