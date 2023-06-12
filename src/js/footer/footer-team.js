@@ -4,11 +4,8 @@
     closeFooterTeamBtn: document.querySelector('[data-team-close]'),
     footerTeam: document.querySelector('[data-team]'),
     body: document.querySelector('body'),
-    footer: document.querySelector('.footer-container'),
   };
-  if (refs.footer.classList.contains('footer-fixed')) {
-    refs.footer.classList.remove('footer-fixed');
-  }
+
   refs.openFooterTeamLink.addEventListener('click', openTeamModal);
 
   refs.closeFooterTeamBtn.addEventListener('click', closeTeamModal);
@@ -37,11 +34,4 @@
       closeTeamModal();
     }
   }
-
-  setTimeout(() => {
-    if (refs.body.clientHeight < window.innerHeight) {
-      refs.footer.classList.add('footer-fixed');
-    }
-    console.log(refs.body.clientHeight, window.innerHeight);
-  }, 200);
 })();
