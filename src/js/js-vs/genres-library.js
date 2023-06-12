@@ -102,7 +102,7 @@ function update(data) {
 // обгортання елементу масиву хтмл-кодом
 function createCard(data, count = PER_PAGE * libraryLengthFactor) {
 
-  console.log(data, count);
+  //console.log(data, count);
   if (count > data.length) { 
     count = data.length;
   }
@@ -194,7 +194,7 @@ function visibleButton(data) {
   function onLoadMore() {
     libraryLengthFactor += 1;
    
-    console.log(data, libraryLengthFactor);
+    //console.log(data, libraryLengthFactor);
     onMarkup(data);
     showEmptyLibrary(data);
   }
