@@ -1,6 +1,9 @@
 import GenreList from '../class/GenreList.js';
 import { styleModal } from "../js-header/header.js";
-let libraryLengthFactor = 1
+
+let libraryLengthFactor = 1;
+const PER_PAGE = 9; 
+
 const cl_Genres = new GenreList({
   selector: '.select',
   url: '/genre/movie/list',
@@ -47,6 +50,7 @@ onMarkup(libraryCinema);
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
   const genre = Number(select.value);
+  libraryLengthFactor = 1;
 
   try {
     
@@ -78,7 +82,7 @@ function onLibreryFilter(event) {
 // створення розмітки
 function onMarkup(data){
   const cards = createCard(data)
-  visibleButton();
+  visibleButton(data);
   update(cards)
   managerModal();
   showEmptyLibrary();
@@ -93,7 +97,7 @@ function update(data) {
 }
 
 // обгортання елементу масиву хтмл-кодом
-function createCard(data, count = 9 * libraryLengthFactor) {
+function createCard(data, count = PER_PAGE * libraryLengthFactor) {
   
   return data.slice(0, count).reduce(
     (acc, item) => {
@@ -168,11 +172,11 @@ function TemplateMovieCard( data ) {
 
 // console.log(localStorageLength)
 
-function visibleButton() {
+function visibleButton(data) {
   const loadMoreBtn = document.querySelector('.load-more')
-  const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
+  //const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
 
-  if (localStorageLength.length > 9) {
+  if (data.length > PER_PAGE) {
     loadMoreBtn.classList.remove('is-hidden')
     loadMoreBtn.addEventListener('click', onLoadMore)
   } else {
@@ -180,15 +184,11 @@ function visibleButton() {
   } 
 
   function onLoadMore() {
-    libraryLengthFactor += 1;
-    onMarkup(libraryCinema);
+    libraryLengthFactor++;
+    onMarkup(libraryCinema, PER_PAGE * libraryLengthFactor);
   }
 
 }
-
-
-
-
 
 
 // если пустой список
