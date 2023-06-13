@@ -1,5 +1,5 @@
-/*--button--*//*--button--*/
-/* 
+/*--button--*/ /*--button--*/
+/*
 .button-general - кнопки "Load more" та "Search movie"
 .button-watch-trailer - кнопка "Watch trailer"
 .button-rem-me - кнопка "Remind me" + жовта "Add to my library"
@@ -34,7 +34,6 @@
   color: var(--color-black);
 }
 
-
 .button-my-libr {
   background: var(--color-black);
   color: var(--color-white);
@@ -54,15 +53,16 @@
   color: var(--color-text-button);
   border: none;
 }
-
+.button-round-pag {
+  width: 24px;
+  height: 24px;
+}
 .button-round-pag,
 .button-round-search {
   transition-property: background-color;
   transition-duration: 250ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-  width: 24px;
-  height: 24px;
   background: var(--color-button);
   border-radius: 50%;
   border: none;
@@ -76,11 +76,13 @@
   justify-content: center;
   align-items: center;
 
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .button-round-search {
   width: 40px;
   height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
   fill: var(--color-white);
 }
 
@@ -89,18 +91,15 @@
   background: var(--color-button-hover);
   color: var(--color-text-header-l);
   fill: var(--color-text-header-l);
-} 
-
+}
 
 /*---button up ---*/ /*---button up ---*/ /*---button up ---*/ /*---button up ---*/
 .button-up {
   display: inline-block;
   position: fixed;
-  transition: background-color .3s,
-              opacity .5s, 
-              visibility .5s;
+  transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
   animation: animatebut 3000ms infinite 1000ms;
-  
+
   opacity: 0;
   visibility: hidden;
   z-index: 8;
@@ -109,13 +108,13 @@
   background-repeat: no-repeat;
   background-position: center;
   /* background-size: 50px 50px; */
-  border: 2px solid var(--color-black);   
-  width: 40px;   
-  height: 40px; 
+  border: 2px solid var(--color-black);
+  width: 40px;
+  height: 40px;
   bottom: 30px;
-  right: 30px; 
-  text-align: center;   
-  border-radius: 25px; 
+  right: 30px;
+  text-align: center;
+  border-radius: 25px;
 
   display: inline-flex;
   justify-content: center;
@@ -126,7 +125,7 @@
   color: var(--color-text-description);
 }
 
-.button-up:hover, 
+.button-up:hover,
 .button-up:focus {
   animation: animatebut step-start;
   align-items: flex-start;
@@ -139,7 +138,7 @@
 .arrow-up span {
   position: fixed;
   z-index: 3;
-  
+
   display: block;
   width: 15px;
   height: 15px;
@@ -148,17 +147,17 @@
   border-left: 3px solid var(--color-button);
   border-top: 3px solid var(--color-text-button);
   text-shadow: 1px 1px 2px #494848;
- 
+
   margin: -2px;
   animation: arrow-up 3000ms infinite;
 }
 
-.arrow-up span:nth-child(2){
+.arrow-up span:nth-child(2) {
   animation-delay: -0.1s;
   right: 70px;
   bottom: 90px;
 }
-.arrow-up span:nth-child(3){
+.arrow-up span:nth-child(3) {
   animation-delay: -0.2s;
   right: 80px;
   bottom: 75px;
@@ -169,16 +168,16 @@
   visibility: visible;
 }
 @keyframes arrow-up {
-  0%{
-      opacity: 0;
-      transform: rotate(45deg) translate(10px,10px);
+  0% {
+    opacity: 0;
+    transform: rotate(45deg) translate(10px, 10px);
   }
-  50%{
-      opacity: 1;
+  50% {
+    opacity: 1;
   }
-  100%{
-      opacity: 0;
-      transform: rotate(45deg) translate(-10px,-10px);
+  100% {
+    opacity: 0;
+    transform: rotate(45deg) translate(-10px, -10px);
   }
 }
 
@@ -211,12 +210,10 @@
   line-height: 1.4;
   text-align: center;
 
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
-
 @media screen and (max-width: 320px) {
-  
 }
 
 @media screen and (min-width: 768px) {
@@ -242,15 +239,16 @@
   .button-round-search {
     width: 44px;
     height: 44px;
+    padding-left: 12px;
+    padding-right: 12px;
   }
 
   .button-up {
-    width: 55px;   
-    height: 55px; 
+    width: 55px;
+    height: 55px;
     right: 50px;
     bottom: 50px;
   }
-  
 }
 @media screen and (min-width: 1280px) {
   .results-matching {
@@ -272,6 +270,7 @@
   .button-round-search {
     width: 48px;
     height: 48px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
-
 }
