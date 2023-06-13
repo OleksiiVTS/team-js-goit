@@ -2,6 +2,8 @@ const heroRandomFilm = document.getElementById('hero-random-film');
 const heroContainer = document.getElementById('hero-container');
 const apiKey = '9073999c285844087924fd0e24160fae';
 let randomFilmIndex;
+let filmDetails;
+let trailerDetails;
 
 async function fetchFilmData() {
   const apiUrl = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`;
@@ -17,15 +19,12 @@ async function fetchFilmData() {
   }
 }
 
-let filmDetails;
-let trailerDetails;   ////!!!! - це зміни
-
 async function getRandomFilm() {
   const filmIndexes = await fetchFilmData();
   const randomIndex = Math.floor(Math.random() * filmIndexes.length);
   randomFilmIndex = filmIndexes[randomIndex];
   const filmDetails = await getFilmDetails(randomFilmIndex);
-
+  console.log(filmDetails);
   ////!!!!
   const trailerDetails = await getTrailerDetails(randomFilmIndex);
 
@@ -44,22 +43,31 @@ async function getFilmDetails(filmIndex) {
   }
 }
 
+// https://api.themoviedb.org/3/movie/385687/videos?api_key=9073999c285844087924fd0e24160fae
 
 ////!!!!
-async function getTrailerDetails(filmIndex) { 
+async function getTrailerDetails(filmIndex) {
   const apiUrl = `https://api.themoviedb.org/3/movie/${filmIndex}/videos?api_key=${apiKey}`;
 
   try {
     const response = await fetch(apiUrl);
     const trailerDetails = await response.json();
-    return trailerDetails.results;
+    const officialTrailer = trailerDetails.results.find(
+      video => video.type === 'Trailer' && video.name === 'Official Trailer'
+    );
+    const officialTrailerUrl = officialTrailer
+      ? `https://www.youtube.com/watch?v=${officialTrailer.key}`
+      : null;
+    console.log(officialTrailerUrl);
+    return officialTrailerUrl;
   } catch (error) {
     console.log('Error occurred while making API request:', error);
   }
 }
-////!!!!
 
-function createFilmBox({ title, vote_average, backdrop_path, overview }) {
+function createFilmBox(filmDetails, officialTrailerUrl) {
+  const { backdrop_path, title, vote_average, overview } = filmDetails;
+
   const words = overview.split(' ');
   let truncatedOverview = words.slice(0, 30).join(' ');
 
@@ -94,8 +102,8 @@ function createFilmBox({ title, vote_average, backdrop_path, overview }) {
         </div>
         <p class="hero-text">${truncatedOverview}</p>
         <div class="hero-homepage-buttons">
-          <button id="watchTrailerButton" class="button-watch-trailer">Watch trailer</button>
-          <button id="moreDetailsButton" class="button-more-details">More Details</button>
+        <button id="watchTrailerButton" class="button-watch-trailer"><a class="hero-href" href="${officialTrailerUrl}">Watch trailer</a></button>
+        <button id="moreDetailsButton" class="button-more-details">More Details</button>
         </div>
       </div>
     </section>
@@ -103,7 +111,7 @@ function createFilmBox({ title, vote_average, backdrop_path, overview }) {
 }
 
 function createHTML(markup) {
-  heroRandomFilm.insertAdjacentHTML('afterbegin', markup);
+  heroRandomFilm.innerHTML = markup;
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
@@ -115,17 +123,11 @@ window.addEventListener('DOMContentLoaded', async () => {
     localStorage.setItem('libraryFilms', JSON.stringify(libraryFilms));
   }
 
-////!!!!
+ 
   const { filmDetails, trailerDetails } = await getRandomFilm();
-  const [ offTrailer ] = trailerDetails.filter(e => e.name === "Official Trailer");
-  const urlTrailer = `https://www.youtube.com/watch?v=${offTrailer.key}`;
-  // const filmDetails = await getRandomFilm();
-  // const trailerDetails = await getTrailerDetails();
 
-////!!!!
-  
-  
-  const filmBoxHTML = createFilmBox(filmDetails);
+
+  const filmBoxHTML = createFilmBox(filmDetails, trailerDetails);
   createHTML(filmBoxHTML);
 
   const watchTrailerButton = document.getElementById('watchTrailerButton');
@@ -173,7 +175,6 @@ function createDetailsBox({
   overview,
   vote_average,
   vote_count,
-  release_date,
   popularity,
   genres,
   poster_path,
@@ -326,7 +327,7 @@ function closeDetails() {
   modalDetails.classList.toggle('more-details-is-hidden');
   document.removeEventListener('keydown', escapeHandlerDetails);
   window.removeEventListener('click', outsideClickHandlerDetails);
-  // detailsOpened = false;
+  detailsOpened = false;
   clearDetailsBox();
 }
 
