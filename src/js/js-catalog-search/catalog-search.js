@@ -10,7 +10,9 @@ const formEl = document.querySelector('.form-search');
 const catalogSearchForm = document.querySelector('.catalog-search-input');
 const btnSearch = document.getElementById('btn-search');
 const notFoundContainer = document.querySelector('.results-matching');
-btnSearch.addEventListener('click', onSubmit);
+if (btnSearch) {
+  btnSearch.addEventListener('click', onSubmit);
+}
 
 const refs = {
   footer: document.querySelector('.footer-container'),
@@ -93,20 +95,23 @@ async function onSubmit(event) {
 }
 
 /// Пагінація
-export async function initPagination(objGallery) {
+async function initPagination(objGallery) {
+
   const res = await objGallery;
   //console.log('initPagination -> ', objGallery.name, res);
 
   const container = document.querySelector('.tui-pagination');
+  if (!container) {
+    // якщо це інша сторінка
+    return false;
+  }
+
   container.innerHTML = '';
 
   if (!res.totalResults) {
-    if (container) {
-      const noFilm = document.querySelector('.m-w-t-value');
-      const catalog = document.querySelector('.catalog-gallery');
-      catalog.insertAdjacentHTML('beforeend', noFilm.innerHTML);
-    }
-
+    const noFilm = document.querySelector('.m-w-t-value');
+    const catalog = document.querySelector('.catalog-gallery');
+    catalog.insertAdjacentHTML('beforeend', noFilm.innerHTML);
     return false; //new Pagination(container)
   }
 
@@ -137,22 +142,20 @@ export async function initPagination(objGallery) {
     },
   };
 
-  let pagination;
-  if (container) {
-    pagination = new Pagination(container, paginationOptions);
-    pagination.reset();
+  const pagination = new Pagination(container, paginationOptions);
+  pagination.reset();
 
-    //console.log(pagination);
-    //Pagination first start with response from API and create total_pages
-    //Go to Homepage-rendering.js
-    //
-    pagination.movePageTo(objGallery.page);
-    pagination.getCurrentPage();
-    pagination.on('afterMove', function (eventData) {
+  //console.log(pagination);
+  //Pagination first start with response from API and create total_pages
+  //Go to Homepage-rendering.js
+  //
+  pagination.movePageTo(objGallery.page);
+  pagination.getCurrentPage();
+  pagination.on('afterMove', function (eventData) {
       objGallery.page = eventData.page;
       objGallery.onMarkup(objGallery.TemplateMovieCard);
       stylePagination();
-    });
-  }
+  });
+  
   return true;
 }
