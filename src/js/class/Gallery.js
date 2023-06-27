@@ -254,6 +254,23 @@ export default class Gallery {
     }
   }
 
+  onMarkupFromLS() {
+
+    // отримання даних
+    this.listMovies = this.importFromLS()
+    if (this.listMovies.length === 0) {
+      showNoData();   // показати що не має даних
+      return false;
+    }
+
+    const markup = this.createNewCards(cbTemplate, count);
+    this.updateGallery(markup);
+    
+
+    
+  }
+
+
   // Шаблон картки для фільму
   //
   // // частина посилання на картинку

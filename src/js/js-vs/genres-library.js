@@ -1,6 +1,9 @@
 import GenreList from '../class/GenreList.js';
 import { styleModal } from "../js-header/header.js";
-let libraryLengthFactor = 1
+
+let libraryLengthFactor = 1;
+const PER_PAGE = 9; 
+
 const cl_Genres = new GenreList({
   selector: '.select',
   url: '/genre/movie/list',
@@ -47,13 +50,15 @@ onMarkup(libraryCinema);
 // отримуемо потрібний масив даних для розмітки і виводу на сторінку
 function onLibreryFilter(event) {
   const genre = Number(select.value);
+  libraryLengthFactor = 1;  // сброс сторінок
 
   try {
     
     libraryCinema = JSON.parse(localStorage.getItem('libraryFilms'));
-    if(libraryCinema.length === 0) {
-      throw new Error("масив пустий")
-    }
+    // if (libraryCinema.length === 0) {
+    //   showEmptyLibrary();
+    //   throw new Error("масив пустий")
+    // }
 
 
     if (isNaN(genre)) {
@@ -78,10 +83,10 @@ function onLibreryFilter(event) {
 // створення розмітки
 function onMarkup(data){
   const cards = createCard(data)
-  visibleButton();
+  visibleButton(data);
   update(cards)
+  showEmptyLibrary(data);
   managerModal();
-  showEmptyLibrary();
 }
 
 // вивід даних на сторінку
@@ -93,8 +98,13 @@ function update(data) {
 }
 
 // обгортання елементу масиву хтмл-кодом
-function createCard(data, count = 9 * libraryLengthFactor) {
-  
+function createCard(data, count = PER_PAGE * libraryLengthFactor) {
+
+  //console.log(data, count);
+  if (count > data.length) { 
+    count = data.length;
+  }
+
   return data.slice(0, count).reduce(
     (acc, item) => {
      return acc + TemplateMovieCard(item)
@@ -168,11 +178,11 @@ function TemplateMovieCard( data ) {
 
 // console.log(localStorageLength)
 
-function visibleButton() {
+function visibleButton(data) {
   const loadMoreBtn = document.querySelector('.load-more')
-  const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
+  //const localStorageLength = JSON.parse(localStorage.getItem("libraryFilms"))
 
-  if (localStorageLength.length > 9) {
+  if (data.length > PER_PAGE) {
     loadMoreBtn.classList.remove('is-hidden')
     loadMoreBtn.addEventListener('click', onLoadMore)
   } else {
@@ -181,20 +191,18 @@ function visibleButton() {
 
   function onLoadMore() {
     libraryLengthFactor += 1;
-    onMarkup(libraryCinema);
+   
+    //console.log(data, libraryLengthFactor);
+    onMarkup(data);
   }
 
 }
 
 
-
-
-
-
 // если пустой список
-function emptyLibraryMarkup() {
-  if (libraryCinema.length === 0) {
-    document.querySelector('.library-filter').style.display = 'none';
+function emptyLibraryMarkup(data) {
+  if (data.length === 0) {
+    //document.querySelector('.library-filter').style.display = 'none';
 
     return `<div class="empty-library"> 
       <p class="empty-library-text">OOPS...<br/> We are very sorry! <br/> You don’t have any movies in your library.</p>
@@ -205,9 +213,9 @@ function emptyLibraryMarkup() {
   }
 }
 
-function showEmptyLibrary() {
+function showEmptyLibrary(data = libraryCinema) {
   if (boxLibraryCinema) {
-    const result = emptyLibraryMarkup();
+    const result = emptyLibraryMarkup(data);
     if (result) {
       boxLibraryCinema.innerHTML = '';
       boxLibraryCinema.insertAdjacentHTML('beforeend', result);
