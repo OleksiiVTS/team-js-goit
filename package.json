@@ -2,20 +2,20 @@
   "name": "team-js-goit",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://github.com/OleksiiVTS/team-js-goit",
+  "homepage": "https://github.com/Maksym-nl/Project_js.git",
   "scripts": {
     "start": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /team-js-goit/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OleksiiVTS/team-js-goit.git"
+    "url": "git+https://github.com/Maksym-nl/Project_js.git"
   },
   "keywords": [],
   "author": "Grope 9-78. GoIT>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/OleksiiVTS/team-js-goit/issues"
+    "url": "https://github.com/Maksym-nl/Project_js.git/issues"
   },
   "dependencies": {
     "axios": "^1.4.0",
